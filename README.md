@@ -1,9 +1,12 @@
-# Phipe
+# Phipe (Alpha)
 
 Phipe is a parallel connection handling library, for PHP.
 
 It provides abstractions on top of PHP streams and the PHP [Event extension](http://php.net/event) to provide a clean
 and simple interface to manage and observe multiple connections at once.
+
+__Caveat emptor__: This is not complete, and not production ready. Whilst a lot of the moving parts are functioning,
+there is still work to be done.
 
 ## Installation
 
