@@ -81,7 +81,7 @@ $phipe->execute();
 ```
 
 Valid events are: `connect`, `disconnect`, `read`, `write`, `eof`. For an example of callback use, please see
-the [`example/`][1] directory.
+the [`example/`](example/) directory.
 
 ### Advanced Usage
 
