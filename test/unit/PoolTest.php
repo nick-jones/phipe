@@ -22,7 +22,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase {
 		$this->connections = $this->getMock('\SplObjectStorage');
 
 		$this->pool = new Pool();
-		$this->pool->setAll($this->connections);
+		$this->pool->setConnections($this->connections);
 	}
 
 	public function testAdd() {
@@ -50,13 +50,9 @@ class PoolTest extends \PHPUnit_Framework_TestCase {
 	public function testSetAll() {
 		$storage = $this->getMock('\SplObjectStorage');
 
-		$this->pool->setAll($storage);
+		$this->pool->setConnections($storage);
 
-		$this->assertEquals($storage, $this->pool->getAll());
-	}
-
-	public function testGetAll() {
-		$this->assertInstanceOf('\SplObjectStorage', $this->pool->getAll());
+		$this->assertEquals(0, count($this->pool));
 	}
 
 	public function testFilter_Inclusion() {
@@ -65,7 +61,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase {
 			$this->createMockConnection()
 		);
 
-		$this->pool->setAll($connections);
+		$this->pool->setConnections($connections);
 
 		// Filter always returning TRUE for inclusion, expecting everything to be returned
 		$result = $this->pool->filter(function(Connection $connection) {
@@ -76,7 +72,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testFilter_Exclusion() {
-		$this->pool->setAll(array(
+		$this->pool->setConnections(array(
 			$this->createMockConnection()
 		));
 
@@ -89,7 +85,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testWalk() {
-		$this->pool->setAll(array(
+		$this->pool->setConnections(array(
 			$this->createMockConnection(),
 			$this->createMockConnection()
 		));
@@ -110,7 +106,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase {
 
 		$connections = array($connectionConnected, $connectionDataAvailable, $connectionUnknown);
 
-		$this->pool->setAll($connections);
+		$this->pool->setConnections($connections);
 
 		$this->assertEquals(1, count($this->pool->getAllWithState(Connection::STATE_CONNECTED)));
 		$this->assertEquals(1, count($this->pool->getAllWithState(Connection::STATE_DATA_AVAILABLE)));
@@ -120,9 +116,21 @@ class PoolTest extends \PHPUnit_Framework_TestCase {
 	public function testCount() {
 		$this->assertEquals(0, $this->pool->count());
 
-		$this->pool->setAll(array($this->createMockConnection()));
+		$this->pool->setConnections(array($this->createMockConnection()));
 
 		$this->assertEquals(1, $this->pool->count());
+	}
+
+	public function testToArray() {
+		$connection = $this->createMockConnection();
+
+		$storage = new \SplObjectStorage();
+		$storage->attach($connection);
+
+		$this->pool->setConnections($storage);
+		$result = $this->pool->toArray();
+
+		$this->assertEquals(array($connection), $result);
 	}
 
 	/**

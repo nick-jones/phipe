@@ -16,40 +16,32 @@ class Pool implements \Countable {
 	 */
 	protected $connections;
 
-	/**
-	 *
-	 */
 	public function __construct() {
 		$this->connections = new \SplObjectStorage();
 	}
 
 	/**
+	 * Add a Connection instance to the Pool
+	 *
 	 * @param Connection $connection
 	 */
 	public function add(Connection $connection) {
-		// Add to the connection set
 		$this->connections->attach($connection);
 	}
 
 	/**
+	 * Remove a Connection instance from the Pool
+	 *
 	 * @param Connection $connection
 	 */
 	public function remove(Connection $connection) {
-		// Remove from the connection set
 		$this->connections->detach($connection);
-	}
-
-	/**
-	 * @return \SplObjectStorage
-	 */
-	public function getAll() {
-		return $this->connections;
 	}
 
 	/**
 	 * @param \SplObjectStorage|Connection[] $connections
 	 */
-	public function setAll($connections) {
+	public function setConnections($connections) {
 		$this->connections = $connections;
 	}
 
@@ -57,7 +49,7 @@ class Pool implements \Countable {
 	 * @param callable $callback
 	 */
 	public function walk(callable $callback) {
-		foreach ($this->getAll() as $connection) {
+		foreach ($this->connections as $connection) {
 			call_user_func($callback, $connection);
 		}
 	}
@@ -69,7 +61,7 @@ class Pool implements \Countable {
 	public function filter(callable $callback) {
 		$connections = new self();
 
-		foreach ($this->getAll() as $connection) {
+		foreach ($this->connections as $connection) {
 			if (call_user_func($callback, $connection)) {
 				$connections->add($connection);
 			}
@@ -93,5 +85,20 @@ class Pool implements \Countable {
 	 */
 	public function count() {
 		return count($this->connections);
+	}
+
+	/**
+	 * Returns the all the Connection instances contained within an array.
+	 *
+	 * @return array
+	 */
+	public function toArray() {
+		$connections = array();
+
+		foreach ($this->connections as $connection) {
+			array_push($connections, $connection);
+		}
+
+		return $connections;
 	}
 }
