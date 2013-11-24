@@ -6,6 +6,10 @@ use Phipe\Pool;
 use Phipe\Connection\Connection;
 
 /**
+ * An implementation of the Disconnect handler interface that expunges Connections from the supplied Pool, if they
+ * are disconnected. This is useful is we do not wish for disconnected instances to be reconnected.
+ *
+ * This class extends the Soft handler to ensure that EOF connections are cleaned up.
  *
  * @package Phipe\Handler\Disconnect
  */
@@ -17,17 +21,21 @@ class Expunging extends Soft {
 		// Perform a soft disconnect first. This will ensure all EOF connections are disconnected.
 		parent::performDisconnect($pool);
 
-		$this->removeDisconnectedConnectionsFromPool($pool);
+		$this->removeDisconnectedFromPool($pool);
 	}
 
 	/**
-	 * @param Pool $pool
+	 * Removes all connection instances which report themselves as disconnected.
+	 *
+	 * @param Pool $pool The instance from which the connections should be fetched and removed
 	 */
-	protected function removeDisconnectedConnectionsFromPool(Pool $pool) {
+	protected function removeDisconnectedFromPool(Pool $pool) {
+		// Resolve the disconnected connections
 		$connections = $pool->filter(function(Connection $connection) {
 			return $connection->isDisconnected();
 		});
 
+		// Remove each one from the Pool
 		$connections->walk(function(Connection $connection) use($pool) {
 			$pool->remove($connection);
 		});
