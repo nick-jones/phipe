@@ -20,7 +20,7 @@ class SimpleTest extends \PHPUnit_Framework_TestCase {
 		$connected = $this->getMock('\Phipe\Pool');
 
 		$connected->expects($this->any())
-			->method('getAll')
+			->method('toArray')
 			->will($this->returnValue($connections));
 
 		$pool = $this->getMock('\Phipe\Pool');
