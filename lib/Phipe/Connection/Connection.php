@@ -6,8 +6,6 @@ namespace Phipe\Connection;
  * Abstract class to represent a connection. Observer methods are implemented concretely, as it seems unlikely
  * subclasses would wish to vary the behaviour of these.
  *
- * (Move to the Connection NS?)
- *
  * @package Phipe
  */
 abstract class Connection implements \SplSubject {

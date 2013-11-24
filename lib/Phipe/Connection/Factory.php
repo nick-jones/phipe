@@ -5,8 +5,6 @@ namespace Phipe\Connection;
 /**
  * Generic factory for creating Connection related instances.
  *
- * (Move to Connection NS?)
- *
  * @package Phipe
  */
 interface Factory {

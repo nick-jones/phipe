@@ -7,8 +7,6 @@ namespace Phipe\Connection;
  * ensure that those connections update their state, so observers can continue to watch their state, and, if applicable,
  * manage them.
  *
- * (Move to Connection NS?)
- *
  * @package Phipe
  */
 interface Prober {

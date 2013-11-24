@@ -5,8 +5,6 @@ namespace Phipe\Connection;
 /**
  * Base exception class for Connection related issues.
  *
- * (Move to the Connection NS?)
- *
  * @package Phipe
  */
 class ConnectionException extends \RuntimeException {
