@@ -59,7 +59,7 @@ class ApplicationContainer extends \Phipe\Config\Container {
 	protected function createDefaultHandlers() {
 		$handlers = array(
 			'connect' => function() {
-				return new Handler\Connect\Simple();
+				return new Handler\Connect\Sequential();
 			},
 			'reconnect' => function() {
 				return new Handler\Reconnect\SimpleDelayed();

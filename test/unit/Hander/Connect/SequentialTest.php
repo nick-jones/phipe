@@ -2,14 +2,14 @@
 
 namespace Phipe\Handler\Connect;
 
-class SimpleTest extends \PHPUnit_Framework_TestCase {
+class SequentialTest extends \PHPUnit_Framework_TestCase {
 	/**
-	 * @var Simple
+	 * @var Sequential
 	 */
 	protected $handler;
 
 	protected function setUp() {
-		$this->handler = new Simple();
+		$this->handler = new Sequential();
 	}
 
 	public function testConnect() {
