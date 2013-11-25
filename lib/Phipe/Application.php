@@ -24,7 +24,7 @@ class Application {
 	 * The $config array can contain the following values:
 	 *  - connections: array of array-based connection details (host/port/ssl), or actual instances themselves.
 	 *  - pool: an instance of \Phipe\Pool (optional)
-	 *  - factory: a concrete instance of \Phipe\Connection\Factory (optional, \Phipe\Stream\StreamFactory is default)
+	 *  - factory: a concrete instance of \Phipe\Connection\Factory (optional, \Phipe\Connection\Stream\StreamFactory is default)
 	 *  - loop_runner: an instance of \Phipe\Loop\Runner (optional)
 	 *
 	 * @param array|Container|NULL $config
