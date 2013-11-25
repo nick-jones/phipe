@@ -30,7 +30,7 @@ class ApplicationContainerTest extends \PHPUnit_Framework_TestCase {
 
 	public function testCreateDefaultHandlers() {
 		$this->assertEquals('Phipe\Handler\Connect\Sequential', get_class($this->container['handlers']['connect']));
-		$this->assertEquals('Phipe\Handler\Reconnect\SimpleDelayed', get_class($this->container['handlers']['reconnect']));
+		$this->assertEquals('Phipe\Handler\Reconnect\SequentialDelayed', get_class($this->container['handlers']['reconnect']));
 		$this->assertEquals('Phipe\Handler\Disconnect\Soft', get_class($this->container['handlers']['disconnect']));
 		$this->assertEquals('Phipe\Handler\Activity\Simple', get_class($this->container['handlers']['activity']));
 	}

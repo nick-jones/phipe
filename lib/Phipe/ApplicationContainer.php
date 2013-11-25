@@ -62,7 +62,7 @@ class ApplicationContainer extends \Phipe\Config\Container {
 				return new Handler\Connect\Sequential();
 			},
 			'reconnect' => function() {
-				return new Handler\Reconnect\SimpleDelayed();
+				return new Handler\Reconnect\SequentialDelayed();
 			},
 			'disconnect' => function() {
 				return $this['reconnect'] ?

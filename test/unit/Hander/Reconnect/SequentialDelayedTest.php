@@ -2,14 +2,14 @@
 
 namespace Phipe\Handler\Reconnect;
 
-class SimpleDelayedTest extends \PHPUnit_Framework_TestCase {
+class SequentialDelayedTest extends \PHPUnit_Framework_TestCase {
 	/**
-	 * @var SimpleDelayed
+	 * @var SequentialDelayed
 	 */
 	protected $handler;
 
 	protected function setUp() {
-		$this->handler = new SimpleDelayed();
+		$this->handler = new SequentialDelayed();
 	}
 
 	public function testReconnect() {

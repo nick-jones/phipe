@@ -11,7 +11,7 @@ use Phipe\Connection\Connection;
  *
  * @package Phipe\Handler\Reconnect
  */
-class SimpleDelayed implements \Phipe\Handler\Reconnect {
+class SequentialDelayed implements \Phipe\Handler\Reconnect {
 	/**
 	 * The delay, in seconds, to wait between each reconnection attempt.
 	 *
