@@ -21,10 +21,11 @@ class Selector {
 	 *
 	 * @param array $streams
 	 * @param int $timeout
+	 * @throws SelectFailureException
 	 * @return array
 	 */
 	public function select(array $streams, $timeout = 500000) {
-		// Call out select function
+		// Call the chose select strategy callback
 		$result = call_user_func($this->getSelectStrategy(), $streams, $timeout);
 
 		list($changed, $streams) = $result;
