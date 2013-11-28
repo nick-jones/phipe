@@ -2,7 +2,7 @@
 
 namespace Phipe\Connection\Event;
 
-class FactoryTest extends \PHPUnit_Framework_TestCase {
+class EventFactoryTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var EventFactory
 	 */

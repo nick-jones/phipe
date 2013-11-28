@@ -2,7 +2,7 @@
 
 namespace Phipe\Connection\Stream;
 
-class ProberTest extends \PHPUnit_Framework_TestCase {
+class StreamProberTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var StreamProber
 	 */

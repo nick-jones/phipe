@@ -2,7 +2,7 @@
 
 namespace Phipe\Connection\Stream;
 
-class FactoryTest extends \PHPUnit_Framework_TestCase {
+class StreamFactoryTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var StreamFactory
 	 */

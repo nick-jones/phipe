@@ -6,7 +6,7 @@ use Phipe\ResourceTestHelper;
 
 require_once __DIR__ . '/../../../helper/ResourceTestHelper.php';
 
-class StreamTest extends \PHPUnit_Framework_TestCase {
+class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var StreamConnection
 	 */

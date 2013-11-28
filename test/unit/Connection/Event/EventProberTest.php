@@ -4,7 +4,7 @@ namespace Phipe\Connection\Event;
 
 require_once __DIR__ . '/../../../helper/Stub/EventBase.php';
 
-class ProberTest extends \PHPUnit_Framework_TestCase {
+class EventProberTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var EventProber
 	 */
