@@ -25,37 +25,27 @@ class SelectorTest extends \PHPUnit_Framework_TestCase {
 		$this->selector->select($expectedStreams, $expectedTimeout);
 	}
 
-	public function testSelect_Failure() {
-		$this->setExpectedException(
-			'Phipe\Connection\Stream\SelectFailureException',
-			'Select strategy indicated failure'
-		);
-
-		$strategy = function() {
-			return array(FALSE, array());
-		};
-
-		$this->selector->setSelectStrategy($strategy);
-		$this->selector->select(array());
-	}
-
-	public function testSelectOrSleep_NoStreams() {
+	public function testSleepingStreamSelect_NoStreams() {
 		$streams = array();
-		$results = $this->selector->selectOrSleep($streams, 1);
 
-		$this->assertEquals(array(0, $streams), $results);
+		$this->selector->setSelectStrategy(array('Phipe\Connection\Stream\Selector', 'sleepingStreamSelect'));
+		$results = $this->selector->select($streams, 1);
+
+		$this->assertEquals($streams, $results);
 	}
 
-	public function testSelectOrSleep_SingleStream() {
+	public function testSleepingStreamSelect_SingleStream() {
 		$address = 'tcp://127.0.0.1:83751';
 
 		$server = stream_socket_server($address);
 		$client = stream_socket_client($address);
 
 		$streams = array($client);
-		$results = $this->selector->selectOrSleep($streams, 1);
 
-		$this->assertEquals(array(0, array()), $results);
+		$this->selector->setSelectStrategy(array('Phipe\Connection\Stream\Selector', 'sleepingStreamSelect'));
+		$results = $this->selector->select($streams, 1);
+
+		$this->assertEquals(array(), $results);
 
 		fclose($client);
 		fclose($server);

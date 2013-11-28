@@ -10,29 +10,22 @@ namespace Phipe\Connection\Stream;
  */
 class Selector {
 	/**
-	 * The strategy to use for selecting updated resource handles.
+	 * The strategy to use for selecting updated resource handles. Default is the "select OR sleep" strategy.
 	 *
 	 * @var callable
 	 */
-	protected $selectStrategy = array(__CLASS__, 'selectOrSleep');
+	protected $selectStrategy = array(__CLASS__, 'sleepingStreamSelect');
 
 	/**
 	 * Indicates which resources are available for reading (or rather, won't block for further processing)
 	 *
 	 * @param array $streams
 	 * @param int $timeout
-	 * @throws SelectFailureException
 	 * @return array
 	 */
 	public function select(array $streams, $timeout = 500000) {
 		// Call the chose select strategy callback
-		$result = call_user_func($this->getSelectStrategy(), $streams, $timeout);
-
-		list($changed, $streams) = $result;
-
-		if ($changed === false) {
-			throw new SelectFailureException('Select strategy indicated failure');
-		}
+		$streams = call_user_func($this->getSelectStrategy(), $streams, $timeout);
 
 		return $streams;
 	}
@@ -45,16 +38,33 @@ class Selector {
 	 * @param int $timeout
 	 * @return array
 	 */
-	public function selectOrSleep(array $streams, $timeout) {
+	protected function sleepingStreamSelect(array $streams, $timeout) {
 		if (count($streams) > 0) {
-			$changed = stream_select($streams, $write = NULL, $except = NULL, 0, $timeout);
+			$streams = $this->streamSelect($streams, $timeout);
 		}
 		else {
 			usleep($timeout);
-			$changed = 0;
 		}
 
-		return array($changed, $streams);
+		return $streams;
+	}
+
+	/**
+	 * This strategy wraps stream_select, adding some error handling.
+	 *
+	 * @param array $streams
+	 * @param $timeout
+	 * @return array
+	 * @throws SelectFailureException
+	 */
+	protected function streamSelect(array $streams, $timeout) {
+		$changed = stream_select($streams, $write = NULL, $except = NULL, 0, $timeout);
+
+		if ($changed === false) {
+			throw new SelectFailureException('Select strategy indicated failure');
+		}
+
+		return $streams;
 	}
 
 	/**
