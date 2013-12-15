@@ -26,13 +26,13 @@ interface EventBufferEvent {
 	public function connect($addr);
 
 	/**
-	 * @param \EventDnsBase $dns_base
+	 * @param \EventDnsBase|null $dns_base
 	 * @param string $hostname
 	 * @param int $port
 	 * @param int $family
 	 * @return bool
 	 */
-	public function connectHost(\EventDnsBase $dns_base, $hostname, $port, $family = \EventUtil::AF_UNSPEC);
+	public function connectHost($dns_base, $hostname, $port, $family = \EventUtil::AF_UNSPEC);
 
 	/**
 	 * @param \EventBase $base
