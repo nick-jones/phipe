@@ -70,11 +70,11 @@ abstract class Connection implements \SplSubject {
 	protected $observers;
 
 	/**
-	 * @param string $host
-	 * @param int $port
+	 * @param string|null $host
+	 * @param int|null $port
 	 * @param bool $ssl
 	 */
-	public function __construct($host, $port, $ssl = FALSE) {
+	public function __construct($host = NULL, $port = NULL, $ssl = FALSE) {
 		$this->host = $host;
 		$this->port = $port;
 		$this->ssl = $ssl;
@@ -144,6 +144,27 @@ abstract class Connection implements \SplSubject {
 	 */
 	public function setObservers($observers) {
 		$this->observers = $observers;
+	}
+
+	/**
+	 * @param string $host
+	 */
+	public function setHost($host) {
+		$this->host = $host;
+	}
+
+	/**
+	 * @param int $port
+	 */
+	public function setPort($port) {
+		$this->port = $port;
+	}
+
+	/**
+	 * @param bool $ssl
+	 */
+	public function setSsl($ssl) {
+		$this->ssl = $ssl;
 	}
 
 	/**
