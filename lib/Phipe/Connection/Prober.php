@@ -13,7 +13,7 @@ interface Prober {
 	/**
 	 * Check whether any of the supplied connections have changed state, and ensure they update their internal state.
 	 *
-	 * @param array $connections
+	 * @param Connection[] $connections
 	 */
 	public function probe(array $connections);
 }

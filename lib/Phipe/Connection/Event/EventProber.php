@@ -26,7 +26,7 @@ class EventProber implements \Phipe\Connection\Prober {
 	 * the same EventBase instance. If they don't then the factories have been misused. Unfortunately there is not
 	 * way to stop this happening at the moment.
 	 *
-	 * @param array $connections
+	 * @param EventConnection[] $connections
 	 */
 	public function probe(array $connections) {
 		$this->eventBase->loop(\EventBase::LOOP_ONCE);
