@@ -42,6 +42,10 @@ $watcher->on('disconnect', function(Connection $connection) {
 	echo 'Disconnected' . PHP_EOL;
 });
 
+$factory = new \Phipe\Connection\Buffering\BufferingFactory(
+	new \Phipe\Connection\Stream\StreamFactory()
+);
+
 $phipe = new \Phipe\Application([
 	'connections' => [
 		['host' => '108.61.240.240', 'port' => 6667], // DALnet

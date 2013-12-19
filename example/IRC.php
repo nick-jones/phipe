@@ -44,7 +44,11 @@ $watcher->on('disconnect', function(Connection $connection) {
 });
 
 //$factory = new \Phipe\Connection\Event\EventFactory();
-$factory = new \Phipe\Connection\Stream\StreamFactory();
+//$factory = new \Phipe\Connection\Stream\StreamFactory();
+
+$factory = new \Phipe\Connection\Buffering\BufferingFactory(
+	new \Phipe\Connection\Event\EventFactory()
+);
 
 $phipe = new \Phipe\Application([
 	'connections' => [
