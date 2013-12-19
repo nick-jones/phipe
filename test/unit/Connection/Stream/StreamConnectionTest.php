@@ -50,7 +50,7 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
 		$host = '127.0.0.1';
 		$port = 83751;
 
-		$helper = new ResourceTestHelper(
+		$this->resourceTestHelper = new ResourceTestHelper(
 			stream_socket_server(sprintf('tcp://%s:%d', $host, $port))
 		);
 
@@ -58,14 +58,19 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
 		$connection->connect();
 
 		$this->assertInternalType('resource', $connection->getStream());
-
-		$helper->close();
 	}
 
 	public function testConnect_AlreadyConnected() {
 		$this->setExpectedException('\Phipe\Connection\ConnectionException', 'Already connected');
 
-		$connection = new StreamConnection('example.com', 80);
+		$host = '127.0.0.1';
+		$port = 83751;
+
+		$this->resourceTestHelper = new ResourceTestHelper(
+			stream_socket_server(sprintf('tcp://%s:%d', $host, $port))
+		);
+
+		$connection = new StreamConnection($host, $port);
 		$connection->connect();
 		$connection->connect();
 	}
