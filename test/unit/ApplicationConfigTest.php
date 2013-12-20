@@ -5,14 +5,14 @@ namespace Phipe;
 /**
  * @package Phipe
  */
-class ApplicationContainerTest extends \PHPUnit_Framework_TestCase {
+class ApplicationConfigTest extends \PHPUnit_Framework_TestCase {
 	/**
-	 * @var ApplicationContainer
+	 * @var ApplicationConfig
 	 */
 	protected $container;
 
 	protected function setUp() {
-		$this->container = new ApplicationContainer();
+		$this->container = new ApplicationConfig();
 	}
 
 	public function testCreateDefaultValues() {
@@ -25,7 +25,7 @@ class ApplicationContainerTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('Phipe\Connection\Stream\StreamFactory', get_class($this->container['factory']));
 		$this->assertEquals('Phipe\Pool', get_class($this->container['pool']));
 		$this->assertEquals('Phipe\Loop\Runner', get_class($this->container['loop_runner']));
-		$this->assertInstanceOf('Phipe\Config\Container', $this->container['handlers']);
+		$this->assertInstanceOf('SimpleConfig\Container', $this->container['handlers']);
 	}
 
 	public function testCreateDefaultHandlers() {

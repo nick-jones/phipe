@@ -2,11 +2,13 @@
 
 namespace Phipe;
 
+use SimpleConfig\Container;
+
 /**
  *
  * @package Phipe
  */
-class ApplicationContainer extends \Phipe\Config\Container {
+class ApplicationConfig extends Container {
 	/**
 	 * @param array $values
 	 * @param array $factories
@@ -46,7 +48,7 @@ class ApplicationContainer extends \Phipe\Config\Container {
 				return new Loop\Runner();
 			},
 			'handlers' => function() {
-				return new Config\Container(array(), $this->createDefaultHandlers());
+				return new Container(array(), $this->createDefaultHandlers());
 			}
 		);
 

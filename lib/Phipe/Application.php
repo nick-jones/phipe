@@ -3,7 +3,6 @@
 namespace Phipe;
 
 use Phipe\Connection\Connection;
-use Phipe\Config\Container;
 
 /**
  * This class aims to provide an easy interface to the various connection components. Based on the provided config,
@@ -16,7 +15,7 @@ use Phipe\Config\Container;
  */
 class Application {
 	/**
-	 * @var Container
+	 * @var ApplicationConfig
 	 */
 	protected $config;
 
@@ -27,7 +26,7 @@ class Application {
 	 *  - factory: a concrete instance of \Phipe\Connection\Factory (optional, \Phipe\Connection\Stream\StreamFactory is default)
 	 *  - loop_runner: an instance of \Phipe\Loop\Runner (optional)
 	 *
-	 * @param array|Container|NULL $config
+	 * @param array|ApplicationConfig|NULL $config
 	 */
 	public function __construct($config = NULL) {
 		$this->setConfig($config);
@@ -110,21 +109,21 @@ class Application {
 	}
 
 	/**
-	 * Sets the config class property. If an array is provided, a Container instance is created containing the provided
+	 * Sets the config class property. If an array is provided, a ApplicationConfig instance is created containing the provided
 	 * array, and a default set of factories relevant to this class.
 	 *
-	 * @param array|Container $config
+	 * @param array|ApplicationConfig $config
 	 */
 	public function setConfig($config) {
 		if (is_array($config)) {
-			$config = new ApplicationContainer($config);
+			$config = new ApplicationConfig($config);
 		}
 
 		$this->config = $config;
 	}
 
 	/**
-	 * @return array|Container
+	 * @return array|ApplicationConfig
 	 */
 	protected function getHandlers() {
 		return $this->config['handlers'];

@@ -32,14 +32,14 @@ class Session implements \Phipe\Loop\Worker {
 	protected $prober;
 
 	/**
-	 * @var array|\Phipe\Config\Container
+	 * @var array|ApplicationConfig
 	 */
 	protected $handlers;
 
 	/**
 	 * @param Pool $pool
 	 * @param Prober $prober
-	 * @param array|\Phipe\Config\Container $handlers
+	 * @param array|ApplicationConfig $handlers
 	 */
 	public function __construct(Pool $pool, Prober $prober, $handlers) {
 		$this->pool = $pool;
