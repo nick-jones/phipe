@@ -1,19 +1,24 @@
 {
 	"name": "nick-jones/Phipe",
+
 	"authors": [{
 		"name": "Nicholas Jones"
 	}],
+
 	"require": {
 		"php": ">=5.4",
 		"nick-jones/SimpleConfig": "dev-master"
 	},
+
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*"
 	},
+
 	"repositories": [{
 		"type": "vcs",
 		"url": "https://github.com/nick-jones/SimpleConfig"
 	}],
+
 	"autoload": {
 		"psr-0": {
 			"Phipe": "lib/"
