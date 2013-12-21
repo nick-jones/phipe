@@ -5,6 +5,8 @@
 		"name": "Nicholas Jones"
 	}],
 
+	"minimum-stability": "dev",
+
 	"require": {
 		"php": ">=5.4",
 		"nick-jones/SimpleConfig": "dev-master"
