@@ -24,6 +24,11 @@ abstract class DecoratingConnection extends \Phipe\Connection\Connection {
 	protected $notificationPropagator;
 
 	/**
+	 * @var array
+	 */
+	protected $eventIgnores = array();
+
+	/**
 	 * @param Connection $connection
 	 */
 	public function __construct(Connection $connection = NULL) {
@@ -54,7 +59,7 @@ abstract class DecoratingConnection extends \Phipe\Connection\Connection {
 	 * @param Connection $connection
 	 */
 	protected function setupNotificationPropagator(Connection $connection) {
-		$notificationPropagator = new NotificationPropagator($this, $connection);
+		$notificationPropagator = new NotificationPropagator($this, $connection, $this->eventIgnores);
 		$notificationPropagator->initialise();
 
 		$this->setNotificationPropagator($notificationPropagator);
