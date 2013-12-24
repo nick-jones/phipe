@@ -18,7 +18,19 @@ class BufferingConnection extends \Phipe\Connection\Decorating\DecoratingConnect
 	/**
 	 * @var string
 	 */
-	protected $writeBuffer = '';
+	protected $partialReadBuffer = '';
+
+	/**
+	 * @var string
+	 */
+	protected $partialWriteBuffer = '';
+
+	/**
+	 * @var array
+	 */
+	protected $eventIgnores = array(
+		self::EVENT_READ
+	);
 
 	/**
 	 * Write any data which precedes a newline character.
@@ -26,8 +38,8 @@ class BufferingConnection extends \Phipe\Connection\Decorating\DecoratingConnect
 	 * @param string $data
 	 */
 	public function write($data) {
-		$data = $this->writeBuffer . $data;
-		$this->writeBuffer = $this->stripPartial($data);
+		$data = $this->partialWriteBuffer . $data;
+		$this->partialWriteBuffer = $this->stripPartial($data);
 
 		parent::write($data);
 	}
@@ -38,10 +50,26 @@ class BufferingConnection extends \Phipe\Connection\Decorating\DecoratingConnect
 	 * @return string
 	 */
 	public function read() {
-		$data = $this->readBuffer . parent::read();
-		$this->readBuffer = $this->stripPartial($data);
+		return $this->readBuffer;
+	}
 
-		return $data;
+	/**
+	 * Populates the read buffer for reading.
+	 */
+	public function populateReadBuffer() {
+		$data = $this->partialReadBuffer . parent::read();
+
+		$this->partialReadBuffer = $this->stripPartial($data);
+		$this->readBuffer = $data;
+
+		$this->notify(self::EVENT_READ);
+	}
+
+	/**
+	 * Clear the internal read buffer.
+	 */
+	public function clearReadBuffer() {
+		$this->readBuffer = '';
 	}
 
 	/**

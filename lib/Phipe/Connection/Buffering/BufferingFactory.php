@@ -2,8 +2,6 @@
 
 namespace Phipe\Connection\Buffering;
 
-use Phipe\Connection\Decorating\DecoratingProber;
-
 /**
  * Factory class for creating connections and probers of the Buffering flavour. Since this
  * this family of classes just provide decoration, we must receive a factory instance for
@@ -32,10 +30,10 @@ class BufferingFactory implements \Phipe\Connection\Factory {
 	}
 
 	/**
-	 * @return DecoratingProber
+	 * @return BufferingProber
 	 */
 	public function createProber() {
-		return new DecoratingProber(
+		return new BufferingProber(
 			$this->factory->createProber()
 		);
 	}
