@@ -62,7 +62,9 @@ class BufferingConnection extends \Phipe\Connection\Decorating\DecoratingConnect
 		$this->partialReadBuffer = $this->stripPartial($data);
 		$this->readBuffer = $data;
 
-		$this->notify(self::EVENT_READ);
+		if (strlen($this->readBuffer) > 0) {
+			$this->notify(self::EVENT_READ);
+		}
 	}
 
 	/**
