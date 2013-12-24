@@ -24,12 +24,19 @@ class NotificationPropagator implements \SplObserver {
 	protected $proxied;
 
 	/**
-	 * @param Connection $connection Connection for propagating *to*
-	 * @param Connection $proxied Connection for propagating *from*
+	 * @var array
 	 */
-	public function __construct(Connection $connection, Connection $proxied) {
+	protected $ignoreEvents = array();
+
+	/**
+	 * @param Connection $connection Connection for propagating *to*
+	 * @param Connection $proxied Connection for propagating *from
+	 * @param array $ignoreEvents
+	 */
+	public function __construct(Connection $connection, Connection $proxied, $ignoreEvents = array()) {
 		$this->connection = $connection;
 		$this->proxied = $proxied;
+		$this->ignoreEvents = $ignoreEvents;
 	}
 
 	/**
@@ -45,6 +52,8 @@ class NotificationPropagator implements \SplObserver {
 	 * @param string|null $data
 	 */
 	public function update(\SplSubject $subject, $event = NULL, $data = NULL) {
-		$this->connection->notify($event, $data);
+		if (!in_array($event, $this->ignoreEvents)) {
+			$this->connection->notify($event, $data);
+		}
 	}
 }
