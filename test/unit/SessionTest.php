@@ -34,7 +34,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
 			'connect' => $this->getMock('\Phipe\Strategy\Connect'),
 			'reconnect' => $this->getMock('\Phipe\Strategy\Reconnect'),
 			'disconnect' => $this->getMock('\Phipe\Strategy\Disconnect'),
-			'activity' => $this->getMock('\Phipe\Strategy\Activity')
+			'activity_detect' => $this->getMock('\Phipe\Strategy\ActivityDetect')
 		);
 
 		$this->session = new Session($this->pool, $this->prober, $this->strategies);
@@ -57,7 +57,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
 			->method('performDisconnect')
 			->with($this->equalTo($this->pool));
 
-		$this->strategies['activity']->expects($this->once())
+		$this->strategies['activity_detect']->expects($this->once())
 			->method('performDetect')
 			->with($this->equalTo($this->pool), $this->equalTo($this->prober));
 

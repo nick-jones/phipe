@@ -71,8 +71,8 @@ class ApplicationConfig extends Container {
 					new Strategy\Disconnect\Soft() :
 					new Strategy\Disconnect\Expunging();
 			},
-			'activity' => function() {
-				return new Strategy\Activity\Simple();
+			'activity_detect' => function() {
+				return new Strategy\ActivityDetect\Simple();
 			}
 		);
 

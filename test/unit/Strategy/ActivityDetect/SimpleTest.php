@@ -1,6 +1,6 @@
 <?php
 
-namespace Phipe\Strategy\Activity;
+namespace Phipe\Strategy\ActivityDetect;
 
 class SimpleTest extends \PHPUnit_Framework_TestCase {
 	/**

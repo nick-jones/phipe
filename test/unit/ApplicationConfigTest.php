@@ -32,7 +32,7 @@ class ApplicationConfigTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('Phipe\Strategy\Connect\Sequential', get_class($this->container['strategies']['connect']));
 		$this->assertEquals('Phipe\Strategy\Reconnect\SequentialDelayed', get_class($this->container['strategies']['reconnect']));
 		$this->assertEquals('Phipe\Strategy\Disconnect\Soft', get_class($this->container['strategies']['disconnect']));
-		$this->assertEquals('Phipe\Strategy\Activity\Simple', get_class($this->container['strategies']['activity']));
+		$this->assertEquals('Phipe\Strategy\ActivityDetect\Simple', get_class($this->container['strategies']['activity_detect']));
 	}
 
 	public function testCreateDefaultStrategies_NoReconnect() {

@@ -7,7 +7,7 @@ use Phipe\Connection\Prober;
 use Phipe\Strategy\Connect;
 use Phipe\Strategy\Disconnect;
 use Phipe\Strategy\Reconnect;
-use Phipe\Strategy\Activity;
+use Phipe\Strategy\ActivityDetect;
 
 /**
  * A helper class for maintaining Pool collections. This class implements the Worker interface, which allows it to
@@ -60,7 +60,7 @@ class Session implements \Phipe\Loop\Worker {
 	 * applicable.
 	 */
 	public function work() {
-		$this->getActivityStrategy()
+		$this->getActivityDetectStrategy()
 			->performDetect($this->pool, $this->prober);
 
 		$this->getDisconnectStrategy()
@@ -101,9 +101,9 @@ class Session implements \Phipe\Loop\Worker {
 	}
 
 	/**
-	 * @return Activity
+	 * @return ActivityDetect
 	 */
-	protected function getActivityStrategy() {
-		return $this->strategies['activity'];
+	protected function getActivityDetectStrategy() {
+		return $this->strategies['activity_detect'];
 	}
 }
