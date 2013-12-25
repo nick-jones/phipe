@@ -1,18 +1,18 @@
 <?php
 
-namespace Phipe\Handler\Activity;
+namespace Phipe\Strategy\Activity;
 
 use Phipe\Pool;
 use Phipe\Connection\Connection;
 use Phipe\Connection\Prober;
 
 /**
- * Simple activity handler implementation. All connections are pushed to a Prober instance for detecting changed
+ * Simple activity strategy implementation. All connections are pushed to a Prober instance for detecting changed
  * connections.
  *
- * @package Phipe\Handler\Activity
+ * @package Phipe\Strategy\Activity
  */
-class Simple implements \Phipe\Handler\Activity {
+class Simple implements \Phipe\Strategy\Activity {
 	/**
 	 * @param Pool $pool
 	 * @param Prober $prober

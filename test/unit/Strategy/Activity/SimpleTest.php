@@ -1,15 +1,15 @@
 <?php
 
-namespace Phipe\Handler\Activity;
+namespace Phipe\Strategy\Activity;
 
 class SimpleTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var Simple
 	 */
-	protected $handler;
+	protected $strategy;
 
 	protected function setUp() {
-		$this->handler = new Simple();
+		$this->strategy = new Simple();
 	}
 
 	public function testDetect() {
@@ -36,6 +36,6 @@ class SimpleTest extends \PHPUnit_Framework_TestCase {
 			->method('probe')
 			->with($this->equalTo($connections));
 
-		$this->handler->performDetect($pool, $prober);
+		$this->strategy->performDetect($pool, $prober);
 	}
 }

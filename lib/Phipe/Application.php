@@ -42,9 +42,9 @@ class Application {
 		$prober = $this->getFactory()
 			->createProber();
 
-		$handlers = $this->getHandlers();
+		$strategies = $this->getStrategies();
 
-		$session = new Session($pool, $prober, $handlers);
+		$session = new Session($pool, $prober, $strategies);
 
 		$this->getLoop()
 			->loop($session);
@@ -125,8 +125,8 @@ class Application {
 	/**
 	 * @return array|ApplicationConfig
 	 */
-	protected function getHandlers() {
-		return $this->config['handlers'];
+	protected function getStrategies() {
+		return $this->config['strategies'];
 	}
 
 	/**

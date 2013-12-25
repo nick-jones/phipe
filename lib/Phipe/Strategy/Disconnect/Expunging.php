@@ -1,17 +1,17 @@
 <?php
 
-namespace Phipe\Handler\Disconnect;
+namespace Phipe\Strategy\Disconnect;
 
 use Phipe\Pool;
 use Phipe\Connection\Connection;
 
 /**
- * An implementation of the Disconnect handler interface that expunges Connections from the supplied Pool, if they
+ * An implementation of the Disconnect strategy interface that expunges Connections from the supplied Pool, if they
  * are disconnected. This is useful is we do not wish for disconnected instances to be reconnected.
  *
- * This class extends the Soft handler to ensure that EOF connections are cleaned up.
+ * This class extends the Soft strategy to ensure that EOF connections are cleaned up.
  *
- * @package Phipe\Handler\Disconnect
+ * @package Phipe\Strategy\Disconnect
  */
 class Expunging extends Soft {
 	/**

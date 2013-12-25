@@ -1,14 +1,14 @@
 <?php
 
-namespace Phipe\Handler;
+namespace Phipe\Strategy;
 
 use Phipe\Pool;
 
 /**
- * Reconnect handlers should reconnect any dropped connections. This and the Connect handlers are going to be
+ * Reconnect strategies should reconnect any dropped connections. This and the Connect strategies are going to be
  * reasonably similar in terms of behaviour, so we can consider merging them.
  *
- * @package Phipe\Handler
+ * @package Phipe\Strategy
  */
 interface Reconnect {
 	/**

@@ -1,15 +1,15 @@
 <?php
 
-namespace Phipe\Handler\Connect;
+namespace Phipe\Strategy\Connect;
 
 class SequentialTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var Sequential
 	 */
-	protected $handler;
+	protected $strategy;
 
 	protected function setUp() {
-		$this->handler = new Sequential();
+		$this->strategy = new Sequential();
 	}
 
 	public function testConnect() {
@@ -27,6 +27,6 @@ class SequentialTest extends \PHPUnit_Framework_TestCase {
 				call_user_func($callback, $connection);
 			}));
 
-		$this->handler->performConnect($pool);
+		$this->strategy->performConnect($pool);
 	}
 }

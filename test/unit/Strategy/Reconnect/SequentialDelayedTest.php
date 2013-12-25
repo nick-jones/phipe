@@ -1,23 +1,26 @@
 <?php
 
-namespace Phipe\Handler\Disconnect;
+namespace Phipe\Strategy\Reconnect;
 
-class ExpungingTest extends \PHPUnit_Framework_TestCase {
+class SequentialDelayedTest extends \PHPUnit_Framework_TestCase {
 	/**
-	 * @var Expunging
+	 * @var SequentialDelayed
 	 */
-	protected $handler;
+	protected $strategy;
 
 	protected function setUp() {
-		$this->handler = new Expunging();
+		$this->strategy = new SequentialDelayed();
 	}
 
-	public function testDisconnect() {
+	public function testReconnect() {
 		$connection = $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80));
 
 		$connection->expects($this->once())
 			->method('isDisconnected')
 			->will($this->returnValue(TRUE));
+
+		$connection->expects($this->once())
+			->method('connect');
 
 		$disconnected = $this->getMock('\Phipe\Pool');
 
@@ -37,14 +40,9 @@ class ExpungingTest extends \PHPUnit_Framework_TestCase {
 				return call_user_func($callback, $connection) ? $disconnected : NULL;
 			}));
 
-		$pool->expects($this->any())
-			->method('getAllWithState')
-			->will($this->returnValue($this->getMock('\Phipe\Pool')));
+		$this->strategy->performReconnect($pool);
 
-		$pool->expects($this->once())
-			->method('remove')
-			->with($this->equalTo($connection));
-
-		$this->handler->performDisconnect($pool);
+		// Re-running should not trigger any further action, due to the delay constraints
+		$this->strategy->performReconnect($pool);
 	}
 }

@@ -53,7 +53,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 				'port' => 80
 			)),
 			'observers' => array($observer),
-			'handlers' => array(),
+			'strategies' => array(),
 			'factory' => $factory,
 			'pool' => $pool,
 			'loop_runner' => $runner

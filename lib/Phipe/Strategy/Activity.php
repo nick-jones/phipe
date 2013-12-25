@@ -1,15 +1,15 @@
 <?php
 
-namespace Phipe\Handler;
+namespace Phipe\Strategy;
 
 use Phipe\Pool;
 use Phipe\Connection\Prober;
 
 /**
- * Activity handlers should detect changes within the Pools connections. A prober instance is supplied to aid with
+ * Activity strategies should detect changes within the Pools connections. A prober instance is supplied to aid with
  * this process.
  *
- * @package Phipe\Handler
+ * @package Phipe\Strategy
  */
 interface Activity {
 	/**

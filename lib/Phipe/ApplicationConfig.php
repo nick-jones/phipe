@@ -47,8 +47,8 @@ class ApplicationConfig extends Container {
 			'loop_runner' => function() {
 				return new Loop\Runner();
 			},
-			'handlers' => function() {
-				return new Container(array(), $this->createDefaultHandlers());
+			'strategies' => function() {
+				return new Container(array(), $this->createDefaultStrategies());
 			}
 		);
 
@@ -58,24 +58,24 @@ class ApplicationConfig extends Container {
 	/**
 	 * @return array
 	 */
-	protected function createDefaultHandlers() {
-		$handlers = array(
+	protected function createDefaultStrategies() {
+		$strategies = array(
 			'connect' => function() {
-				return new Handler\Connect\Sequential();
+				return new Strategy\Connect\Sequential();
 			},
 			'reconnect' => function() {
-				return new Handler\Reconnect\SequentialDelayed();
+				return new Strategy\Reconnect\SequentialDelayed();
 			},
 			'disconnect' => function() {
 				return $this['reconnect'] ?
-					new Handler\Disconnect\Soft() :
-					new Handler\Disconnect\Expunging();
+					new Strategy\Disconnect\Soft() :
+					new Strategy\Disconnect\Expunging();
 			},
 			'activity' => function() {
-				return new Handler\Activity\Simple();
+				return new Strategy\Activity\Simple();
 			}
 		);
 
-		return $handlers;
+		return $strategies;
 	}
 }

@@ -39,6 +39,6 @@ class BufferingFactoryTest extends \PHPUnit_Framework_TestCase {
 			->will($this->returnValue($this->getMock('\Phipe\Connection\Prober')));
 
 		$prober = $this->factory->createProber();
-		$this->assertEquals('Phipe\Connection\Decorating\DecoratingProber', get_class($prober));
+		$this->assertEquals('Phipe\Connection\Decorating\BufferingProber', get_class($prober));
 	}
 }

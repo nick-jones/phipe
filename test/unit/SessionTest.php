@@ -21,7 +21,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var \PHPUnit_Framework_MockObject_MockObject[]
 	 */
-	protected $handlers = array();
+	protected $strategies = array();
 
 	/**
 	 *
@@ -30,18 +30,18 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
 		$this->pool = $this->getMock('\Phipe\Pool');
 		$this->prober = $this->getMock('\Phipe\Connection\Prober');
 
-		$this->handlers = array(
-			'connect' => $this->getMock('\Phipe\Handler\Connect'),
-			'reconnect' => $this->getMock('\Phipe\Handler\Reconnect'),
-			'disconnect' => $this->getMock('\Phipe\Handler\Disconnect'),
-			'activity' => $this->getMock('\Phipe\Handler\Activity')
+		$this->strategies = array(
+			'connect' => $this->getMock('\Phipe\Strategy\Connect'),
+			'reconnect' => $this->getMock('\Phipe\Strategy\Reconnect'),
+			'disconnect' => $this->getMock('\Phipe\Strategy\Disconnect'),
+			'activity' => $this->getMock('\Phipe\Strategy\Activity')
 		);
 
-		$this->session = new Session($this->pool, $this->prober, $this->handlers);
+		$this->session = new Session($this->pool, $this->prober, $this->strategies);
 	}
 
 	public function testInitialise() {
-		$this->handlers['connect']->expects($this->once())
+		$this->strategies['connect']->expects($this->once())
 			->method('performConnect')
 			->with($this->equalTo($this->pool));
 
@@ -49,15 +49,15 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testWork() {
-		$this->handlers['reconnect']->expects($this->once())
+		$this->strategies['reconnect']->expects($this->once())
 			->method('performReconnect')
 			->with($this->equalTo($this->pool));
 
-		$this->handlers['disconnect']->expects($this->once())
+		$this->strategies['disconnect']->expects($this->once())
 			->method('performDisconnect')
 			->with($this->equalTo($this->pool));
 
-		$this->handlers['activity']->expects($this->once())
+		$this->strategies['activity']->expects($this->once())
 			->method('performDetect')
 			->with($this->equalTo($this->pool), $this->equalTo($this->prober));
 

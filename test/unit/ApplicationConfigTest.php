@@ -25,18 +25,18 @@ class ApplicationConfigTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('Phipe\Connection\Stream\StreamFactory', get_class($this->container['factory']));
 		$this->assertEquals('Phipe\Pool', get_class($this->container['pool']));
 		$this->assertEquals('Phipe\Loop\Runner', get_class($this->container['loop_runner']));
-		$this->assertInstanceOf('SimpleConfig\Container', $this->container['handlers']);
+		$this->assertInstanceOf('SimpleConfig\Container', $this->container['strategies']);
 	}
 
-	public function testCreateDefaultHandlers() {
-		$this->assertEquals('Phipe\Handler\Connect\Sequential', get_class($this->container['handlers']['connect']));
-		$this->assertEquals('Phipe\Handler\Reconnect\SequentialDelayed', get_class($this->container['handlers']['reconnect']));
-		$this->assertEquals('Phipe\Handler\Disconnect\Soft', get_class($this->container['handlers']['disconnect']));
-		$this->assertEquals('Phipe\Handler\Activity\Simple', get_class($this->container['handlers']['activity']));
+	public function testCreateDefaultStrategies() {
+		$this->assertEquals('Phipe\Strategy\Connect\Sequential', get_class($this->container['strategies']['connect']));
+		$this->assertEquals('Phipe\Strategy\Reconnect\SequentialDelayed', get_class($this->container['strategies']['reconnect']));
+		$this->assertEquals('Phipe\Strategy\Disconnect\Soft', get_class($this->container['strategies']['disconnect']));
+		$this->assertEquals('Phipe\Strategy\Activity\Simple', get_class($this->container['strategies']['activity']));
 	}
 
-	public function testCreateDefaultHandlers_NoReconnect() {
+	public function testCreateDefaultStrategies_NoReconnect() {
 		$this->container['reconnect'] = FALSE;
-		$this->assertEquals('Phipe\Handler\Disconnect\Expunging', get_class($this->container['handlers']['disconnect']));
+		$this->assertEquals('Phipe\Strategy\Disconnect\Expunging', get_class($this->container['strategies']['disconnect']));
 	}
 }

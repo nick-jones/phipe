@@ -1,17 +1,17 @@
 <?php
 
-namespace Phipe\Handler\Reconnect;
+namespace Phipe\Strategy\Reconnect;
 
 use Phipe\Pool;
 use Phipe\Connection\Connection;
 
 /**
- * A simple implementation of the Reconnection handler interface. This class will attempt to reconnect *all*
+ * A simple implementation of the Reconnection strategy interface. This class will attempt to reconnect *all*
  * disconnected connections at a regular interval (60 seconds is default, but a different delay can be provided).
  *
- * @package Phipe\Handler\Reconnect
+ * @package Phipe\Strategy\Reconnect
  */
-class SequentialDelayed implements \Phipe\Handler\Reconnect {
+class SequentialDelayed implements \Phipe\Strategy\Reconnect {
 	/**
 	 * The delay, in seconds, to wait between each reconnection attempt.
 	 *
