@@ -37,8 +37,7 @@ class BufferingConnectionTest extends \PHPUnit_Framework_TestCase {
 		$this->connection->write("r\n");
 	}
 
-
-	public function testRead() {
+	public function testPopulateReadBuffer() {
 		$this->proxied
 			->expects($this->at(0))
 			->method('read')
@@ -49,7 +48,33 @@ class BufferingConnectionTest extends \PHPUnit_Framework_TestCase {
 			->method('read')
 			->will($this->returnValue("r\n"));
 
+		$this->connection->populateReadBuffer();
 		$this->assertEquals("foo\n", $this->connection->read());
+
+		$this->connection->clearReadBuffer();
+
+		$this->connection->populateReadBuffer();
 		$this->assertEquals("bar\n", $this->connection->read());
+	}
+
+	public function testSetReadBuffer() {
+		$this->connection->setReadBuffer('mock');
+		$this->assertEquals('mock', $this->connection->read());
+	}
+
+	public function testClearReadBuffer() {
+		$this->connection->setReadBuffer('mock');
+		$this->connection->clearReadBuffer();
+
+		$this->assertEquals('', $this->connection->read());
+	}
+
+	public function testRead() {
+		$this->connection->setReadBuffer('mock');
+		$this->assertEquals('mock', $this->connection->read());
+		$this->assertEquals('mock', $this->connection->read()); // idempotent
+
+		$this->connection->setReadBuffer('foo');
+		$this->assertEquals('foo', $this->connection->read());
 	}
 }

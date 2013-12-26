@@ -60,11 +60,18 @@ class BufferingConnection extends \Phipe\Connection\Decorating\DecoratingConnect
 		$data = $this->partialReadBuffer . parent::read();
 
 		$this->partialReadBuffer = $this->stripPartial($data);
-		$this->readBuffer = $data;
+		$this->setReadBuffer($data);
 
 		if (strlen($this->readBuffer) > 0) {
 			$this->notify(self::EVENT_READ);
 		}
+	}
+
+	/**
+	 * @param string $readBuffer
+	 */
+	public function setReadBuffer($readBuffer) {
+		$this->readBuffer = $readBuffer;
 	}
 
 	/**

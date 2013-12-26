@@ -21,7 +21,7 @@ class BufferingProberTest extends \PHPUnit_Framework_TestCase {
 	public function testProbe() {
 		$proxiedConnection = $this->getMock('\Phipe\Connection\Connection');
 
-		$connection = $this->getMock('\Phipe\Connection\Decorating\DecoratingConnection');
+		$connection = $this->getMock('\Phipe\Connection\Buffering\BufferingConnection');
 
 		$connection->expects($this->once())
 			->method('getConnection')
