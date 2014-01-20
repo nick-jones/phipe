@@ -13,97 +13,97 @@ use Phipe\Connection\NotificationPropagator;
  * @package Phipe\Connection
  */
 abstract class DecoratingConnection extends \Phipe\Connection\Connection {
-	/**
-	 * @var Connection
-	 */
-	protected $connection;
+    /**
+     * @var Connection
+     */
+    protected $connection;
 
-	/**
-	 * @var NotificationPropagator
-	 */
-	protected $notificationPropagator;
+    /**
+     * @var NotificationPropagator
+     */
+    protected $notificationPropagator;
 
-	/**
-	 * @var array
-	 */
-	protected $eventIgnores = array();
+    /**
+     * @var array
+     */
+    protected $eventIgnores = array();
 
-	/**
-	 * @param Connection $connection
-	 */
-	public function __construct(Connection $connection = NULL) {
-		$this->setConnection($connection);
+    /**
+     * @param Connection $connection
+     */
+    public function __construct(Connection $connection = NULL) {
+        $this->setConnection($connection);
 
-		parent::__construct(null);
-	}
+        parent::__construct(null);
+    }
 
-	/**
-	 * @param Connection|null $connection
-	 */
-	public function setConnection(Connection $connection = NULL) {
-		$this->connection = $connection;
+    /**
+     * @param Connection|null $connection
+     */
+    public function setConnection(Connection $connection = NULL) {
+        $this->connection = $connection;
 
-		if ($connection !== NULL) {
-			$this->setupNotificationPropagator($connection);
-		}
-	}
+        if ($connection !== NULL) {
+            $this->setupNotificationPropagator($connection);
+        }
+    }
 
-	/**
-	 * @return Connection
-	 */
-	public function getConnection() {
-		return $this->connection;
-	}
+    /**
+     * @return Connection
+     */
+    public function getConnection() {
+        return $this->connection;
+    }
 
-	/**
-	 * @param Connection $connection
-	 */
-	protected function setupNotificationPropagator(Connection $connection) {
-		$notificationPropagator = new NotificationPropagator($this, $connection, $this->eventIgnores);
-		$notificationPropagator->initialise();
+    /**
+     * @param Connection $connection
+     */
+    protected function setupNotificationPropagator(Connection $connection) {
+        $notificationPropagator = new NotificationPropagator($this, $connection, $this->eventIgnores);
+        $notificationPropagator->initialise();
 
-		$this->setNotificationPropagator($notificationPropagator);
-	}
+        $this->setNotificationPropagator($notificationPropagator);
+    }
 
-	/**
-	 * @param NotificationPropagator $notificationPropagator
-	 */
-	public function setNotificationPropagator(NotificationPropagator $notificationPropagator) {
-		$this->notificationPropagator = $notificationPropagator;
-	}
+    /**
+     * @param NotificationPropagator $notificationPropagator
+     */
+    public function setNotificationPropagator(NotificationPropagator $notificationPropagator) {
+        $this->notificationPropagator = $notificationPropagator;
+    }
 
-	/**
-	 * Connect to the registered host and port.
-	 */
-	public function connect() {
-		$this->connection->connect();
-	}
+    /**
+     * Connect to the registered host and port.
+     */
+    public function connect() {
+        $this->connection->connect();
+    }
 
-	/**
-	 * Disconnect the active connection.
-	 */
-	public function disconnect() {
-		$this->connection->disconnect();
-	}
+    /**
+     * Disconnect the active connection.
+     */
+    public function disconnect() {
+        $this->connection->disconnect();
+    }
 
-	/**
-	 * @param string $data
-	 */
-	public function write($data) {
-		$this->connection->write($data);
-	}
+    /**
+     * @param string $data
+     */
+    public function write($data) {
+        $this->connection->write($data);
+    }
 
-	/**
-	 * @return string
-	 */
-	public function read() {
-		return $this->connection->read();
-	}
+    /**
+     * @return string
+     */
+    public function read() {
+        return $this->connection->read();
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getState() {
-		return $this->connection->getState();
-	}
+    /**
+     * @return int
+     */
+    public function getState() {
+        return $this->connection->getState();
+    }
 }

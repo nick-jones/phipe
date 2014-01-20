@@ -12,9 +12,9 @@ use Phipe\Connection\Prober;
  * @package Phipe\Strategy
  */
 interface ActivityDetect {
-	/**
-	 * @param Pool $pool
-	 * @param \Phipe\Connection\Prober $prober
-	 */
-	public function performDetect(Pool $pool, Prober $prober);
+    /**
+     * @param Pool $pool
+     * @param \Phipe\Connection\Prober $prober
+     */
+    public function performDetect(Pool $pool, Prober $prober);
 }

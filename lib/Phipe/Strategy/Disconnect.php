@@ -10,8 +10,8 @@ use Phipe\Pool;
  * @package Phipe\Strategy
  */
 interface Disconnect {
-	/**
-	 * @param Pool $pool
-	 */
-	public function performDisconnect(Pool $pool);
+    /**
+     * @param Pool $pool
+     */
+    public function performDisconnect(Pool $pool);
 }

@@ -12,51 +12,51 @@ use Phipe\Connection\Connection;
  * @package Phipe\Strategy\Reconnect
  */
 class SequentialDelayed implements \Phipe\Strategy\Reconnect {
-	/**
-	 * The delay, in seconds, to wait between each reconnection attempt.
-	 *
-	 * @var int
-	 */
-	protected $delay;
+    /**
+     * The delay, in seconds, to wait between each reconnection attempt.
+     *
+     * @var int
+     */
+    protected $delay;
 
-	/**
-	 * Unix timestamp. This indicates at what time we should next attempt to reconnect. Initial value is 0, so we will
-	 * attempt on first request, and then every $delay seconds from then onwards.
-	 *
-	 * @var int
-	 */
-	protected $waitUntil = 0;
+    /**
+     * Unix timestamp. This indicates at what time we should next attempt to reconnect. Initial value is 0, so we will
+     * attempt on first request, and then every $delay seconds from then onwards.
+     *
+     * @var int
+     */
+    protected $waitUntil = 0;
 
-	/**
-	 * @param int $delay Delay to wait before attempting to reconnect any dropped connections.
-	 */
-	public function __construct($delay = 60) {
-		$this->delay = $delay;
-	}
+    /**
+     * @param int $delay Delay to wait before attempting to reconnect any dropped connections.
+     */
+    public function __construct($delay = 60) {
+        $this->delay = $delay;
+    }
 
-	/**
-	 * @param Pool $pool
-	 */
-	public function performReconnect(Pool $pool) {
-		if (time() >= $this->waitUntil) {
-			$this->reconnectDisconnectedInPool($pool);
+    /**
+     * @param Pool $pool
+     */
+    public function performReconnect(Pool $pool) {
+        if (time() >= $this->waitUntil) {
+            $this->reconnectDisconnectedInPool($pool);
 
-			$this->waitUntil = time() + $this->delay;
-		}
-	}
+            $this->waitUntil = time() + $this->delay;
+        }
+    }
 
-	/**
-	 * Attempts to reconnect any disconnected instances from the Pool.
-	 *
-	 * @param Pool $pool
-	 */
-	protected function reconnectDisconnectedInPool(Pool $pool) {
-		$connections = $pool->filter(function(Connection $connection) {
-			return $connection->isDisconnected();
-		});
+    /**
+     * Attempts to reconnect any disconnected instances from the Pool.
+     *
+     * @param Pool $pool
+     */
+    protected function reconnectDisconnectedInPool(Pool $pool) {
+        $connections = $pool->filter(function(Connection $connection) {
+            return $connection->isDisconnected();
+        });
 
-		$connections->walk(function(Connection $connection) {
-			$connection->connect();
-		});
-	}
+        $connections->walk(function(Connection $connection) {
+            $connection->connect();
+        });
+    }
 }

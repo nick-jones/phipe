@@ -17,93 +17,93 @@ use Phipe\Strategy\ActivityDetect;
  * @package Phipe
  */
 class Session implements \Phipe\Loop\Worker {
-	/**
-	 * The pool instance to be managed.
-	 *
-	 * @var Pool
-	 */
-	protected $pool;
+    /**
+     * The pool instance to be managed.
+     *
+     * @var Pool
+     */
+    protected $pool;
 
-	/**
-	 * The prober to look for changed connections with.
-	 *
-	 * @var Prober
-	 */
-	protected $prober;
+    /**
+     * The prober to look for changed connections with.
+     *
+     * @var Prober
+     */
+    protected $prober;
 
-	/**
-	 * @var array|ApplicationConfig
-	 */
-	protected $strategies;
+    /**
+     * @var array|ApplicationConfig
+     */
+    protected $strategies;
 
-	/**
-	 * @param Pool $pool
-	 * @param Prober $prober
-	 * @param array|ApplicationConfig $strategies
-	 */
-	public function __construct(Pool $pool, Prober $prober, $strategies) {
-		$this->pool = $pool;
-		$this->prober = $prober;
-		$this->strategies = $strategies;
-	}
+    /**
+     * @param Pool $pool
+     * @param Prober $prober
+     * @param array|ApplicationConfig $strategies
+     */
+    public function __construct(Pool $pool, Prober $prober, $strategies) {
+        $this->pool = $pool;
+        $this->prober = $prober;
+        $this->strategies = $strategies;
+    }
 
-	/**
-	 * Sets up the Pool ready to be worked.
-	 */
-	public function initialise() {
-		$this->getConnectStrategy()
-			->performConnect($this->pool);
-	}
+    /**
+     * Sets up the Pool ready to be worked.
+     */
+    public function initialise() {
+        $this->getConnectStrategy()
+            ->performConnect($this->pool);
+    }
 
-	/**
-	 * Works the Pool. Resolves any changed connections, and attempts to reconnect any dropped connections, if
-	 * applicable.
-	 */
-	public function work() {
-		$this->getActivityDetectStrategy()
-			->performDetect($this->pool, $this->prober);
+    /**
+     * Works the Pool. Resolves any changed connections, and attempts to reconnect any dropped connections, if
+     * applicable.
+     */
+    public function work() {
+        $this->getActivityDetectStrategy()
+            ->performDetect($this->pool, $this->prober);
 
-		$this->getDisconnectStrategy()
-			->performDisconnect($this->pool);
+        $this->getDisconnectStrategy()
+            ->performDisconnect($this->pool);
 
-		$this->getReconnectStrategy()
-			->performReconnect($this->pool);
-	}
+        $this->getReconnectStrategy()
+            ->performReconnect($this->pool);
+    }
 
-	/**
-	 * This session still has work to do whilst the Pool has connections registered.
-	 *
-	 * @return bool
-	 */
-	public function hasWork() {
-		return $this->pool->count() > 0;
-	}
+    /**
+     * This session still has work to do whilst the Pool has connections registered.
+     *
+     * @return bool
+     */
+    public function hasWork() {
+        return $this->pool->count() > 0;
+    }
 
-	/**
-	 * @return Connect
-	 */
-	protected function getConnectStrategy() {
-		return $this->strategies['connect'];
-	}
+    /**
+     * @return Connect
+     */
+    protected function getConnectStrategy() {
+        return $this->strategies['connect'];
+    }
 
-	/**
-	 * @return Reconnect
-	 */
-	protected function getReconnectStrategy() {
-		return $this->strategies['reconnect'];
-	}
+    /**
+     * @return Reconnect
+     */
+    protected function getReconnectStrategy() {
+        return $this->strategies['reconnect'];
+    }
 
-	/**
-	 * @return Disconnect
-	 */
-	protected function getDisconnectStrategy() {
-		return $this->strategies['disconnect'];
-	}
+    /**
+     * @return Disconnect
+     */
+    protected function getDisconnectStrategy() {
+        return $this->strategies['disconnect'];
+    }
 
-	/**
-	 * @return ActivityDetect
-	 */
-	protected function getActivityDetectStrategy() {
-		return $this->strategies['activity_detect'];
-	}
+    /**
+     * @return ActivityDetect
+     */
+    protected function getActivityDetectStrategy() {
+        return $this->strategies['activity_detect'];
+    }
 }

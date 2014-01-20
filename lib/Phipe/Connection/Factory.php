@@ -8,17 +8,17 @@ namespace Phipe\Connection;
  * @package Phipe
  */
 interface Factory {
-	/**
-	 * @param $host
-	 * @param $port
-	 * @param bool $ssl
-	 * @internal param array $config
-	 * @return \Phipe\Connection\Connection
-	 */
-	public function createConnection($host, $port, $ssl = FALSE);
+    /**
+     * @param $host
+     * @param $port
+     * @param bool $ssl
+     * @internal param array $config
+     * @return \Phipe\Connection\Connection
+     */
+    public function createConnection($host, $port, $ssl = FALSE);
 
-	/**
-	 * @return \Phipe\Connection\Prober
-	 */
-	public function createProber();
+    /**
+     * @return \Phipe\Connection\Prober
+     */
+    public function createProber();
 }

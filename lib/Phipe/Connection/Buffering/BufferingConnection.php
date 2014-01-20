@@ -10,89 +10,89 @@ namespace Phipe\Connection\Buffering;
  * @package Phipe\Connection\Buffering
  */
 class BufferingConnection extends \Phipe\Connection\Decorating\DecoratingConnection {
-	/**
-	 * @var string
-	 */
-	protected $readBuffer = '';
+    /**
+     * @var string
+     */
+    protected $readBuffer = '';
 
-	/**
-	 * @var string
-	 */
-	protected $partialReadBuffer = '';
+    /**
+     * @var string
+     */
+    protected $partialReadBuffer = '';
 
-	/**
-	 * @var string
-	 */
-	protected $partialWriteBuffer = '';
+    /**
+     * @var string
+     */
+    protected $partialWriteBuffer = '';
 
-	/**
-	 * @var array
-	 */
-	protected $eventIgnores = array(
-		self::EVENT_READ
-	);
+    /**
+     * @var array
+     */
+    protected $eventIgnores = array(
+        self::EVENT_READ
+    );
 
-	/**
-	 * Write any data which precedes a newline character.
-	 *
-	 * @param string $data
-	 */
-	public function write($data) {
-		$data = $this->partialWriteBuffer . $data;
-		$this->partialWriteBuffer = $this->stripPartial($data);
+    /**
+     * Write any data which precedes a newline character.
+     *
+     * @param string $data
+     */
+    public function write($data) {
+        $data = $this->partialWriteBuffer . $data;
+        $this->partialWriteBuffer = $this->stripPartial($data);
 
-		parent::write($data);
-	}
+        parent::write($data);
+    }
 
-	/**
-	 * Read all data (newline inclusive) preceding a newline character.
-	 *
-	 * @return string
-	 */
-	public function read() {
-		return $this->readBuffer;
-	}
+    /**
+     * Read all data (newline inclusive) preceding a newline character.
+     *
+     * @return string
+     */
+    public function read() {
+        return $this->readBuffer;
+    }
 
-	/**
-	 * Populates the read buffer for reading.
-	 */
-	public function populateReadBuffer() {
-		$data = $this->partialReadBuffer . parent::read();
+    /**
+     * Populates the read buffer for reading.
+     */
+    public function populateReadBuffer() {
+        $data = $this->partialReadBuffer . parent::read();
 
-		$this->partialReadBuffer = $this->stripPartial($data);
-		$this->setReadBuffer($data);
+        $this->partialReadBuffer = $this->stripPartial($data);
+        $this->setReadBuffer($data);
 
-		if (strlen($this->readBuffer) > 0) {
-			$this->notify(self::EVENT_READ);
-		}
-	}
+        if (strlen($this->readBuffer) > 0) {
+            $this->notify(self::EVENT_READ);
+        }
+    }
 
-	/**
-	 * @param string $readBuffer
-	 */
-	public function setReadBuffer($readBuffer) {
-		$this->readBuffer = $readBuffer;
-	}
+    /**
+     * @param string $readBuffer
+     */
+    public function setReadBuffer($readBuffer) {
+        $this->readBuffer = $readBuffer;
+    }
 
-	/**
-	 * Clear the internal read buffer.
-	 */
-	public function clearReadBuffer() {
-		$this->readBuffer = '';
-	}
+    /**
+     * Clear the internal read buffer.
+     */
+    public function clearReadBuffer() {
+        $this->readBuffer = '';
+    }
 
-	/**
-	 * Strips any data that does *not* precede a newline character. This "partial" data is returned
-	 * for buffering.
-	 *
-	 * @param string $data The string to be stripped
-	 * @return string The partial part of the string, if applicable
-	 */
-	protected function stripPartial(&$data) {
-		preg_match("#^((?:.*\r?\n)*)(.*)$#D", $data, $matches);
+    /**
+     * Strips any data that does *not* precede a newline character. This "partial" data is returned
+     * for buffering.
+     *
+     * @param string $data The string to be stripped
+     * @return string The partial part of the string, if applicable
+     */
+    protected function stripPartial(&$data) {
+        preg_match("#^((?:.*\r?\n)*)(.*)$#D", $data, $matches);
 
-		$data = $matches[1];
+        $data = $matches[1];
 
-		return $matches[2];
-	}
+        return $matches[2];
+    }
 }

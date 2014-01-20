@@ -9,108 +9,108 @@ namespace Phipe\Connection\Stream;
  * @package Phipe\Connection\Stream
  */
 class StreamProber implements \Phipe\Connection\Prober {
-	/**
-	 * An instance that provides select() like behaviour on file descriptors.
-	 *
-	 * @var Selector
-	 */
-	protected $selector;
+    /**
+     * An instance that provides select() like behaviour on file descriptors.
+     *
+     * @var Selector
+     */
+    protected $selector;
 
-	/**
-	 * @param Selector $selector
-	 */
-	public function __construct(Selector $selector) {
-		$this->selector = $selector;
-	}
+    /**
+     * @param Selector $selector
+     */
+    public function __construct(Selector $selector) {
+        $this->selector = $selector;
+    }
 
-	/**
-	 * Probes the provided connections for activity.
-	 *
-	 * @param StreamConnection[] $connections
-	 */
-	public function probe(array $connections) {
-		// Read buffers are used for populating *new* data - as such, we need to remove any stale data.
-		$this->clearConnectionReadBuffers($connections);
+    /**
+     * Probes the provided connections for activity.
+     *
+     * @param StreamConnection[] $connections
+     */
+    public function probe(array $connections) {
+        // Read buffers are used for populating *new* data - as such, we need to remove any stale data.
+        $this->clearConnectionReadBuffers($connections);
 
-		// Resolve any changed resource handles
-		$changedResources = $this->resolveChangedResources(
-			// Translate our connections to an array of resource handles
-			$this->connectionsToResources($connections)
-		);
+        // Resolve any changed resource handles
+        $changedResources = $this->resolveChangedResources(
+            // Translate our connections to an array of resource handles
+            $this->connectionsToResources($connections)
+        );
 
-		// Populate the read buffers of those changed Connection instances
-		$this->populateConnectionReadBuffers(
-			// Translate the changed resource handles to an array of Connection instances
-			$this->resourcesToConnections($changedResources, $connections)
-		);
-	}
+        // Populate the read buffers of those changed Connection instances
+        $this->populateConnectionReadBuffers(
+            // Translate the changed resource handles to an array of Connection instances
+            $this->resourcesToConnections($changedResources, $connections)
+        );
+    }
 
-	/**
-	 * Interrogates the provided resource handles, and returns those handles have changed.
-	 *
-	 * @param resource[] $resources The resource handles to be interrogated
-	 * @return resource[] The changed resource handles
-	 */
-	protected function resolveChangedResources(array $resources) {
-		$changed = $this->selector->select($resources);
+    /**
+     * Interrogates the provided resource handles, and returns those handles have changed.
+     *
+     * @param resource[] $resources The resource handles to be interrogated
+     * @return resource[] The changed resource handles
+     */
+    protected function resolveChangedResources(array $resources) {
+        $changed = $this->selector->select($resources);
 
-		return $changed;
-	}
+        return $changed;
+    }
 
-	/**
-	 * Clears the read buffers of the provided connections.
-	 *
-	 * @param StreamConnection[] $connections
-	 */
-	protected function clearConnectionReadBuffers(array $connections) {
-		foreach ($connections as $connection) {
-			$connection->clearReadBuffer();
-		}
-	}
+    /**
+     * Clears the read buffers of the provided connections.
+     *
+     * @param StreamConnection[] $connections
+     */
+    protected function clearConnectionReadBuffers(array $connections) {
+        foreach ($connections as $connection) {
+            $connection->clearReadBuffer();
+        }
+    }
 
-	/**
-	 * Requests that the provided Connection instances populate their own read buffer.
-	 *
-	 * @param StreamConnection[] $connections
-	 */
-	protected function populateConnectionReadBuffers(array $connections) {
-		foreach ($connections as $connection) {
-			$connection->populateReadBuffer();
-		}
-	}
+    /**
+     * Requests that the provided Connection instances populate their own read buffer.
+     *
+     * @param StreamConnection[] $connections
+     */
+    protected function populateConnectionReadBuffers(array $connections) {
+        foreach ($connections as $connection) {
+            $connection->populateReadBuffer();
+        }
+    }
 
-	/**
-	 * Converts an array of Connection instances into an array of resource handles.
-	 *
-	 * @param StreamConnection[] $connections The instances to be translated
-	 * @return resource[] The resource handles associated with the provided instances
-	 */
-	protected function connectionsToResources(array $connections) {
-		$resources = array();
+    /**
+     * Converts an array of Connection instances into an array of resource handles.
+     *
+     * @param StreamConnection[] $connections The instances to be translated
+     * @return resource[] The resource handles associated with the provided instances
+     */
+    protected function connectionsToResources(array $connections) {
+        $resources = array();
 
-		foreach ($connections as $position => $connection) {
-			$resource = $connection->getStream();
-			$resources[$position] = $resource;
-		}
+        foreach ($connections as $position => $connection) {
+            $resource = $connection->getStream();
+            $resources[$position] = $resource;
+        }
 
-		return $resources;
-	}
+        return $resources;
+    }
 
-	/**
-	 * Converts an array of resources to Connections. This is achieved by virtue of the positioning within the original
-	 * array of Connections. This can only be used with resources extracted via the connectionsToResources().
-	 *
-	 * @param resource[] $resources Resource handles to be mapped to Connections
-	 * @param StreamConnection[] $existingConnections Connections that should contain the associated resource handles
-	 * @return array
-	 */
-	protected function resourcesToConnections($resources, $existingConnections) {
-		$drivers = array();
+    /**
+     * Converts an array of resources to Connections. This is achieved by virtue of the positioning within the original
+     * array of Connections. This can only be used with resources extracted via the connectionsToResources().
+     *
+     * @param resource[] $resources Resource handles to be mapped to Connections
+     * @param StreamConnection[] $existingConnections Connections that should contain the associated resource handles
+     * @return array
+     */
+    protected function resourcesToConnections($resources, $existingConnections) {
+        $drivers = array();
 
-		foreach ($resources as $position => $resource) {
-			$drivers[] = $existingConnections[$position];
-		}
+        foreach ($resources as $position => $resource) {
+            $drivers[] = $existingConnections[$position];
+        }
 
-		return $drivers;
-	}
+        return $drivers;
+    }
 }

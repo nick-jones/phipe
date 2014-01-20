@@ -8,142 +8,142 @@ use Phipe\Connection\Connection;
  * @package Phipe
  */
 class PoolTest extends \PHPUnit_Framework_TestCase {
-	/**
-	 * @var Pool
-	 */
-	protected $pool;
+    /**
+     * @var Pool
+     */
+    protected $pool;
 
-	/**
-	 * @var \PHPUnit_Framework_MockObject_MockObject
-	 */
-	protected $connections;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $connections;
 
-	protected function setUp() {
-		$this->connections = $this->getMock('\SplObjectStorage');
+    protected function setUp() {
+        $this->connections = $this->getMock('\SplObjectStorage');
 
-		$this->pool = new Pool();
-		$this->pool->setConnections($this->connections);
-	}
+        $this->pool = new Pool();
+        $this->pool->setConnections($this->connections);
+    }
 
-	public function testAdd() {
-		$connection = $this->createMockConnection();
+    public function testAdd() {
+        $connection = $this->createMockConnection();
 
-		$this->connections
-			->expects($this->once())
-			->method('attach')
-			->with($connection);
+        $this->connections
+            ->expects($this->once())
+            ->method('attach')
+            ->with($connection);
 
-		$this->pool->add($connection);
-	}
+        $this->pool->add($connection);
+    }
 
-	public function testRemove() {
-		$connection = $this->createMockConnection();
+    public function testRemove() {
+        $connection = $this->createMockConnection();
 
-		$this->connections
-			->expects($this->once())
-			->method('detach')
-			->with($connection);
+        $this->connections
+            ->expects($this->once())
+            ->method('detach')
+            ->with($connection);
 
-		$this->pool->remove($connection);
-	}
+        $this->pool->remove($connection);
+    }
 
-	public function testSetAll() {
-		$storage = $this->getMock('\SplObjectStorage');
+    public function testSetAll() {
+        $storage = $this->getMock('\SplObjectStorage');
 
-		$this->pool->setConnections($storage);
+        $this->pool->setConnections($storage);
 
-		$this->assertEquals(0, count($this->pool));
-	}
+        $this->assertEquals(0, count($this->pool));
+    }
 
-	public function testFilter_Inclusion() {
-		$connections = array(
-			$this->createMockConnection(),
-			$this->createMockConnection()
-		);
+    public function testFilter_Inclusion() {
+        $connections = array(
+            $this->createMockConnection(),
+            $this->createMockConnection()
+        );
 
-		$this->pool->setConnections($connections);
+        $this->pool->setConnections($connections);
 
-		// Filter always returning TRUE for inclusion, expecting everything to be returned
-		$result = $this->pool->filter(function(Connection $connection) {
-			return TRUE;
-		});
+        // Filter always returning TRUE for inclusion, expecting everything to be returned
+        $result = $this->pool->filter(function(Connection $connection) {
+            return TRUE;
+        });
 
-		$this->assertEquals(2, count($result));
-	}
+        $this->assertEquals(2, count($result));
+    }
 
-	public function testFilter_Exclusion() {
-		$this->pool->setConnections(array(
-			$this->createMockConnection()
-		));
+    public function testFilter_Exclusion() {
+        $this->pool->setConnections(array(
+            $this->createMockConnection()
+        ));
 
-		// Filter always returning FALSE for exclusion, expecting nothing to be return
-		$result = $this->pool->filter(function(Connection $connection) {
-			return FALSE;
-		});
+        // Filter always returning FALSE for exclusion, expecting nothing to be return
+        $result = $this->pool->filter(function(Connection $connection) {
+            return FALSE;
+        });
 
-		$this->assertEquals(0, count($result));
-	}
+        $this->assertEquals(0, count($result));
+    }
 
-	public function testWalk() {
-		$this->pool->setConnections(array(
-			$this->createMockConnection(),
-			$this->createMockConnection()
-		));
+    public function testWalk() {
+        $this->pool->setConnections(array(
+            $this->createMockConnection(),
+            $this->createMockConnection()
+        ));
 
-		$calls = 0;
+        $calls = 0;
 
-		$this->pool->walk(function(Connection $connection) use(&$calls) {
-			++$calls;
-		});
+        $this->pool->walk(function(Connection $connection) use(&$calls) {
+            ++$calls;
+        });
 
-		$this->assertEquals(2, $calls);
-	}
+        $this->assertEquals(2, $calls);
+    }
 
-	public function testgetAllWithState() {
-		$connectionConnected = $this->createMockConnection(Connection::STATE_CONNECTED);
-		$connectionDataAvailable = $this->createMockConnection(Connection::STATE_DATA_AVAILABLE);
-		$connectionUnknown = $this->createMockConnection(0);
+    public function testgetAllWithState() {
+        $connectionConnected = $this->createMockConnection(Connection::STATE_CONNECTED);
+        $connectionDataAvailable = $this->createMockConnection(Connection::STATE_DATA_AVAILABLE);
+        $connectionUnknown = $this->createMockConnection(0);
 
-		$connections = array($connectionConnected, $connectionDataAvailable, $connectionUnknown);
+        $connections = array($connectionConnected, $connectionDataAvailable, $connectionUnknown);
 
-		$this->pool->setConnections($connections);
+        $this->pool->setConnections($connections);
 
-		$this->assertEquals(1, count($this->pool->getAllWithState(Connection::STATE_CONNECTED)));
-		$this->assertEquals(1, count($this->pool->getAllWithState(Connection::STATE_DATA_AVAILABLE)));
-		$this->assertEquals(0, count($this->pool->getAllWithState(Connection::STATE_EOF)));
-	}
+        $this->assertEquals(1, count($this->pool->getAllWithState(Connection::STATE_CONNECTED)));
+        $this->assertEquals(1, count($this->pool->getAllWithState(Connection::STATE_DATA_AVAILABLE)));
+        $this->assertEquals(0, count($this->pool->getAllWithState(Connection::STATE_EOF)));
+    }
 
-	public function testCount() {
-		$this->assertEquals(0, $this->pool->count());
+    public function testCount() {
+        $this->assertEquals(0, $this->pool->count());
 
-		$this->pool->setConnections(array($this->createMockConnection()));
+        $this->pool->setConnections(array($this->createMockConnection()));
 
-		$this->assertEquals(1, $this->pool->count());
-	}
+        $this->assertEquals(1, $this->pool->count());
+    }
 
-	public function testToArray() {
-		$connection = $this->createMockConnection();
+    public function testToArray() {
+        $connection = $this->createMockConnection();
 
-		$storage = new \SplObjectStorage();
-		$storage->attach($connection);
+        $storage = new \SplObjectStorage();
+        $storage->attach($connection);
 
-		$this->pool->setConnections($storage);
-		$result = $this->pool->toArray();
+        $this->pool->setConnections($storage);
+        $result = $this->pool->toArray();
 
-		$this->assertEquals(array($connection), $result);
-	}
+        $this->assertEquals(array($connection), $result);
+    }
 
-	/**
-	 * @param int $state
-	 * @return \PHPUnit_Framework_MockObject_MockObject
-	 */
-	protected function createMockConnection($state = 0) {
-		$connection = $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80));
+    /**
+     * @param int $state
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function createMockConnection($state = 0) {
+        $connection = $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80));
 
-		$connection->expects($this->any())
-			->method('getState')
-			->will($this->returnValue($state));
+        $connection->expects($this->any())
+            ->method('getState')
+            ->will($this->returnValue($state));
 
-		return $connection;
-	}
+        return $connection;
+    }
 }

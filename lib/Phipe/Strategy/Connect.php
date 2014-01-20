@@ -11,8 +11,8 @@ use Phipe\Pool;
  * @package Phipe\Strategy
  */
 interface Connect {
-	/**
-	 * @param Pool $pool
-	 */
-	public function performConnect(Pool $pool);
+    /**
+     * @param Pool $pool
+     */
+    public function performConnect(Pool $pool);
 }

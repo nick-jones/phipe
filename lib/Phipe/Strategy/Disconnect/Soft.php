@@ -13,21 +13,21 @@ use Phipe\Connection\Connection;
  * @package Phipe\Strategy\Disconnect
  */
 class Soft implements \Phipe\Strategy\Disconnect {
-	/**
-	 *
-	 */
-	public function performDisconnect(Pool $pool) {
-		$this->disconnectEndOfFileConnectionsInPool($pool);
-	}
+    /**
+     *
+     */
+    public function performDisconnect(Pool $pool) {
+        $this->disconnectEndOfFileConnectionsInPool($pool);
+    }
 
-	/**
-	 * @param Pool $pool
-	 */
-	protected function disconnectEndOfFileConnectionsInPool(Pool $pool) {
-		$connections = $pool->getAllWithState(Connection::STATE_EOF);
+    /**
+     * @param Pool $pool
+     */
+    protected function disconnectEndOfFileConnectionsInPool(Pool $pool) {
+        $connections = $pool->getAllWithState(Connection::STATE_EOF);
 
-		$connections->walk(function(Connection $connection) {
-			$connection->disconnect();
-		});
-	}
+        $connections->walk(function(Connection $connection) {
+            $connection->disconnect();
+        });
+    }
 }

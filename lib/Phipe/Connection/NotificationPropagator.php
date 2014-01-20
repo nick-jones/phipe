@@ -13,47 +13,47 @@ use Phipe\Connection\Connection;
  * @package Phipe\Connection
  */
 class NotificationPropagator implements \SplObserver {
-	/**
-	 * @var Connection
-	 */
-	protected $connection;
+    /**
+     * @var Connection
+     */
+    protected $connection;
 
-	/**
-	 * @var Connection
-	 */
-	protected $proxied;
+    /**
+     * @var Connection
+     */
+    protected $proxied;
 
-	/**
-	 * @var array
-	 */
-	protected $ignoreEvents = array();
+    /**
+     * @var array
+     */
+    protected $ignoreEvents = array();
 
-	/**
-	 * @param Connection $connection Connection for propagating *to*
-	 * @param Connection $proxied Connection for propagating *from
-	 * @param array $ignoreEvents
-	 */
-	public function __construct(Connection $connection, Connection $proxied, $ignoreEvents = array()) {
-		$this->connection = $connection;
-		$this->proxied = $proxied;
-		$this->ignoreEvents = $ignoreEvents;
-	}
+    /**
+     * @param Connection $connection Connection for propagating *to*
+     * @param Connection $proxied Connection for propagating *from
+     * @param array $ignoreEvents
+     */
+    public function __construct(Connection $connection, Connection $proxied, $ignoreEvents = array()) {
+        $this->connection = $connection;
+        $this->proxied = $proxied;
+        $this->ignoreEvents = $ignoreEvents;
+    }
 
-	/**
-	 * Attaches this instance to the proxied connection.
-	 */
-	public function initialise() {
-		$this->proxied->attach($this);
-	}
+    /**
+     * Attaches this instance to the proxied connection.
+     */
+    public function initialise() {
+        $this->proxied->attach($this);
+    }
 
-	/**
-	 * @param \SplSubject $subject
-	 * @param string|null $event
-	 * @param string|null $data
-	 */
-	public function update(\SplSubject $subject, $event = NULL, $data = NULL) {
-		if (!in_array($event, $this->ignoreEvents)) {
-			$this->connection->notify($event, $data);
-		}
-	}
+    /**
+     * @param \SplSubject $subject
+     * @param string|null $event
+     * @param string|null $data
+     */
+    public function update(\SplSubject $subject, $event = NULL, $data = NULL) {
+        if (!in_array($event, $this->ignoreEvents)) {
+            $this->connection->notify($event, $data);
+        }
+    }
 }

@@ -9,61 +9,61 @@ namespace Phipe\Stub;
  * @package Phipe\Stub
  */
 interface EventBase {
-	/**
-	 * @param \EventConfig|null $cfg
-	 */
-	public function __construct (\EventConfig $cfg = NULL);
+    /**
+     * @param \EventConfig|null $cfg
+     */
+    public function __construct (\EventConfig $cfg = NULL);
 
-	/**
-	 * @return bool
-	 */
-	public function dispatch();
+    /**
+     * @return bool
+     */
+    public function dispatch();
 
-	/**
-	 * @return int
-	 */
-	public function getFeatures();
+    /**
+     * @return int
+     */
+    public function getFeatures();
 
-	/**
-	 * @param \EventConfig|null $cfg
-	 * @return string
-	 */
-	public function getMethod(\EventConfig $cfg = NULL);
+    /**
+     * @param \EventConfig|null $cfg
+     * @return string
+     */
+    public function getMethod(\EventConfig $cfg = NULL);
 
-	/**
-	 * @return double
-	 */
-	public function getTimeOfDayCached();
+    /**
+     * @return double
+     */
+    public function getTimeOfDayCached();
 
-	/**
-	 * @return bool
-	 */
-	public function gotExit();
+    /**
+     * @return bool
+     */
+    public function gotExit();
 
-	/**
-	 * @return bool
-	 */
-	public function gotStop();
+    /**
+     * @return bool
+     */
+    public function gotStop();
 
-	/**
-	 * @param int $flags
-	 * @return bool
-	 */
-	public function loop($flags = 0);
+    /**
+     * @param int $flags
+     * @return bool
+     */
+    public function loop($flags = 0);
 
-	/**
-	 * @param string $n_priorities
-	 * @return bool
-	 */
-	public function priorityInit($n_priorities);
+    /**
+     * @param string $n_priorities
+     * @return bool
+     */
+    public function priorityInit($n_priorities);
 
-	/**
-	 * @param string $base
-	 */
-	public function reInit($base);
+    /**
+     * @param string $base
+     */
+    public function reInit($base);
 
-	/**
-	 * @return bool
-	 */
-	public function stop();
+    /**
+     * @return bool
+     */
+    public function stop();
 }

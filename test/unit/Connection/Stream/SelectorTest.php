@@ -3,51 +3,51 @@
 namespace Phipe\Connection\Stream;
 
 class SelectorTest extends \PHPUnit_Framework_TestCase {
-	/**
-	 * @var Selector
-	 */
-	protected $selector;
+    /**
+     * @var Selector
+     */
+    protected $selector;
 
-	protected function setUp() {;
-		$this->selector = new Selector();
-	}
+    protected function setUp() {;
+        $this->selector = new Selector();
+    }
 
-	public function testSelect() {
-		$expectedStreams = array(fopen('php://memory', 'r'));
-		$expectedTimeout = 500;
+    public function testSelect() {
+        $expectedStreams = array(fopen('php://memory', 'r'));
+        $expectedTimeout = 500;
 
-		$strategy = function($streams, $timeout) use($expectedStreams, $expectedTimeout) {
-			$this->assertEquals($expectedStreams, $streams);
-			$this->assertEquals($expectedTimeout, $timeout);
-		};
+        $strategy = function($streams, $timeout) use($expectedStreams, $expectedTimeout) {
+            $this->assertEquals($expectedStreams, $streams);
+            $this->assertEquals($expectedTimeout, $timeout);
+        };
 
-		$this->selector->setSelectStrategy($strategy);
-		$this->selector->select($expectedStreams, $expectedTimeout);
-	}
+        $this->selector->setSelectStrategy($strategy);
+        $this->selector->select($expectedStreams, $expectedTimeout);
+    }
 
-	public function testSleepingStreamSelect_NoStreams() {
-		$streams = array();
+    public function testSleepingStreamSelect_NoStreams() {
+        $streams = array();
 
-		$this->selector->setSelectStrategy(array('Phipe\Connection\Stream\Selector', 'sleepingStreamSelect'));
-		$results = $this->selector->select($streams, 1);
+        $this->selector->setSelectStrategy(array('Phipe\Connection\Stream\Selector', 'sleepingStreamSelect'));
+        $results = $this->selector->select($streams, 1);
 
-		$this->assertEquals($streams, $results);
-	}
+        $this->assertEquals($streams, $results);
+    }
 
-	public function testSleepingStreamSelect_SingleStream() {
-		$address = 'tcp://127.0.0.1:83751';
+    public function testSleepingStreamSelect_SingleStream() {
+        $address = 'tcp://127.0.0.1:83751';
 
-		$server = stream_socket_server($address);
-		$client = stream_socket_client($address);
+        $server = stream_socket_server($address);
+        $client = stream_socket_client($address);
 
-		$streams = array($client);
+        $streams = array($client);
 
-		$this->selector->setSelectStrategy(array('Phipe\Connection\Stream\Selector', 'sleepingStreamSelect'));
-		$results = $this->selector->select($streams, 1);
+        $this->selector->setSelectStrategy(array('Phipe\Connection\Stream\Selector', 'sleepingStreamSelect'));
+        $results = $this->selector->select($streams, 1);
 
-		$this->assertEquals(array(), $results);
+        $this->assertEquals(array(), $results);
 
-		fclose($client);
-		fclose($server);
-	}
+        fclose($client);
+        fclose($server);
+    }
 }

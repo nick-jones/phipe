@@ -8,62 +8,62 @@ namespace Phipe\Connection\Buffering;
  * @package Phipe\Connection
  */
 class BufferingProber implements \Phipe\Connection\Prober {
-	/**
-	 * @var \Phipe\Connection\Prober
-	 */
-	protected $prober;
+    /**
+     * @var \Phipe\Connection\Prober
+     */
+    protected $prober;
 
-	/**
-	 * @param \Phipe\Connection\Prober $prober
-	 */
-	public function __construct(\Phipe\Connection\Prober $prober) {
-		$this->prober = $prober;
-	}
+    /**
+     * @param \Phipe\Connection\Prober $prober
+     */
+    public function __construct(\Phipe\Connection\Prober $prober) {
+        $this->prober = $prober;
+    }
 
-	/**
-	 * @param BufferingConnection[] $connections
-	 */
-	public function probe(array $connections) {
-		$this->clearConnectionReadBuffers($connections);
-		$this->probeProxiedConnections($connections);
-		$this->populateConnectionReadBuffers($connections);
-	}
+    /**
+     * @param BufferingConnection[] $connections
+     */
+    public function probe(array $connections) {
+        $this->clearConnectionReadBuffers($connections);
+        $this->probeProxiedConnections($connections);
+        $this->populateConnectionReadBuffers($connections);
+    }
 
-	/**
-	 * The original proxied connections are extracted from the DecoratingConnection and
-	 * passed into the appropriate prober (as provided in the constructor)
-	 *
-	 * @param BufferingConnection[] $connections
-	 */
-	protected function probeProxiedConnections(array $connections) {
-		$proxied = array();
+    /**
+     * The original proxied connections are extracted from the DecoratingConnection and
+     * passed into the appropriate prober (as provided in the constructor)
+     *
+     * @param BufferingConnection[] $connections
+     */
+    protected function probeProxiedConnections(array $connections) {
+        $proxied = array();
 
-		foreach ($connections as $connection) {
-			array_push($proxied, $connection->getConnection());
-		}
+        foreach ($connections as $connection) {
+            array_push($proxied, $connection->getConnection());
+        }
 
-		$this->prober->probe($proxied);
-	}
+        $this->prober->probe($proxied);
+    }
 
-	/**
-	 * Clears the read buffers of the provided connections.
-	 *
-	 * @param BufferingConnection[] $connections
-	 */
-	protected function clearConnectionReadBuffers(array $connections) {
-		foreach ($connections as $connection) {
-			$connection->clearReadBuffer();
-		}
-	}
+    /**
+     * Clears the read buffers of the provided connections.
+     *
+     * @param BufferingConnection[] $connections
+     */
+    protected function clearConnectionReadBuffers(array $connections) {
+        foreach ($connections as $connection) {
+            $connection->clearReadBuffer();
+        }
+    }
 
-	/**
-	 * Requests that the provided Connection instances populate their own read buffer.
-	 *
-	 * @param BufferingConnection[] $connections
-	 */
-	protected function populateConnectionReadBuffers(array $connections) {
-		foreach ($connections as $connection) {
-			$connection->populateReadBuffer();
-		}
-	}
+    /**
+     * Requests that the provided Connection instances populate their own read buffer.
+     *
+     * @param BufferingConnection[] $connections
+     */
+    protected function populateConnectionReadBuffers(array $connections) {
+        foreach ($connections as $connection) {
+            $connection->populateReadBuffer();
+        }
+    }
 }

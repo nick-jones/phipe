@@ -10,40 +10,40 @@ namespace Phipe\Connection\Event;
  * @package Phipe\Connection\Event
  */
 class EventFactory implements \Phipe\Connection\Factory {
-	/**
-	 * This instance is shared amongst Connections and Probers created via this factory.
-	 *
-	 * @var \EventBase
-	 */
-	protected $eventBase;
+    /**
+     * This instance is shared amongst Connections and Probers created via this factory.
+     *
+     * @var \EventBase
+     */
+    protected $eventBase;
 
-	/**
-	 * @param \EventBase|null $eventBase
-	 */
-	public function __construct(\EventBase $eventBase = NULL) {
-		if (!$eventBase) {
-			$eventBase = new \EventBase();
-		}
+    /**
+     * @param \EventBase|null $eventBase
+     */
+    public function __construct(\EventBase $eventBase = NULL) {
+        if (!$eventBase) {
+            $eventBase = new \EventBase();
+        }
 
-		$this->eventBase = $eventBase;
-	}
+        $this->eventBase = $eventBase;
+    }
 
-	/**
-	 * @param string $host
-	 * @param int $port
-	 * @param bool $ssl
-	 * @return EventConnection
-	 */
-	public function createConnection($host, $port, $ssl = FALSE) {
-		$connection = new EventConnection($host, $port, $ssl);
-		$connection->setEventBase($this->eventBase);
-		return $connection;
-	}
+    /**
+     * @param string $host
+     * @param int $port
+     * @param bool $ssl
+     * @return EventConnection
+     */
+    public function createConnection($host, $port, $ssl = FALSE) {
+        $connection = new EventConnection($host, $port, $ssl);
+        $connection->setEventBase($this->eventBase);
+        return $connection;
+    }
 
-	/**
-	 * @return EventProber
-	 */
-	public function createProber() {
-		return new EventProber($this->eventBase);
-	}
+    /**
+     * @return EventProber
+     */
+    public function createProber() {
+        return new EventProber($this->eventBase);
+    }
 }

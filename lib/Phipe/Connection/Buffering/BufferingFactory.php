@@ -10,31 +10,31 @@ namespace Phipe\Connection\Buffering;
  * @package Phipe\Connection\Buffering
  */
 class BufferingFactory implements \Phipe\Connection\Factory {
-	/**
-	 * @param \Phipe\Connection\Factory $factory
-	 */
-	public function __construct(\Phipe\Connection\Factory $factory) {
-		$this->factory = $factory;
-	}
+    /**
+     * @param \Phipe\Connection\Factory $factory
+     */
+    public function __construct(\Phipe\Connection\Factory $factory) {
+        $this->factory = $factory;
+    }
 
-	/**
-	 * @param string $host
-	 * @param int $port
-	 * @param bool $ssl
-	 * @return BufferingConnection
-	 */
-	public function createConnection($host, $port, $ssl = FALSE) {
-		return new BufferingConnection(
-			$this->factory->createConnection($host, $port, $ssl)
-		);
-	}
+    /**
+     * @param string $host
+     * @param int $port
+     * @param bool $ssl
+     * @return BufferingConnection
+     */
+    public function createConnection($host, $port, $ssl = FALSE) {
+        return new BufferingConnection(
+            $this->factory->createConnection($host, $port, $ssl)
+        );
+    }
 
-	/**
-	 * @return BufferingProber
-	 */
-	public function createProber() {
-		return new BufferingProber(
-			$this->factory->createProber()
-		);
-	}
+    /**
+     * @return BufferingProber
+     */
+    public function createProber() {
+        return new BufferingProber(
+            $this->factory->createProber()
+        );
+    }
 }

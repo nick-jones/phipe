@@ -13,19 +13,19 @@ use Phipe\Connection\Connection;
  * @package Phipe\Strategy\Connect
  */
 class Sequential implements \Phipe\Strategy\Connect {
-	/**
-	 * @param Pool $pool
-	 */
-	public function performConnect(Pool $pool) {
-		$this->connectAllInPool($pool);
-	}
+    /**
+     * @param Pool $pool
+     */
+    public function performConnect(Pool $pool) {
+        $this->connectAllInPool($pool);
+    }
 
-	/**
-	 * @param Pool $pool
-	 */
-	protected function connectAllInPool(Pool $pool) {
-		$pool->walk(function(Connection $connection) {
-			$connection->connect();
-		});
-	}
+    /**
+     * @param Pool $pool
+     */
+    protected function connectAllInPool(Pool $pool) {
+        $pool->walk(function(Connection $connection) {
+            $connection->connect();
+        });
+    }
 }

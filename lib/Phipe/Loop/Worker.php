@@ -9,23 +9,23 @@ namespace Phipe\Loop;
  * @package Phipe\Loop
  */
 interface Worker {
-	/**
-	 * This method is called before work beings. Concrete implementations should perform any setup work when this
-	 * method is called.
-	 */
-	public function initialise();
+    /**
+     * This method is called before work beings. Concrete implementations should perform any setup work when this
+     * method is called.
+     */
+    public function initialise();
 
-	/**
-	 * This method is called when the Runner instance is running. Concrete implementations should perform their task
-	 * within this method.
-	 */
-	public function work();
+    /**
+     * This method is called when the Runner instance is running. Concrete implementations should perform their task
+     * within this method.
+     */
+    public function work();
 
-	/**
-	 * This method is called to check whether the worker still wants to continue working. If the Worker does not
-	 * maintain any state that can indicate this, then simply return TRUE always.
-	 *
-	 * @return bool
-	 */
-	public function hasWork();
+    /**
+     * This method is called to check whether the worker still wants to continue working. If the Worker does not
+     * maintain any state that can indicate this, then simply return TRUE always.
+     *
+     * @return bool
+     */
+    public function hasWork();
 }

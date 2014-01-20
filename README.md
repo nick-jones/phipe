@@ -20,10 +20,10 @@ connection details to the `\Phipe\Application` class:
 
 ```php
 $phipe = new \Phipe\Application([
-	'connections' => [
-		['host' => '127.0.0.1', 'port' => 80],
-		['host' => '127.0.0.1', 'port' => 80]
-	]
+    'connections' => [
+        ['host' => '127.0.0.1', 'port' => 80],
+        ['host' => '127.0.0.1', 'port' => 80]
+    ]
 ]);
 
 $phipe->execute();
@@ -37,20 +37,20 @@ utilising observers that implement the SplObserver interface:
 
 ```php
 class MyObserver implements \SplObserver {
-	public function update(\SplSubject $subject, $event = NULL) {
-		echo $event . PHP_EOL;
-	}
+    public function update(\SplSubject $subject, $event = NULL) {
+        echo $event . PHP_EOL;
+    }
 }
 
 $observer = new MyObserver();
 
 $phipe = new \Phipe\Application([
-	'connections' => [
-		['host' => '127.0.0.1', 'port' => 80]
-	],
-	'observers' => [
-		$observer
-	]
+    'connections' => [
+        ['host' => '127.0.0.1', 'port' => 80]
+    ],
+    'observers' => [
+        $observer
+    ]
 ]);
 
 $phipe->execute();
@@ -64,20 +64,20 @@ For your convenience, there is an observer implementation that provides an simpl
 $observer = new \Phipe\Watcher();
 
 $watcher->on('connect', function(\Phipe\Connection\Connection $connection) {
-	echo 'Connected!' . PHP_EOL;
+    echo 'Connected!' . PHP_EOL;
 });
 
 $watcher->on('disconnect', function(\Phipe\Connection\Connection $connection) {
-	// etc
+    // etc
 });
 
 $phipe = new \Phipe\Application([
-	'connections' => [
-		['host' => '127.0.0.1', 'port' => 80]
-	],
-	'observers' => [
-		$observer
-	]
+    'connections' => [
+        ['host' => '127.0.0.1', 'port' => 80]
+    ],
+    'observers' => [
+        $observer
+    ]
 ]);
 
 $phipe->execute();
@@ -96,8 +96,8 @@ a different factory to the `Application` class:
 
 ```php
 $phipe = new \Phipe\Application([
-	'connections' => [ /* connection details */ ],
-	'factory' => new \Phipe\Connection\Event\EventFactory()
+    'connections' => [ /* connection details */ ],
+    'factory' => new \Phipe\Connection\Event\EventFactory()
 ]);
 
 $phipe->execute();

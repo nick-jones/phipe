@@ -11,8 +11,8 @@ use Phipe\Pool;
  * @package Phipe\Strategy
  */
 interface Reconnect {
-	/**
-	 * @param Pool $pool
-	 */
-	public function performReconnect(Pool $pool);
+    /**
+     * @param Pool $pool
+     */
+    public function performReconnect(Pool $pool);
 }
