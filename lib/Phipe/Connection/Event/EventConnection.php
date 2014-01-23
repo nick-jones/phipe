@@ -38,6 +38,31 @@ class EventConnection extends \Phipe\Connection\Connection {
     protected $state = 0;
 
     /**
+     * Default options to be used when creating EventBufferEvent instances.
+     *
+     * @var int
+     */
+    protected $bufferEventOptions = \EventBufferEvent::OPT_CLOSE_ON_FREE;
+
+    /**
+     * Default SSL method to be used when creating EventSslContext instances.
+     *
+     * @link http://php.net/manual/en/class.eventsslcontext.php
+     * @var int
+     */
+    protected $sslMethod = \EventSslContext::SSLv23_CLIENT_METHOD;
+
+    /**
+     * Default options to be passed to EventSslContext.
+     *
+     * @var array
+     */
+    protected $sslOptions = array(
+        \EventSslContext::OPT_VERIFY_PEER => false,
+        \EventSslContext::OPT_ALLOW_SELF_SIGNED => true
+    );
+
+    /**
      * Connect to host & port, as provided in the constructor. To be done: SSL & DNS support.
      */
     public function connect() {
@@ -160,9 +185,21 @@ class EventConnection extends \Phipe\Connection\Connection {
      */
     public function createBufferEvent() {
         $base = $this->getEventBase();
-        $options = \EventBufferEvent::OPT_CLOSE_ON_FREE;
 
-        return new \EventBufferEvent($base, NULL, $options);
+        return new \EventBufferEvent($base, NULL, $this->bufferEventOptions);
+    }
+
+    /**
+     * Factory method for creating EventBufferEvent instances that will talk over SSL.
+     *
+     * @return \EventBufferEvent
+     */
+    public function createSslBufferEvent() {
+        $base = $this->getEventBase();
+        $context = new \EventSslContext($this->sslMethod, $this->sslOptions);
+        $state = \EventBufferEvent::SSL_CONNECTING;
+
+        return \EventBufferEvent::sslSocket($base, NULL, $context, $state, $this->sslMethod);
     }
 
     /**
@@ -192,7 +229,9 @@ class EventConnection extends \Phipe\Connection\Connection {
      */
     protected function getBufferEvent() {
         if (!$this->bufferEvent) {
-            $this->bufferEvent = $this->createBufferEvent();
+            $this->bufferEvent = $this->ssl
+                ? $this->createSslBufferEvent()
+                : $this->createBufferEvent();
         }
 
         return $this->bufferEvent;

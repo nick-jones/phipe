@@ -129,4 +129,11 @@ class EventConnectionTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertInstanceOf('\EventBufferEvent', $bufferEvent);
     }
+
+    public function testCreateSslBufferEvent() {
+        $this->event->setEventBase(new \EventBase());
+        $bufferEvent = $this->event->createSslBufferEvent();
+
+        $this->assertInstanceOf('\EventBufferEvent', $bufferEvent);
+    }
 }
