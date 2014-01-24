@@ -31,7 +31,7 @@ class StreamConnection extends \Phipe\Connection\Connection {
             throw new ConnectionException('Already connected', $this);
         }
 
-        $stream = stream_socket_client($this->getAddress(), $errorNumber, $errorMessage, 10);
+        $stream = @stream_socket_client($this->getAddress(), $errorNumber, $errorMessage, 10);
 
         if ($stream === FALSE) {
             $message = sprintf('Stream connection failed (%d), message: %s', $errorNumber, $errorMessage);
