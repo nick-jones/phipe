@@ -161,10 +161,23 @@ class EventConnection extends \Phipe\Connection\Connection {
         }
 
         if ($events & \EventBufferEvent::ERROR) {
-            $details = \EventUtil::getLastSocketError();
-            $message = sprintf('EventBufferEvent received error status. Details: "%s"', $details);
-            throw new ConnectionException($message, $this);
+            $this->handleEventError();
         }
+    }
+
+    /**
+     * @throws ConnectionException
+     */
+    protected function handleEventError() {
+        if (!$this->isConnected()) {
+            $this->notify(self::EVENT_CONNECT_FAIL);
+        }
+
+        $errorNumber = \EventUtil::getLastSocketErrno();
+        $errorMessage = \EventUtil::getLastSocketError();
+        $message = sprintf('EventBufferEvent received error status (%d), message: %s', $errorNumber, $errorMessage);
+
+        throw new ConnectionException($message, $this);
     }
 
     /**

@@ -120,6 +120,10 @@ class EventConnectionTest extends \PHPUnit_Framework_TestCase {
     public function testEventStatus_Error() {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'EventBufferEvent received error status');
 
+        $this->observer->expects($this->once())
+            ->method('update')
+            ->with($this->equalTo($this->event), $this->equalTo(\Phipe\Connection\Connection::EVENT_CONNECT_FAIL));
+
         $this->event->eventStatus(NULL, \EventBufferEvent::ERROR);
     }
 
