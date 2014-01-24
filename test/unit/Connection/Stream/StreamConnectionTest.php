@@ -17,12 +17,23 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
      */
     protected $resourceTestHelper;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|\SplObserver
+     */
+    protected $observer;
+
+    const TEST_HOST = '127.0.0.1';
+
+    const TEST_PORT = 83751;
+
     protected function setUp() {
         $handle = fopen('php://memory', 'rw');
         $this->resourceTestHelper = new ResourceTestHelper($handle);
+        $this->observer = $this->getMock('\SplObserver');
 
-        $this->stream = new StreamConnection('127.0.0.1', 80);
+        $this->stream = new StreamConnection(self::TEST_HOST, self::TEST_PORT);
         $this->stream->setStream($handle);
+        $this->stream->attach($this->observer);
     }
 
     protected function tearDown() {
@@ -47,32 +58,31 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testConnect() {
-        $host = '127.0.0.1';
-        $port = 83751;
-
         $this->resourceTestHelper = new ResourceTestHelper(
-            stream_socket_server(sprintf('tcp://%s:%d', $host, $port))
+            stream_socket_server(sprintf('tcp://%s:%d', self::TEST_HOST, self::TEST_PORT))
         );
 
-        $connection = new StreamConnection($host, $port);
-        $connection->connect();
+        $this->stream->setStream(NULL);
+        $this->stream->connect();
 
-        $this->assertInternalType('resource', $connection->getStream());
+        $this->assertInternalType('resource', $this->stream->getStream());
     }
 
     public function testConnect_AlreadyConnected() {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Already connected');
 
-        $host = '127.0.0.1';
-        $port = 83751;
+        $this->stream->connect();
+    }
 
-        $this->resourceTestHelper = new ResourceTestHelper(
-            stream_socket_server(sprintf('tcp://%s:%d', $host, $port))
-        );
+    public function testConnect_Failure() {
+        $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Stream connection failed');
 
-        $connection = new StreamConnection($host, $port);
-        $connection->connect();
-        $connection->connect();
+        $this->observer->expects($this->once())
+            ->method('update')
+            ->with($this->equalTo($this->stream), $this->equalTo(\Phipe\Connection\Connection::EVENT_CONNECT_FAIL));
+
+        $this->stream->setStream(NULL);
+        $this->stream->connect();
     }
 
     public function testDisconnect() {

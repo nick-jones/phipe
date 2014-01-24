@@ -34,6 +34,8 @@ class StreamConnection extends \Phipe\Connection\Connection {
         $stream = @stream_socket_client($this->getAddress(), $errorNumber, $errorMessage, 10);
 
         if ($stream === FALSE) {
+            $this->notify(self::EVENT_CONNECT_FAIL);
+
             $message = sprintf('Stream connection failed (%d), message: %s', $errorNumber, $errorMessage);
             throw new ConnectionException($message, $this);
         }
