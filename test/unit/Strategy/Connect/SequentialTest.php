@@ -16,7 +16,8 @@ class SequentialTest extends \PHPUnit_Framework_TestCase {
         $connection = $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80));
 
         $connection->expects($this->once())
-            ->method('connect');
+            ->method('connect')
+            ->will($this->throwException(new \Phipe\Connection\ConnectionException('Mock', $connection)));
 
         $pool = $this->getMock('\Phipe\Pool');
 

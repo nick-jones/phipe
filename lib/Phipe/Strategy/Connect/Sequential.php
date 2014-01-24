@@ -4,6 +4,7 @@ namespace Phipe\Strategy\Connect;
 
 use Phipe\Pool;
 use Phipe\Connection\Connection;
+use Phipe\Connection\ConnectionException;
 
 /**
  * A simple implementation of a Connect strategy. This implementation connects all instances sequentially; this may
@@ -25,7 +26,10 @@ class Sequential implements \Phipe\Strategy\Connect {
      */
     protected function connectAllInPool(Pool $pool) {
         $pool->walk(function(Connection $connection) {
-            $connection->connect();
+            try {
+                $connection->connect();
+            }
+            catch (ConnectionException $e) { }
         });
     }
 }

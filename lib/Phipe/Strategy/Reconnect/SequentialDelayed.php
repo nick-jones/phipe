@@ -2,6 +2,7 @@
 
 namespace Phipe\Strategy\Reconnect;
 
+use Phipe\Connection\ConnectionException;
 use Phipe\Pool;
 use Phipe\Connection\Connection;
 
@@ -51,12 +52,34 @@ class SequentialDelayed implements \Phipe\Strategy\Reconnect {
      * @param Pool $pool
      */
     protected function reconnectDisconnectedInPool(Pool $pool) {
-        $connections = $pool->filter(function(Connection $connection) {
+        $this->reconnectConnections(
+            $this->resolveDisconnectedInPool($pool)
+        );
+    }
+
+    /**
+     * Resolve all disconnected connections with the supplied Pool.
+     *
+     * @param Pool $pool
+     * @return Pool
+     */
+    protected function resolveDisconnectedInPool(Pool $pool) {
+        return $pool->filter(function(Connection $connection) {
             return $connection->isDisconnected();
         });
+    }
 
-        $connections->walk(function(Connection $connection) {
-            $connection->connect();
+    /**
+     * Reconnect all Connection instances within the supplied Pool.
+     *
+     * @param Pool $pool
+     */
+    protected function reconnectConnections(Pool $pool) {
+        $pool->walk(function(Connection $connection) {
+            try {
+                $connection->connect();
+            }
+            catch (ConnectionException $e) { }
         });
     }
 }

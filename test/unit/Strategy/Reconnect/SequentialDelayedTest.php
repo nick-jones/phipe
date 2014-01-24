@@ -20,7 +20,8 @@ class SequentialDelayedTest extends \PHPUnit_Framework_TestCase {
             ->will($this->returnValue(TRUE));
 
         $connection->expects($this->once())
-            ->method('connect');
+            ->method('connect')
+            ->will($this->throwException(new \Phipe\Connection\ConnectionException('Mock', $connection)));
 
         $disconnected = $this->getMock('\Phipe\Pool');
 
