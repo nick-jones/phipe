@@ -8,7 +8,7 @@ use Phipe\Connection\Connection;
 
 /**
  * A simple implementation of the Reconnection strategy interface. This class will attempt to reconnect *all*
- * disconnected connections at a regular interval (60 seconds is default, but a different delay can be provided).
+ * disconnected connections at a regular interval (30 seconds is default, but a different delay can be provided).
  *
  * @package Phipe\Strategy\Reconnect
  */
@@ -21,18 +21,22 @@ class SequentialDelayed implements \Phipe\Strategy\Reconnect {
     protected $delay;
 
     /**
-     * Unix timestamp. This indicates at what time we should next attempt to reconnect. Initial value is 0, so we will
-     * attempt on first request, and then every $delay seconds from then onwards.
+     * Unix timestamp. This indicates at what time we should next attempt to reconnect.
      *
      * @var int
      */
-    protected $waitUntil = 0;
+    protected $waitUntil;
 
     /**
      * @param int $delay Delay to wait before attempting to reconnect any dropped connections.
+     * @param null $waitUntil Time at which the next reconnect attempt should commence.
      */
-    public function __construct($delay = 60) {
+    public function __construct($delay = 30, $waitUntil = NULL) {
         $this->delay = $delay;
+
+        if ($waitUntil === NULL) {
+            $this->updateWaitUntil();
+        }
     }
 
     /**
@@ -41,9 +45,15 @@ class SequentialDelayed implements \Phipe\Strategy\Reconnect {
     public function performReconnect(Pool $pool) {
         if (time() >= $this->waitUntil) {
             $this->reconnectDisconnectedInPool($pool);
-
-            $this->waitUntil = time() + $this->delay;
+            $this->updateWaitUntil();
         }
+    }
+
+    /**
+     * Increases the wait until time by the delay value.
+     */
+    protected function updateWaitUntil() {
+        $this->waitUntil = time() + $this->delay;
     }
 
     /**

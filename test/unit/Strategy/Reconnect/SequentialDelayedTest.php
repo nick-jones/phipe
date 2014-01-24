@@ -9,7 +9,7 @@ class SequentialDelayedTest extends \PHPUnit_Framework_TestCase {
     protected $strategy;
 
     protected function setUp() {
-        $this->strategy = new SequentialDelayed();
+        $this->strategy = new SequentialDelayed(30, 0);
     }
 
     public function testReconnect() {
