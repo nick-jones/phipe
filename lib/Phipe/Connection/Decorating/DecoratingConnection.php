@@ -106,4 +106,25 @@ abstract class DecoratingConnection extends \Phipe\Connection\Connection {
     public function getState() {
         return $this->connection->getState();
     }
+
+    /**
+     * @param string $host
+     */
+    public function setHost($host) {
+        $this->connection->setHost($host);
+    }
+
+    /**
+     * @param int $port
+     */
+    public function setPort($port) {
+        $this->connection->setPort($port);
+    }
+
+    /**
+     * @param bool $ssl
+     */
+    public function setSsl($ssl) {
+        $this->connection->setSsl($ssl);
+    }
 }

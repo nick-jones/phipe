@@ -83,4 +83,37 @@ class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals($state, $this->connection->getState());
     }
+
+    public function testSetHost() {
+        $host = 'irc.mock.example';
+
+        $this->proxied
+            ->expects($this->once())
+            ->method('setHost')
+            ->with($this->equalTo($host));
+
+        $this->connection->setHost($host);
+    }
+
+    public function testSetPort() {
+        $port = 80;
+
+        $this->proxied
+            ->expects($this->once())
+            ->method('setPort')
+            ->with($this->equalTo($port));
+
+        $this->connection->setPort($port);
+    }
+
+    public function testSetSsl() {
+        $ssl = TRUE;
+
+        $this->proxied
+            ->expects($this->once())
+            ->method('setSsl')
+            ->with($this->equalTo($ssl));
+
+        $this->connection->setSsl($ssl);
+    }
 }
