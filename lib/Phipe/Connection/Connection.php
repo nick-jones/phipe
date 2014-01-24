@@ -30,6 +30,11 @@ abstract class Connection implements \SplSubject {
     const EVENT_CONNECT = 'connect';
 
     /**
+     * This connection has failed in its attempts to connect
+     */
+    const EVENT_CONNECT_FAIL = 'connect_fail';
+
+    /**
      * This connection has disconnected
      */
     const EVENT_DISCONNECT = 'disconnect';
