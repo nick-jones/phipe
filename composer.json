@@ -1,25 +1,24 @@
 {
-    "name": "nick-jones/Phipe",
+    "name": "nick-jones/phipe",
+
+    "description": "Phipe is a parallel connection handling library",
+
+    "keywords": ["parallel", "connection", "socket"],
 
     "authors": [{
         "name": "Nicholas Jones"
     }],
 
-    "minimum-stability": "dev",
+    "license": "MIT",
 
     "require": {
         "php": ">=5.4",
-        "nick-jones/SimpleConfig": "dev-master"
+        "nick-jones/simpleconfig": "~0.1"
     },
 
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
     },
-
-    "repositories": [{
-        "type": "vcs",
-        "url": "https://github.com/nick-jones/SimpleConfig"
-    }],
 
     "autoload": {
         "psr-0": {
