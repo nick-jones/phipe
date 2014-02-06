@@ -33,6 +33,7 @@ class SequentialDelayed implements \Phipe\Strategy\Reconnect {
      */
     public function __construct($delay = 30, $waitUntil = NULL) {
         $this->delay = $delay;
+        $this->waitUntil = $waitUntil;
 
         if ($waitUntil === NULL) {
             $this->updateWaitUntil();
