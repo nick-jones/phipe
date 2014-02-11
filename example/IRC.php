@@ -14,6 +14,10 @@ $watcher->on('connect', function(Connection $connection) {
     $connection->write("USER monkey  8 * :monkey'\n");
 });
 
+$watcher->on('connect_fail', function(Connection $connection) {
+    echo 'Connection failed' . PHP_EOL;
+});
+
 $watcher->on('read', function(Connection $connection) {
     $lines = preg_split("#\r?\n#", $connection->read(), -1, PREG_SPLIT_NO_EMPTY);
 

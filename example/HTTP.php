@@ -19,6 +19,10 @@ $watcher->on('connect', function(Connection $connection) {
     echo $data . '----------' . PHP_EOL;
 });
 
+$watcher->on('connect_fail', function(Connection $connection) {
+    echo 'Connection failed' . PHP_EOL;
+});
+
 $watcher->on('read', function(Connection $connection) {
     echo 'Data read..' . PHP_EOL;
 
