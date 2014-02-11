@@ -17,8 +17,25 @@ class WatcherTest extends \PHPUnit_Framework_TestCase {
         $this->watcher = new Watcher();
     }
 
-    public function testOn() {
-        $result = $this->watcher->on(Connection::EVENT_CONNECT, function () {});
+    /**
+     * @return array
+     */
+    public function eventDataProvider() {
+        return array(
+            array(Connection::EVENT_CONNECT),
+            array(Connection::EVENT_CONNECT_FAIL),
+            array(Connection::EVENT_READ),
+            array(Connection::EVENT_WRITE),
+            array(Connection::EVENT_EOF),
+            array(Connection::EVENT_DISCONNECT)
+        );
+    }
+
+    /**
+     * @dataProvider eventDataProvider
+     */
+    public function testOn($event) {
+        $result = $this->watcher->on($event, function () {});
         $this->assertEquals($this->watcher, $result);
     }
 
