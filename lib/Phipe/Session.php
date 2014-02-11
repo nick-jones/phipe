@@ -76,7 +76,7 @@ class Session implements \Phipe\Loop\Worker {
      * @return bool
      */
     public function hasWork() {
-        return $this->pool->count() > 0;
+        return count($this->pool) > 0;
     }
 
     /**
