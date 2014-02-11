@@ -17,6 +17,7 @@ class Watcher implements \SplObserver {
      */
     protected $eventCallbackMappings = array(
         Connection::EVENT_CONNECT => array(),
+        Connection::EVENT_CONNECT_FAIL => array(),
         Connection::EVENT_READ => array(),
         Connection::EVENT_WRITE => array(),
         Connection::EVENT_EOF => array(),
