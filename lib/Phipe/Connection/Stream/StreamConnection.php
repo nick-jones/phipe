@@ -180,8 +180,4 @@ class StreamConnection extends \Phipe\Connection\Connection {
 
         return $address;
     }
-
-    protected function verifySteamStatus() {
-
-    }
 }
