@@ -119,6 +119,10 @@ class Application {
             $config = new ApplicationConfig($config);
         }
 
+        if (is_null($config)) {
+            $config = array();
+        }
+
         $this->config = $config;
     }
 
