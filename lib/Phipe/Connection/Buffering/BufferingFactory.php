@@ -11,6 +11,11 @@ namespace Phipe\Connection\Buffering;
  */
 class BufferingFactory implements \Phipe\Connection\Factory {
     /**
+     * @var \Phipe\Connection\Factory
+     */
+    protected $factory;
+
+    /**
      * @param \Phipe\Connection\Factory $factory
      */
     public function __construct(\Phipe\Connection\Factory $factory) {
