@@ -57,6 +57,13 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($payload, $result);
     }
 
+    public function testWrite_NullHandle() {
+        $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Stream socket is not writable');
+
+        $this->stream->setStream(null);
+        $this->stream->write('mock');
+    }
+
     public function testConnect() {
         $this->resourceTestHelper = new ResourceTestHelper(
             stream_socket_server(sprintf('tcp://%s:%d', self::TEST_HOST, self::TEST_PORT))
@@ -136,6 +143,13 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->stream->populateReadBuffer();
 
         $this->assertEquals('mock', $this->stream->read());
+    }
+
+    public function testPopulateReadBuffer_NullHandle() {
+        $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Stream socket is not readable');
+
+        $this->stream->setStream(null);
+        $this->stream->populateReadBuffer();
     }
 
     public function testClearReadBuffer() {

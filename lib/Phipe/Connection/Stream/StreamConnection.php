@@ -80,6 +80,10 @@ class StreamConnection extends \Phipe\Connection\Connection {
      * @throws ConnectionException
      */
     public function write($data) {
+        if (!is_resource($this->stream)) {
+            throw new ConnectionException('Stream socket is not writable', $this);
+        }
+
         $result = fwrite($this->stream, $data);
 
         if ($result === FALSE) {
@@ -118,10 +122,14 @@ class StreamConnection extends \Phipe\Connection\Connection {
      * @throws ConnectionException
      */
     public function populateReadBuffer() {
+        if (!is_resource($this->stream)) {
+            throw new ConnectionException('Stream socket is not readable', $this);
+        }
+
         $data = fread($this->stream, 8192);
 
         if ($data === FALSE) {
-            throw new ConnectionException('Stream connection read failed', $this);
+            throw new ConnectionException('Stream socket read failed', $this);
         }
 
         $this->setReadBuffer($data);
@@ -144,7 +152,7 @@ class StreamConnection extends \Phipe\Connection\Connection {
     }
 
     /**
-     * @param resource $stream
+     * @param resource|NULL $stream
      */
     public function setStream($stream) {
         $this->stream = $stream;
@@ -171,5 +179,9 @@ class StreamConnection extends \Phipe\Connection\Connection {
         }
 
         return $address;
+    }
+
+    protected function verifySteamStatus() {
+
     }
 }
