@@ -4,12 +4,12 @@ namespace Phipe\Connection\Decorating;
 
 class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|DecoratingConnection
+     * @var DecoratingConnection
      */
     protected $connection;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Connection\Connection
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $proxied;
 

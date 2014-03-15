@@ -9,7 +9,7 @@ class StreamProberTest extends \PHPUnit_Framework_TestCase {
     protected $prober;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Selector
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $selector;
 

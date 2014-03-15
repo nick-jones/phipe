@@ -9,12 +9,12 @@ class NotificationPropagatorTest extends \PHPUnit_Framework_TestCase {
     protected $notificationPropagator;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Connection\Connection
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $connection;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Connection\Connection
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $proxied;
 

@@ -11,7 +11,7 @@ class EventProberTest extends \PHPUnit_Framework_TestCase {
     protected $prober;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Stub\EventBase
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $eventBase;
 

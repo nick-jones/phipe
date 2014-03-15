@@ -18,7 +18,7 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
     protected $resourceTestHelper;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\SplObserver
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $observer;
 

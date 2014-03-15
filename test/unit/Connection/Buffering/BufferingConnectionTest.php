@@ -4,12 +4,12 @@ namespace Phipe\Connection\Buffering;
 
 class BufferingConnectionTest extends \PHPUnit_Framework_TestCase {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|BufferingConnection
+     * @var BufferingConnection
      */
     protected $connection;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Connection\Connection
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $proxied;
 

@@ -12,12 +12,12 @@ class EventConnectionTest extends \PHPUnit_Framework_TestCase {
     protected $event;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Stub\EventBufferEvent
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $bufferEvent;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\SplObserver
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $observer;
 

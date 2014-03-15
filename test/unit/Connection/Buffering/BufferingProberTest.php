@@ -9,7 +9,7 @@ class BufferingProberTest extends \PHPUnit_Framework_TestCase {
     protected $prober;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Connection\Prober
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $proxied;
 

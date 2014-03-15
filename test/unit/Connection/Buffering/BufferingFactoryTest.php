@@ -9,7 +9,7 @@ class BufferingFactoryTest extends \PHPUnit_Framework_TestCase {
     protected $factory;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Connection\Factory
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $proxied;
 

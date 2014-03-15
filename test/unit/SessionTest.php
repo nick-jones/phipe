@@ -9,12 +9,12 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
     protected $session;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Pool
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $pool;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Connection\Prober
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $prober;
 
