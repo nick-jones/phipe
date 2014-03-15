@@ -29,7 +29,7 @@ class SequentialDelayed implements \Phipe\Strategy\Reconnect {
 
     /**
      * @param int $delay Delay to wait before attempting to reconnect any dropped connections.
-     * @param null $waitUntil Time at which the next reconnect attempt should commence.
+     * @param int|null $waitUntil Time at which the next reconnect attempt should commence.
      */
     public function __construct($delay = 30, $waitUntil = NULL) {
         $this->delay = $delay;
