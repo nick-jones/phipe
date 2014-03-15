@@ -90,7 +90,9 @@ class SequentialDelayed implements \Phipe\Strategy\Reconnect {
             try {
                 $connection->connect();
             }
-            catch (ConnectionException $e) { }
+            catch (ConnectionException $e) {
+                // Cannot reconnect for whatever reason, we'll try again later.
+            }
         });
     }
 }

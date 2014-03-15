@@ -29,7 +29,10 @@ class Sequential implements \Phipe\Strategy\Connect {
             try {
                 $connection->connect();
             }
-            catch (ConnectionException $e) { }
+            catch (ConnectionException $e) {
+                // If any cannot connect, we will retry later. No need for any one connection to
+                // disrupt other connections.
+            }
         });
     }
 }
