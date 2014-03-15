@@ -112,7 +112,7 @@ class Application {
      * Sets the config class property. If an array is provided, a ApplicationConfig instance is created containing the provided
      * array, and a default set of factories relevant to this class.
      *
-     * @param array|ApplicationConfig $config
+     * @param array|ApplicationConfig|NULL $config
      */
     public function setConfig($config) {
         if (is_array($config)) {
