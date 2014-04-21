@@ -11,6 +11,9 @@ tools:
         - 'vendor/*'
   external_code_coverage:
     enabled: true
+    filter:
+      paths:
+        - 'lib/*'
   php_pdepend:
     enabled: true
     configuration_file: null
@@ -28,6 +31,8 @@ tools:
     filter:
       excluded_paths:
         - 'vendor/*'
+        - 'example/*'
+        - 'test/*'
       paths: {  }
   php_changetracking:
     enabled: true
