@@ -1,5 +1,7 @@
 # Phipe (Alpha)
 
+[![Build Status](https://travis-ci.org/nick-jones/Phipe.svg?branch=master)](https://travis-ci.org/nick-jones/Phipe) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nick-jones/Phipe/badges/quality-score.png?s=e036d8385a89a1d8f77d098509bb3a18c87f1bcf)](https://scrutinizer-ci.com/g/nick-jones/Phipe/) [![Code Coverage](https://scrutinizer-ci.com/g/nick-jones/Phipe/badges/coverage.png?s=09d7327f81735048a529d6a39a3585036cfd2f21)](https://scrutinizer-ci.com/g/nick-jones/Phipe/)
+
 Phipe is a parallel connection handling library, for PHP.
 
 It provides abstractions on top of PHP streams and the PHP [Event extension](http://php.net/event) to provide a clean
