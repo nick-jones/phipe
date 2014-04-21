@@ -7,7 +7,7 @@ php:
 
 before_script:
   - echo -e "\n\n\n\n\n" | pecl install -f event
-  - echo "extension=event.so" >> /etc/php5/cli/php.ini
+  - echo "extension=event.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer self-update
   - composer install --dev --no-interaction --prefer-dist
 
