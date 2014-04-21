@@ -9,11 +9,8 @@ tools:
     filter:
       excluded_paths:
         - 'vendor/*'
-  php_code_coverage:
+  external_code_coverage:
     enabled: true
-    filter:
-      paths:
-        - 'lib/*'
   php_pdepend:
     enabled: true
     configuration_file: null
