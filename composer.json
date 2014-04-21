@@ -17,8 +17,7 @@
     },
 
     "require-dev": {
-        "phpunit/phpunit": "3.7.*",
-        "ext-event": "*"
+        "phpunit/phpunit": "3.7.*"
     },
 
     "autoload": {
