@@ -40,8 +40,7 @@ tools:
       excluded_paths:
         - 'vendor/*'
       paths: {  }
-before_commands:
-  - "composer install --prefer-source"
-after_commands: {  }
-artifacts: {  }
-build_failure_conditions: {  }
+before_commands: { }
+after_commands: { }
+artifacts: { }
+build_failure_conditions: { }
