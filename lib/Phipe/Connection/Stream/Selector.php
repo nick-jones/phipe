@@ -58,7 +58,9 @@ class Selector {
      * @throws SelectFailureException
      */
     protected function streamSelect(array $streams, $timeout) {
-        $changed = stream_select($streams, $write = NULL, $except = NULL, 0, $timeout);
+        $write = NULL;
+        $except = NULL;
+        $changed = stream_select($streams, $write, $except, 0, $timeout);
 
         if ($changed === false) {
             throw new SelectFailureException('Select strategy indicated failure');
