@@ -9,6 +9,7 @@ tools:
     filter:
       excluded_paths:
         - 'vendor/*'
+        - 'example/*'
   external_code_coverage:
     enabled: true
     filter:
@@ -23,6 +24,7 @@ tools:
     filter:
       excluded_paths:
         - 'vendor/*'
+        - 'example/*'
   php_hhvm:
     enabled: true
   php_sim:
