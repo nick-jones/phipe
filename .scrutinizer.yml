@@ -26,6 +26,8 @@ tools:
     excluded_dirs: ["coverage", "example", "test", "vendor"]
   php_analyzer:
     enabled: true
+    filter:
+      paths: ["lib/*"]
   php_hhvm:
     enabled: true
   php_mess_detector:
