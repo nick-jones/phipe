@@ -4,8 +4,6 @@ namespace Phipe\Connection\Stream;
 
 use Phipe\ResourceTestHelper;
 
-require_once __DIR__ . '/../../../helper/ResourceTestHelper.php';
-
 class StreamConnectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
