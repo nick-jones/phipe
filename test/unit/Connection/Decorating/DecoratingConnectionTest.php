@@ -27,7 +27,7 @@ class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase
     public function testSetConnection()
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Connection\Connection $connection */
-        $connection = $this->getMock('\Phipe\Connection\Connection');;
+        $connection = $this->getMock('\Phipe\Connection\Connection');
 
         $this->connection->setConnection($connection);
 
