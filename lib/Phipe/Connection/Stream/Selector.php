@@ -61,8 +61,8 @@ class Selector
      */
     protected function streamSelect(array $streams, $timeout)
     {
-        $write = null;
-        $except = null;
+        $write = array();
+        $except = array();
         $changed = stream_select($streams, $write, $except, 0, $timeout);
 
         if ($changed === false) {
