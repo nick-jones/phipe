@@ -60,7 +60,7 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($payload, $result);
     }
 
-    public function testWrite_NullHandle()
+    public function testWriteWithNullHandle()
     {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Stream socket is not writable');
 
@@ -80,14 +80,14 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('resource', $this->stream->getStream());
     }
 
-    public function testConnect_AlreadyConnected()
+    public function testConnectWhenAlreadyConnected()
     {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Already connected');
 
         $this->stream->connect();
     }
 
-    public function testConnect_Failure()
+    public function testConnectFailure()
     {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Stream connection failed');
 
@@ -106,7 +106,7 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->stream->getStream());
     }
 
-    public function testDisconnect_AlreadyDisconnected()
+    public function testDisconnectWhenAlreadyDisconnected()
     {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Already disconnected');
 
@@ -114,7 +114,7 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase
         $this->stream->disconnect();
     }
 
-    public function testGetState_Connected()
+    public function testGetStateWhenConnected()
     {
         $state = $this->stream->getState();
         $this->assertGreaterThan(0, StreamConnection::STATE_CONNECTED & $state);
@@ -122,7 +122,7 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, StreamConnection::STATE_EOF & $state);
     }
 
-    public function testGetState_DataAvailable()
+    public function testGetStateWhenDataAvailable()
     {
         $this->stream->setReadBuffer('mock');
 
@@ -132,7 +132,7 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, StreamConnection::STATE_EOF & $state);
     }
 
-    public function testGetState_EndOfFile()
+    public function testGetStateWhenEndOfFile()
     {
         $this->resourceTestHelper->fetchPayload();
 
@@ -142,7 +142,7 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, StreamConnection::STATE_EOF & $state);
     }
 
-    public function testGetState_Disconnected()
+    public function testGetStateWhenDisconnected()
     {
         $this->resourceTestHelper->close();
 
@@ -159,7 +159,7 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('mock', $this->stream->read());
     }
 
-    public function testPopulateReadBuffer_NullHandle()
+    public function testPopulateReadBufferWithNullHandle()
     {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Stream socket is not readable');
 

@@ -29,7 +29,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result, 'Connection must indicate it has reached EOF');
     }
 
-    public function testIsEndOfFile_NotEnded()
+    public function testIsEndOfFileWithNonTerminated()
     {
         $this->connection
             ->expects($this->once())
@@ -53,7 +53,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result, 'Connection must indicate it is connected');
     }
 
-    public function testIsConnected_NotConnected()
+    public function testIsConnectedWhenNotConnected()
     {
         $this->connection
             ->expects($this->once())
@@ -77,7 +77,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result, 'Connection must indicate it is disconnected');
     }
 
-    public function testIsDisconnected_NotDisconnected()
+    public function testIsDisconnectedWhenNotDisconnected()
     {
         $this->connection
             ->expects($this->once())

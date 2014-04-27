@@ -66,7 +66,7 @@ class SequentialDelayedTest extends \PHPUnit_Framework_TestCase
         $this->strategy->performReconnect($pool);
     }
 
-    public function testReconnect_FutureWaitUntil()
+    public function testReconnectWithFutureWaitUntil()
     {
         $this->setUpStrategy(time() + 3600);
 

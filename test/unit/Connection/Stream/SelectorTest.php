@@ -29,7 +29,7 @@ class SelectorTest extends \PHPUnit_Framework_TestCase
         $this->selector->select($expectedStreams, $expectedTimeout);
     }
 
-    public function testSleepingStreamSelect_NoStreams()
+    public function testSleepingStreamSelectWithNoStreams()
     {
         $streams = array();
 
@@ -39,7 +39,7 @@ class SelectorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($streams, $results);
     }
 
-    public function testSleepingStreamSelect_SingleStream()
+    public function testSleepingStreamSelectWithSingleStream()
     {
         $address = 'tcp://127.0.0.1:83751';
 

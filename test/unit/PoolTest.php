@@ -60,7 +60,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, count($this->pool));
     }
 
-    public function testFilter_Inclusion()
+    public function testFilterWithValueInclusion()
     {
         $connections = array(
             $this->createMockConnection(),
@@ -79,7 +79,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($result));
     }
 
-    public function testFilter_Exclusion()
+    public function testFilterWithValueExclusion()
     {
         $this->pool->setConnections(
             array(

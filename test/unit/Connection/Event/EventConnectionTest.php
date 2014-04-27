@@ -106,7 +106,7 @@ class EventConnectionTest extends \PHPUnit_Framework_TestCase
         $this->event->eventRead(null);
     }
 
-    public function testEventStatus_Connected()
+    public function testEventStatusWithConnectedEvent()
     {
         $this->observer->expects($this->once())
             ->method('update')
@@ -115,7 +115,7 @@ class EventConnectionTest extends \PHPUnit_Framework_TestCase
         $this->event->eventStatus(null, \EventBufferEvent::CONNECTED);
     }
 
-    public function testEventStatus_EOF()
+    public function testEventStatusWithEOFEvent()
     {
         $this->observer->expects($this->once())
             ->method('update')
@@ -124,7 +124,7 @@ class EventConnectionTest extends \PHPUnit_Framework_TestCase
         $this->event->eventStatus(null, \EventBufferEvent::EOF);
     }
 
-    public function testEventStatus_Error()
+    public function testEventStatusWithErrorEvent()
     {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'EventBufferEvent received error status');
 

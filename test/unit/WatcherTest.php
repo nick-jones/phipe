@@ -47,7 +47,7 @@ class WatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->watcher, $result);
     }
 
-    public function testOn_InvalidEvent()
+    public function testOnWithInvalidEvent()
     {
         $this->setExpectedException('\InvalidArgumentException', 'Event "mock" is unrecognised');
 
@@ -76,7 +76,7 @@ class WatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $calls);
     }
 
-    public function testUpdate_NonListeningEvent()
+    public function testUpdateWithNonListeningEvent()
     {
         $connection = $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80));
 
@@ -90,7 +90,7 @@ class WatcherTest extends \PHPUnit_Framework_TestCase
         $this->watcher->update($connection, Connection::EVENT_DISCONNECT);
     }
 
-    public function testUpdate_NonConnection()
+    public function testUpdateWithNonConnection()
     {
         $subject = $this->getMock('\SplSubject');
 

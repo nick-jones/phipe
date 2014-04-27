@@ -74,7 +74,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->session->hasWork());
     }
 
-    public function testHasWork_None()
+    public function testHasWorkWithNoneAvailable()
     {
         $this->pool->expects($this->once())
             ->method('count')

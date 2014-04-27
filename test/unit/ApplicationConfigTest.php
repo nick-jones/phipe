@@ -46,7 +46,7 @@ class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testCreateDefaultStrategies_NoReconnect()
+    public function testCreateDefaultStrategiesWithNoReconnect()
     {
         $this->container['reconnect'] = false;
         $this->assertEquals(
