@@ -39,13 +39,13 @@ class StreamProber implements Prober
 
         // Resolve any changed resource handles
         $changedResources = $this->resolveChangedResources(
-        // Translate our connections to an array of resource handles
+            // Translate our connections to an array of resource handles
             $this->connectionsToResources($connections)
         );
 
         // Populate the read buffers of those changed Connection instances
         $this->populateConnectionReadBuffers(
-        // Translate the changed resource handles to an array of Connection instances
+            // Translate the changed resource handles to an array of Connection instances
             $this->resourcesToConnections($changedResources, $connections)
         );
     }
