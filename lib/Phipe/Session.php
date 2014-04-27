@@ -2,7 +2,7 @@
 
 namespace Phipe;
 
-use Phipe\Pool;
+use Phipe\Loop\Worker;
 use Phipe\Connection\Prober;
 use Phipe\Strategy\Connect;
 use Phipe\Strategy\Disconnect;
@@ -16,7 +16,8 @@ use Phipe\Strategy\ActivityDetect;
  *
  * @package Phipe
  */
-class Session implements \Phipe\Loop\Worker {
+class Session implements Worker
+{
     /**
      * The pool instance to be managed.
      *
@@ -41,7 +42,8 @@ class Session implements \Phipe\Loop\Worker {
      * @param Prober $prober
      * @param array|ApplicationConfig $strategies
      */
-    public function __construct(Pool $pool, Prober $prober, $strategies) {
+    public function __construct(Pool $pool, Prober $prober, $strategies)
+    {
         $this->pool = $pool;
         $this->prober = $prober;
         $this->strategies = $strategies;
@@ -50,7 +52,8 @@ class Session implements \Phipe\Loop\Worker {
     /**
      * Sets up the Pool ready to be worked.
      */
-    public function initialise() {
+    public function initialise()
+    {
         $this->getConnectStrategy()
             ->performConnect($this->pool);
     }
@@ -59,7 +62,8 @@ class Session implements \Phipe\Loop\Worker {
      * Works the Pool. Resolves any changed connections, and attempts to reconnect any dropped connections, if
      * applicable.
      */
-    public function work() {
+    public function work()
+    {
         $this->getActivityDetectStrategy()
             ->performDetect($this->pool, $this->prober);
 
@@ -75,35 +79,40 @@ class Session implements \Phipe\Loop\Worker {
      *
      * @return bool
      */
-    public function hasWork() {
+    public function hasWork()
+    {
         return count($this->pool) > 0;
     }
 
     /**
      * @return Connect
      */
-    protected function getConnectStrategy() {
+    protected function getConnectStrategy()
+    {
         return $this->strategies['connect'];
     }
 
     /**
      * @return Reconnect
      */
-    protected function getReconnectStrategy() {
+    protected function getReconnectStrategy()
+    {
         return $this->strategies['reconnect'];
     }
 
     /**
      * @return Disconnect
      */
-    protected function getDisconnectStrategy() {
+    protected function getDisconnectStrategy()
+    {
         return $this->strategies['disconnect'];
     }
 
     /**
      * @return ActivityDetect
      */
-    protected function getActivityDetectStrategy() {
+    protected function getActivityDetectStrategy()
+    {
         return $this->strategies['activity_detect'];
     }
 }

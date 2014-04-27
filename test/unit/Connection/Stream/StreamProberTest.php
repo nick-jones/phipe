@@ -2,7 +2,8 @@
 
 namespace Phipe\Connection\Stream;
 
-class StreamProberTest extends \PHPUnit_Framework_TestCase {
+class StreamProberTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var StreamProber
      */
@@ -13,12 +14,14 @@ class StreamProberTest extends \PHPUnit_Framework_TestCase {
      */
     protected $selector;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->selector = $this->getMock('\Phipe\Connection\Stream\Selector');
         $this->prober = new StreamProber($this->selector);
     }
 
-    public function testProbe() {
+    public function testProbe()
+    {
         $stream1 = fopen('php://memory', 'r');
         $stream2 = fopen('php://memory', 'r');
 
@@ -46,7 +49,8 @@ class StreamProberTest extends \PHPUnit_Framework_TestCase {
      * @param resource $stream The value to be returned by the "getStream" method
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function createMockConnection($stream) {
+    protected function createMockConnection($stream)
+    {
         $connection = $this->getMock('\Phipe\Connection\Stream\StreamConnection', array(), array('127.0.0.1', 80));
 
         $connection->expects($this->any())

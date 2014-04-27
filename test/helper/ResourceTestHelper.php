@@ -7,7 +7,8 @@ namespace Phipe;
  *
  * @package Phipe
  */
-class ResourceTestHelper {
+class ResourceTestHelper
+{
     /**
      * @var resource
      */
@@ -16,14 +17,16 @@ class ResourceTestHelper {
     /**
      * @param resource $handle The resource handle to be used within the helper methods
      */
-    public function __construct($handle) {
+    public function __construct($handle)
+    {
         $this->handle = $handle;
     }
 
     /**
      * Closes the resource handle, if it's open.
      */
-    public function close() {
+    public function close()
+    {
         if (is_resource($this->handle)) {
             fclose($this->handle);
         }
@@ -35,7 +38,8 @@ class ResourceTestHelper {
      *
      * @param string $payload
      */
-    public function addPayload($payload) {
+    public function addPayload($payload)
+    {
         $position = ftell($this->handle);
         fwrite($this->handle, $payload);
         fseek($this->handle, $position);
@@ -46,7 +50,8 @@ class ResourceTestHelper {
      *
      * @return string
      */
-    public function fetchPayload() {
+    public function fetchPayload()
+    {
         rewind($this->handle);
         $payload = '';
 

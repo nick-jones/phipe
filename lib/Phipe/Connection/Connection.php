@@ -8,7 +8,8 @@ namespace Phipe\Connection;
  *
  * @package Phipe
  */
-abstract class Connection implements \SplSubject {
+abstract class Connection implements \SplSubject
+{
     /**
      * Indicates that the connection is active
      */
@@ -79,7 +80,8 @@ abstract class Connection implements \SplSubject {
      * @param int|null $port
      * @param bool $ssl
      */
-    public function __construct($host = NULL, $port = NULL, $ssl = FALSE) {
+    public function __construct($host = null, $port = null, $ssl = false)
+    {
         $this->host = $host;
         $this->port = $port;
         $this->ssl = $ssl;
@@ -122,7 +124,8 @@ abstract class Connection implements \SplSubject {
      *
      * @return bool
      */
-    public function isEndOfFile() {
+    public function isEndOfFile()
+    {
         return (self::STATE_EOF & $this->getState()) > 0;
     }
 
@@ -131,7 +134,8 @@ abstract class Connection implements \SplSubject {
      *
      * @return bool
      */
-    public function isConnected() {
+    public function isConnected()
+    {
         return (self::STATE_CONNECTED & $this->getState()) > 0;
     }
 
@@ -140,56 +144,64 @@ abstract class Connection implements \SplSubject {
      *
      * @return bool
      */
-    public function isDisconnected() {
+    public function isDisconnected()
+    {
         return !$this->isConnected();
     }
 
     /**
      * @param \SplObjectStorage $observers
      */
-    public function setObservers($observers) {
+    public function setObservers($observers)
+    {
         $this->observers = $observers;
     }
 
     /**
      * @param string $host
      */
-    public function setHost($host) {
+    public function setHost($host)
+    {
         $this->host = $host;
     }
 
     /**
      * @param int $port
      */
-    public function setPort($port) {
+    public function setPort($port)
+    {
         $this->port = $port;
     }
 
     /**
      * @param bool $ssl
      */
-    public function setSsl($ssl) {
+    public function setSsl($ssl)
+    {
         $this->ssl = $ssl;
     }
 
     /**
      * @param \SplObserver $observer
      */
-    public function attach(\SplObserver $observer) {
+    public function attach(\SplObserver $observer)
+    {
         $this->observers->attach($observer);
     }
 
     /**
      * @param \SplObserver $observer
      */
-    public function detach(\SplObserver $observer) {
+    public function detach(\SplObserver $observer)
+    {
         $this->observers->detach($observer);
     }
 
     /**
      * Notifies our observers, which event context optionally supplied.
      */
-    public function notify($event = NULL, $data = NULL) {
+    public function notify($event = null, $data = null)
+    {
         foreach ($this->observers as $observer) {
             $observer->update($this, $event, $data);
         }

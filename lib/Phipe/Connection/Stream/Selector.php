@@ -8,7 +8,8 @@ namespace Phipe\Connection\Stream;
  *
  * @package Phipe\Connection\Stream
  */
-class Selector {
+class Selector
+{
     /**
      * The strategy to use for selecting updated resource handles. Default is the "select OR sleep" strategy.
      *
@@ -23,7 +24,8 @@ class Selector {
      * @param int $timeout
      * @return array
      */
-    public function select(array $streams, $timeout = 500000) {
+    public function select(array $streams, $timeout = 500000)
+    {
         // Call the chose select strategy callback
         $streams = call_user_func($this->getSelectStrategy(), $streams, $timeout);
 
@@ -38,11 +40,11 @@ class Selector {
      * @param int $timeout
      * @return array
      */
-    protected function sleepingStreamSelect(array $streams, $timeout) {
+    protected function sleepingStreamSelect(array $streams, $timeout)
+    {
         if (count($streams) > 0) {
             $streams = $this->streamSelect($streams, $timeout);
-        }
-        else {
+        } else {
             usleep($timeout);
         }
 
@@ -57,9 +59,10 @@ class Selector {
      * @return array
      * @throws SelectFailureException
      */
-    protected function streamSelect(array $streams, $timeout) {
-        $write = NULL;
-        $except = NULL;
+    protected function streamSelect(array $streams, $timeout)
+    {
+        $write = null;
+        $except = null;
         $changed = stream_select($streams, $write, $except, 0, $timeout);
 
         if ($changed === false) {
@@ -72,14 +75,16 @@ class Selector {
     /**
      * @return callable
      */
-    public function getSelectStrategy() {
+    public function getSelectStrategy()
+    {
         return $this->selectStrategy;
     }
 
     /**
      * @param callable $callback
      */
-    public function setSelectStrategy($callback) {
+    public function setSelectStrategy($callback)
+    {
         $this->selectStrategy = $callback;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Phipe\Connection\Event;
 
+use Phipe\Connection\Factory;
+
 /**
  * Factory implementation for the Event implementations of Connection & Prober. Since the Event implementations rely
  * on a shared instance of EventBase, only connections created from a single factory instance should be used with a
@@ -9,7 +11,8 @@ namespace Phipe\Connection\Event;
  *
  * @package Phipe\Connection\Event
  */
-class EventFactory implements \Phipe\Connection\Factory {
+class EventFactory implements Factory
+{
     /**
      * This instance is shared amongst Connections and Probers created via this factory.
      *
@@ -20,7 +23,8 @@ class EventFactory implements \Phipe\Connection\Factory {
     /**
      * @param \EventBase|null $eventBase
      */
-    public function __construct(\EventBase $eventBase = NULL) {
+    public function __construct(\EventBase $eventBase = null)
+    {
         if (!$eventBase) {
             $eventBase = new \EventBase();
         }
@@ -34,7 +38,8 @@ class EventFactory implements \Phipe\Connection\Factory {
      * @param bool $ssl
      * @return EventConnection
      */
-    public function createConnection($host, $port, $ssl = FALSE) {
+    public function createConnection($host, $port, $ssl = false)
+    {
         $connection = new EventConnection($host, $port, $ssl);
         $connection->setEventBase($this->eventBase);
         return $connection;
@@ -43,7 +48,8 @@ class EventFactory implements \Phipe\Connection\Factory {
     /**
      * @return EventProber
      */
-    public function createProber() {
+    public function createProber()
+    {
         return new EventProber($this->eventBase);
     }
 }

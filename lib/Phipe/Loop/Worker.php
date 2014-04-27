@@ -8,7 +8,8 @@ namespace Phipe\Loop;
  *
  * @package Phipe\Loop
  */
-interface Worker {
+interface Worker
+{
     /**
      * This method is called before work beings. Concrete implementations should perform any setup work when this
      * method is called.

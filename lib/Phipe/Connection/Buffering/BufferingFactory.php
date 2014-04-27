@@ -2,6 +2,8 @@
 
 namespace Phipe\Connection\Buffering;
 
+use Phipe\Connection\Factory;
+
 /**
  * Factory class for creating connections and probers of the Buffering flavour. Since this
  * this family of classes just provide decoration, we must receive a factory instance for
@@ -9,16 +11,18 @@ namespace Phipe\Connection\Buffering;
  *
  * @package Phipe\Connection\Buffering
  */
-class BufferingFactory implements \Phipe\Connection\Factory {
+class BufferingFactory implements Factory
+{
     /**
-     * @var \Phipe\Connection\Factory
+     * @var Factory
      */
     protected $factory;
 
     /**
-     * @param \Phipe\Connection\Factory $factory
+     * @param Factory $factory
      */
-    public function __construct(\Phipe\Connection\Factory $factory) {
+    public function __construct(Factory $factory)
+    {
         $this->factory = $factory;
     }
 
@@ -28,7 +32,8 @@ class BufferingFactory implements \Phipe\Connection\Factory {
      * @param bool $ssl
      * @return BufferingConnection
      */
-    public function createConnection($host, $port, $ssl = FALSE) {
+    public function createConnection($host, $port, $ssl = false)
+    {
         return new BufferingConnection(
             $this->factory->createConnection($host, $port, $ssl)
         );
@@ -37,7 +42,8 @@ class BufferingFactory implements \Phipe\Connection\Factory {
     /**
      * @return BufferingProber
      */
-    public function createProber() {
+    public function createProber()
+    {
         return new BufferingProber(
             $this->factory->createProber()
         );

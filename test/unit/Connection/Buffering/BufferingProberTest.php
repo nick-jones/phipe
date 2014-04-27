@@ -2,7 +2,8 @@
 
 namespace Phipe\Connection\Buffering;
 
-class BufferingProberTest extends \PHPUnit_Framework_TestCase {
+class BufferingProberTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var BufferingProber
      */
@@ -13,12 +14,14 @@ class BufferingProberTest extends \PHPUnit_Framework_TestCase {
      */
     protected $proxied;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->proxied = $this->getMock('\Phipe\Connection\Prober');
         $this->prober = new BufferingProber($this->proxied);
     }
 
-    public function testProbe() {
+    public function testProbe()
+    {
         $proxiedConnection = $this->getMock('\Phipe\Connection\Connection');
 
         $connection = $this->getMock('\Phipe\Connection\Buffering\BufferingConnection');

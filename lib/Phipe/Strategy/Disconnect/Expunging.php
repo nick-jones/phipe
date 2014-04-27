@@ -13,11 +13,13 @@ use Phipe\Connection\Connection;
  *
  * @package Phipe\Strategy\Disconnect
  */
-class Expunging extends Soft {
+class Expunging extends Soft
+{
     /**
      * @param Pool $pool
      */
-    public function performDisconnect(Pool $pool) {
+    public function performDisconnect(Pool $pool)
+    {
         // Perform a soft disconnect first. This will ensure all EOF connections are disconnected.
         parent::performDisconnect($pool);
 
@@ -29,15 +31,20 @@ class Expunging extends Soft {
      *
      * @param Pool $pool The instance from which the connections should be fetched and removed
      */
-    protected function removeDisconnectedFromPool(Pool $pool) {
+    protected function removeDisconnectedFromPool(Pool $pool)
+    {
         // Resolve the disconnected connections
-        $connections = $pool->filter(function(Connection $connection) {
-            return $connection->isDisconnected();
-        });
+        $connections = $pool->filter(
+            function (Connection $connection) {
+                return $connection->isDisconnected();
+            }
+        );
 
         // Remove each one from the Pool
-        $connections->walk(function(Connection $connection) use($pool) {
-            $pool->remove($connection);
-        });
+        $connections->walk(
+            function (Connection $connection) use ($pool) {
+                $pool->remove($connection);
+            }
+        );
     }
 }

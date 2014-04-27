@@ -2,13 +2,16 @@
 
 namespace Phipe\Connection\Event;
 
+use Phipe\Connection\Prober;
+
 /**
  * Prober implementation for use with Event based connections. This simply asks the EventBase instance to wait for
  * changes with EventBufferEvent instances associated with it.
  *
  * @package Phipe\Connection\Event
  */
-class EventProber implements \Phipe\Connection\Prober {
+class EventProber implements Prober
+{
     /**
      * @var \EventBase
      */
@@ -17,7 +20,8 @@ class EventProber implements \Phipe\Connection\Prober {
     /**
      * @param \EventBase $eventBase
      */
-    public function __construct($eventBase) {
+    public function __construct($eventBase)
+    {
         $this->eventBase = $eventBase;
     }
 
@@ -28,7 +32,8 @@ class EventProber implements \Phipe\Connection\Prober {
      *
      * @param EventConnection[] $connections
      */
-    public function probe(array $connections) {
+    public function probe(array $connections)
+    {
         $this->eventBase->loop(\EventBase::LOOP_ONCE);
     }
 }

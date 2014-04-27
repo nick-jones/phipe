@@ -5,7 +5,8 @@ namespace Phipe\Connection\Event;
 require_once __DIR__ . '/../../../helper/Stub/EventBufferEvent.php';
 require_once __DIR__ . '/../../../helper/Stub/EventBase.php';
 
-class EventConnectionTest extends \PHPUnit_Framework_TestCase {
+class EventConnectionTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var EventConnection
      */
@@ -21,7 +22,8 @@ class EventConnectionTest extends \PHPUnit_Framework_TestCase {
      */
     protected $observer;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $eventBase = $this->getMock('\Phipe\Stub\EventBase');
         $this->bufferEvent = $this->getMock('\Phipe\Stub\EventBufferEvent', array(), array($eventBase));
         $this->observer = $this->getMock('\SplObserver');
@@ -31,7 +33,8 @@ class EventConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->event->attach($this->observer);
     }
 
-    public function testConnect() {
+    public function testConnect()
+    {
         $this->bufferEvent->expects($this->once())
             ->method('setCallbacks');
 
@@ -45,7 +48,8 @@ class EventConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->event->connect();
     }
 
-    public function testDisconnect() {
+    public function testDisconnect()
+    {
         $this->observer->expects($this->once())
             ->method('update')
             ->with($this->equalTo($this->event), $this->equalTo(\Phipe\Connection\Connection::EVENT_DISCONNECT));
@@ -56,7 +60,8 @@ class EventConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->event->disconnect();
     }
 
-    public function testRead() {
+    public function testRead()
+    {
         $expected = 'foo';
 
         $input = $this->getMock('\EventBuffer');
@@ -73,7 +78,8 @@ class EventConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $result);
     }
 
-    public function testWrite() {
+    public function testWrite()
+    {
         $data = 'foo';
 
         $output = $this->getMock('\EventBuffer');
@@ -89,52 +95,59 @@ class EventConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->event->write($data);
     }
 
-    public function testGetState() {
+    public function testGetState()
+    {
         $this->assertEquals(0, $this->event->getState());
     }
 
-    public function testEventRead() {
+    public function testEventRead()
+    {
         $this->observer->expects($this->once())
             ->method('update')
             ->with($this->equalTo($this->event), $this->equalTo(\Phipe\Connection\Connection::EVENT_READ));
 
-        $this->event->eventRead(NULL);
+        $this->event->eventRead(null);
     }
 
-    public function testEventStatus_Connected() {
+    public function testEventStatus_Connected()
+    {
         $this->observer->expects($this->once())
             ->method('update')
             ->with($this->equalTo($this->event), $this->equalTo(\Phipe\Connection\Connection::EVENT_CONNECT));
 
-        $this->event->eventStatus(NULL, \EventBufferEvent::CONNECTED);
+        $this->event->eventStatus(null, \EventBufferEvent::CONNECTED);
     }
 
-    public function testEventStatus_EOF() {
+    public function testEventStatus_EOF()
+    {
         $this->observer->expects($this->once())
             ->method('update')
             ->with($this->equalTo($this->event), $this->equalTo(\Phipe\Connection\Connection::EVENT_EOF));
 
-        $this->event->eventStatus(NULL, \EventBufferEvent::EOF);
+        $this->event->eventStatus(null, \EventBufferEvent::EOF);
     }
 
-    public function testEventStatus_Error() {
+    public function testEventStatus_Error()
+    {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'EventBufferEvent received error status');
 
         $this->observer->expects($this->once())
             ->method('update')
             ->with($this->equalTo($this->event), $this->equalTo(\Phipe\Connection\Connection::EVENT_CONNECT_FAIL));
 
-        $this->event->eventStatus(NULL, \EventBufferEvent::ERROR);
+        $this->event->eventStatus(null, \EventBufferEvent::ERROR);
     }
 
-    public function testCreateBufferEvent() {
+    public function testCreateBufferEvent()
+    {
         $this->event->setEventBase(new \EventBase());
         $bufferEvent = $this->event->createBufferEvent();
 
         $this->assertInstanceOf('\EventBufferEvent', $bufferEvent);
     }
 
-    public function testCreateSslBufferEvent() {
+    public function testCreateSslBufferEvent()
+    {
         $this->event->setEventBase(new \EventBase());
         $bufferEvent = $this->event->createSslBufferEvent();
 

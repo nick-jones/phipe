@@ -2,7 +2,8 @@
 
 namespace Phipe\Connection\Decorating;
 
-class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
+class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var DecoratingConnection
      */
@@ -13,7 +14,8 @@ class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
      */
     protected $proxied;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->proxied = $this->getMock('\Phipe\Connection\Connection');
 
         $this->connection = $this->getMockForAbstractClass(
@@ -22,7 +24,8 @@ class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
         );
     }
 
-    public function testSetConnection() {
+    public function testSetConnection()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Connection\Connection $connection */
         $connection = $this->getMock('\Phipe\Connection\Connection');;
 
@@ -31,11 +34,13 @@ class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($connection, $this->connection->getConnection());
     }
 
-    public function testGetConnection() {
+    public function testGetConnection()
+    {
         $this->assertEquals($this->proxied, $this->connection->getConnection());
     }
 
-    public function testConnect() {
+    public function testConnect()
+    {
         $this->proxied
             ->expects($this->once())
             ->method('connect');
@@ -43,7 +48,8 @@ class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->connection->connect();
     }
 
-    public function testDisconnect() {
+    public function testDisconnect()
+    {
         $this->proxied
             ->expects($this->once())
             ->method('disconnect');
@@ -51,7 +57,8 @@ class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->connection->disconnect();
     }
 
-    public function testWrite() {
+    public function testWrite()
+    {
         $data = 'mock';
 
         $this->proxied
@@ -62,7 +69,8 @@ class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->connection->write($data);
     }
 
-    public function testRead() {
+    public function testRead()
+    {
         $data = 'mock';
 
         $this->proxied
@@ -73,7 +81,8 @@ class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($data, $this->connection->read());
     }
 
-    public function testGetState() {
+    public function testGetState()
+    {
         $state = 0;
 
         $this->proxied
@@ -84,7 +93,8 @@ class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($state, $this->connection->getState());
     }
 
-    public function testSetHost() {
+    public function testSetHost()
+    {
         $host = 'irc.mock.example';
 
         $this->proxied
@@ -95,7 +105,8 @@ class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->connection->setHost($host);
     }
 
-    public function testSetPort() {
+    public function testSetPort()
+    {
         $port = 80;
 
         $this->proxied
@@ -106,8 +117,9 @@ class DecoratingConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->connection->setPort($port);
     }
 
-    public function testSetSsl() {
-        $ssl = TRUE;
+    public function testSetSsl()
+    {
+        $ssl = true;
 
         $this->proxied
             ->expects($this->once())

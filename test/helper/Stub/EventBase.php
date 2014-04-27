@@ -8,11 +8,12 @@ namespace Phipe\Stub;
  *
  * @package Phipe\Stub
  */
-interface EventBase {
+interface EventBase
+{
     /**
      * @param \EventConfig|null $cfg
      */
-    public function __construct (\EventConfig $cfg = NULL);
+    public function __construct(\EventConfig $cfg = null);
 
     /**
      * @return bool
@@ -28,7 +29,7 @@ interface EventBase {
      * @param \EventConfig|null $cfg
      * @return string
      */
-    public function getMethod(\EventConfig $cfg = NULL);
+    public function getMethod(\EventConfig $cfg = null);
 
     /**
      * @return double

@@ -9,7 +9,8 @@ use Phipe\Pool;
  *
  * @package Phipe\Strategy
  */
-interface Disconnect {
+interface Disconnect
+{
     /**
      * @param Pool $pool
      */

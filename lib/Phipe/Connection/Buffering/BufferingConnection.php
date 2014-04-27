@@ -2,6 +2,8 @@
 
 namespace Phipe\Connection\Buffering;
 
+use Phipe\Connection\Decorating\DecoratingConnection;
+
 /**
  * This connection implementation buffers reads and writes until a newline characters is reached.
  * The read data may contain numerous newlines, but will always end on one. Data to be written
@@ -9,7 +11,8 @@ namespace Phipe\Connection\Buffering;
  *
  * @package Phipe\Connection\Buffering
  */
-class BufferingConnection extends \Phipe\Connection\Decorating\DecoratingConnection {
+class BufferingConnection extends DecoratingConnection
+{
     /**
      * @var string
      */
@@ -37,7 +40,8 @@ class BufferingConnection extends \Phipe\Connection\Decorating\DecoratingConnect
      *
      * @param string $data
      */
-    public function write($data) {
+    public function write($data)
+    {
         $data = $this->partialWriteBuffer . $data;
         $this->partialWriteBuffer = $this->stripPartial($data);
 
@@ -49,14 +53,16 @@ class BufferingConnection extends \Phipe\Connection\Decorating\DecoratingConnect
      *
      * @return string
      */
-    public function read() {
+    public function read()
+    {
         return $this->readBuffer;
     }
 
     /**
      * Populates the read buffer for reading.
      */
-    public function populateReadBuffer() {
+    public function populateReadBuffer()
+    {
         $data = $this->partialReadBuffer . parent::read();
 
         $this->partialReadBuffer = $this->stripPartial($data);
@@ -70,14 +76,16 @@ class BufferingConnection extends \Phipe\Connection\Decorating\DecoratingConnect
     /**
      * @param string $readBuffer
      */
-    public function setReadBuffer($readBuffer) {
+    public function setReadBuffer($readBuffer)
+    {
         $this->readBuffer = $readBuffer;
     }
 
     /**
      * Clear the internal read buffer.
      */
-    public function clearReadBuffer() {
+    public function clearReadBuffer()
+    {
         $this->readBuffer = '';
     }
 
@@ -88,7 +96,8 @@ class BufferingConnection extends \Phipe\Connection\Decorating\DecoratingConnect
      * @param string $data The string to be stripped
      * @return string The partial part of the string, if applicable
      */
-    protected function stripPartial(&$data) {
+    protected function stripPartial(&$data)
+    {
         preg_match("#^((?:.*\r?\n)*)(.*)$#D", $data, $matches);
 
         $data = $matches[1];

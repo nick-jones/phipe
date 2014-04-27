@@ -8,7 +8,8 @@ namespace Phipe\Stub;
  *
  * @package Phipe\Stub
  */
-interface EventBufferEvent {
+interface EventBufferEvent
+{
     /**
      * @param \EventBase $base
      * @param resource|null $socket
@@ -17,7 +18,14 @@ interface EventBufferEvent {
      * @param callable|NULL $writecb
      * @param callable|NULL $eventcb
      */
-    public function __construct(\EventBase $base, $socket = NULL, $options = 0, callable $readcb = NULL, callable $writecb = NULL, callable $eventcb = NULL);
+    public function __construct(
+        \EventBase $base,
+        $socket = null,
+        $options = 0,
+        callable $readcb = null,
+        callable $writecb = null,
+        callable $eventcb = null
+    );
 
     /**
      * @param string $addr
@@ -94,7 +102,12 @@ interface EventBufferEvent {
      * @param callable $eventcb
      * @param mixed $arg
      */
-    public function setCallbacks(callable $readcb = NULL, callable $writecb = NULL, callable $eventcb = NULL, $arg = NULL);
+    public function setCallbacks(
+        callable $readcb = null,
+        callable $writecb = null,
+        callable $eventcb = null,
+        $arg = null
+    );
 
     /**
      * @param int $priority
@@ -129,7 +142,13 @@ interface EventBufferEvent {
      * @param int $options
      * @return \EventBufferEvent
      */
-    public static function sslFilter(\EventBase $base, \EventBufferEvent $underlying, \EventSslContext $ctx, $state, $options = 0);
+    public static function sslFilter(
+        \EventBase $base,
+        \EventBufferEvent $underlying,
+        \EventSslContext $ctx,
+        $state,
+        $options = 0
+    );
 
     public function sslRenegotiate();
 

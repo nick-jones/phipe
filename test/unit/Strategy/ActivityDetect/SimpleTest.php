@@ -2,17 +2,20 @@
 
 namespace Phipe\Strategy\ActivityDetect;
 
-class SimpleTest extends \PHPUnit_Framework_TestCase {
+class SimpleTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var Simple
      */
     protected $strategy;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->strategy = new Simple();
     }
 
-    public function testDetect() {
+    public function testDetect()
+    {
         $connections = array(
             $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80))
         );

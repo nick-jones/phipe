@@ -13,38 +13,56 @@ use \Phipe\Connection\Connection;
 
 $watcher = new Watcher();
 
-$watcher->on('connect', function(Connection $connection) {
-    echo 'Connected...' . PHP_EOL;
+$watcher->on(
+    'connect',
+    function (Connection $connection) {
+        echo 'Connected...' . PHP_EOL;
 
-    $connection->write("NICK monkey_brain\n");
-    $connection->write("USER monkey  8 * :monkey'\n");
-});
-
-$watcher->on('connect_fail', function(Connection $connection) {
-    echo 'Connection failed' . PHP_EOL;
-});
-
-$watcher->on('read', function(Connection $connection) {
-    $lines = preg_split("#\r?\n#", $connection->read(), -1, PREG_SPLIT_NO_EMPTY);
-
-    foreach ($lines as $line) {
-        echo "← {$line}\n";
+        $connection->write("NICK monkey_brain\n");
+        $connection->write("USER monkey  8 * :monkey'\n");
     }
-});
+);
 
-$watcher->on('write', function(Connection $connection, $data) {
-    echo "→ {$data}";
-});
+$watcher->on(
+    'connect_fail',
+    function (Connection $connection) {
+        echo 'Connection failed' . PHP_EOL;
+    }
+);
 
-$watcher->on('eof', function(Connection $connection) {
-    echo PHP_EOL;
-    echo 'EOF' . PHP_EOL;
-});
+$watcher->on(
+    'read',
+    function (Connection $connection) {
+        $lines = preg_split("#\r?\n#", $connection->read(), -1, PREG_SPLIT_NO_EMPTY);
 
-$watcher->on('disconnect', function(Connection $connection) {
-    echo PHP_EOL;
-    echo 'Disconnected' . PHP_EOL;
-});
+        foreach ($lines as $line) {
+            echo "← {$line}\n";
+        }
+    }
+);
+
+$watcher->on(
+    'write',
+    function (Connection $connection, $data) {
+        echo "→ {$data}";
+    }
+);
+
+$watcher->on(
+    'eof',
+    function (Connection $connection) {
+        echo PHP_EOL;
+        echo 'EOF' . PHP_EOL;
+    }
+);
+
+$watcher->on(
+    'disconnect',
+    function (Connection $connection) {
+        echo PHP_EOL;
+        echo 'Disconnected' . PHP_EOL;
+    }
+);
 
 $factory = new \Phipe\Connection\Buffering\BufferingFactory(
     new \Phipe\Connection\Stream\StreamFactory()
@@ -58,7 +76,7 @@ $phipe = new \Phipe\Application([
         $watcher
     ],
     'factory' => $factory,
-    'reconnect' => TRUE // If this were FALSE, the loop would exit.
+    'reconnect' => true // If this were FALSE, the loop would exit.
 ]);
 
 $phipe->execute();

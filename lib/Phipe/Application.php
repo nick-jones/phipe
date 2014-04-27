@@ -13,7 +13,8 @@ use Phipe\Connection\Connection;
  *
  * @package Phipe
  */
-class Application {
+class Application
+{
     /**
      * @var ApplicationConfig
      */
@@ -28,14 +29,16 @@ class Application {
      *
      * @param array|ApplicationConfig|NULL $config
      */
-    public function __construct($config = NULL) {
+    public function __construct($config = null)
+    {
         $this->setConfig($config);
     }
 
     /**
      * Sets up all the required components, and runs the Manager via a Loop Runner.
      */
-    public function execute() {
+    public function execute()
+    {
         $pool = $this->getPool();
         $this->preparePool($pool);
 
@@ -55,7 +58,8 @@ class Application {
      *
      * @param Pool $pool
      */
-    protected function preparePool(Pool $pool) {
+    protected function preparePool(Pool $pool)
+    {
         foreach ($this->createConnections() as $connection) {
             $this->attachObserversToConnection($connection);
             $pool->add($connection);
@@ -65,7 +69,8 @@ class Application {
     /**
      * @param Connection $connection
      */
-    protected function attachObserversToConnection(Connection $connection) {
+    protected function attachObserversToConnection(Connection $connection)
+    {
         foreach ($this->getObservers() as $observer) {
             $connection->attach($observer);
         }
@@ -76,7 +81,8 @@ class Application {
      *
      * @return Connection[]
      */
-    protected function createConnections() {
+    protected function createConnections()
+    {
         $connections = array();
 
         foreach ($this->config['connections'] as $connection) {
@@ -99,10 +105,11 @@ class Application {
      * @param array $config
      * @return \Phipe\Connection\Connection
      */
-    protected function createConnectionFromConfig(array $config) {
+    protected function createConnectionFromConfig(array $config)
+    {
         $host = $config['host'];
         $port = $config['port'];
-        $ssl = isset($config['ssl']) ? $config['ssl'] : FALSE;
+        $ssl = isset($config['ssl']) ? $config['ssl'] : false;
 
         return $this->getFactory()
             ->createConnection($host, $port, $ssl);
@@ -114,7 +121,8 @@ class Application {
      *
      * @param array|ApplicationConfig|NULL $config
      */
-    public function setConfig($config) {
+    public function setConfig($config)
+    {
         if (is_array($config)) {
             $config = new ApplicationConfig($config);
         }
@@ -129,7 +137,8 @@ class Application {
     /**
      * @return array|ApplicationConfig
      */
-    protected function getStrategies() {
+    protected function getStrategies()
+    {
         return $this->config['strategies'];
     }
 
@@ -138,28 +147,32 @@ class Application {
      *
      * @return \SplObserver[]
      */
-    protected function getObservers() {
+    protected function getObservers()
+    {
         return $this->config['observers'];
     }
 
     /**
      * @return \Phipe\Connection\Factory
      */
-    protected function getFactory() {
+    protected function getFactory()
+    {
         return $this->config['factory'];
     }
 
     /**
      * @return \Phipe\Pool
      */
-    protected function getPool() {
+    protected function getPool()
+    {
         return $this->config['pool'];
     }
 
     /**
      * @return \Phipe\Loop\Runner
      */
-    protected function getLoop() {
+    protected function getLoop()
+    {
         return $this->config['loop_runner'];
     }
 }

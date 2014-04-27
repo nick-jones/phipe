@@ -2,7 +2,8 @@
 
 namespace Phipe\Connection\Buffering;
 
-class BufferingFactoryTest extends \PHPUnit_Framework_TestCase {
+class BufferingFactoryTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var BufferingFactory
      */
@@ -13,12 +14,14 @@ class BufferingFactoryTest extends \PHPUnit_Framework_TestCase {
      */
     protected $proxied;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->proxied = $this->getMock('\Phipe\Connection\Factory');
         $this->factory = new BufferingFactory($this->proxied);
     }
 
-    public function testCreateConnection() {
+    public function testCreateConnection()
+    {
         $host = '127.0.0.1';
         $port = 80;
 
@@ -32,7 +35,8 @@ class BufferingFactoryTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('Phipe\Connection\Buffering\BufferingConnection', get_class($connection));
     }
 
-    public function testCreateProber() {
+    public function testCreateProber()
+    {
         $this->proxied
             ->expects($this->once())
             ->method('createProber')

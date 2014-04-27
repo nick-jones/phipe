@@ -10,7 +10,8 @@ use Phipe\Pool;
  *
  * @package Phipe\Strategy
  */
-interface Connect {
+interface Connect
+{
     /**
      * @param Pool $pool
      */

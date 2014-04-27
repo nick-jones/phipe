@@ -2,7 +2,8 @@
 
 namespace Phipe\Connection;
 
-class NotificationPropagatorTest extends \PHPUnit_Framework_TestCase {
+class NotificationPropagatorTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var NotificationPropagator
      */
@@ -18,14 +19,16 @@ class NotificationPropagatorTest extends \PHPUnit_Framework_TestCase {
      */
     protected $proxied;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->connection = $this->getMock('\Phipe\Connection\Connection');
         $this->proxied = $this->getMock('\Phipe\Connection\Connection');
 
         $this->notificationPropagator = new NotificationPropagator($this->connection, $this->proxied);
     }
 
-    public function testInitialise() {
+    public function testInitialise()
+    {
         $this->proxied
             ->expects($this->once())
             ->method('attach')
@@ -34,7 +37,8 @@ class NotificationPropagatorTest extends \PHPUnit_Framework_TestCase {
         $this->notificationPropagator->initialise();
     }
 
-    public function testUpdate() {
+    public function testUpdate()
+    {
         $event = 'write';
         $data = 'mock';
 

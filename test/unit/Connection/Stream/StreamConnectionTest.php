@@ -6,7 +6,8 @@ use Phipe\ResourceTestHelper;
 
 require_once __DIR__ . '/../../../helper/ResourceTestHelper.php';
 
-class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
+class StreamConnectionTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var StreamConnection
      */
@@ -26,7 +27,8 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
 
     const TEST_PORT = 83751;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $handle = fopen('php://memory', 'rw');
         $this->resourceTestHelper = new ResourceTestHelper($handle);
         $this->observer = $this->getMock('\SplObserver');
@@ -36,11 +38,13 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->stream->attach($this->observer);
     }
 
-    protected function tearDown() {
+    protected function tearDown()
+    {
         $this->resourceTestHelper->close();
     }
 
-    public function testRead() {
+    public function testRead()
+    {
         $payload = 'hello';
 
         $this->stream->setReadBuffer($payload);
@@ -49,7 +53,8 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($payload, $result);
     }
 
-    public function testWrite() {
+    public function testWrite()
+    {
         $payload = 'hello';
         $this->stream->write($payload);
 
@@ -57,62 +62,70 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($payload, $result);
     }
 
-    public function testWrite_NullHandle() {
+    public function testWrite_NullHandle()
+    {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Stream socket is not writable');
 
         $this->stream->setStream(null);
         $this->stream->write('mock');
     }
 
-    public function testConnect() {
+    public function testConnect()
+    {
         $this->resourceTestHelper = new ResourceTestHelper(
             stream_socket_server(sprintf('tcp://%s:%d', self::TEST_HOST, self::TEST_PORT))
         );
 
-        $this->stream->setStream(NULL);
+        $this->stream->setStream(null);
         $this->stream->connect();
 
         $this->assertInternalType('resource', $this->stream->getStream());
     }
 
-    public function testConnect_AlreadyConnected() {
+    public function testConnect_AlreadyConnected()
+    {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Already connected');
 
         $this->stream->connect();
     }
 
-    public function testConnect_Failure() {
+    public function testConnect_Failure()
+    {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Stream connection failed');
 
         $this->observer->expects($this->once())
             ->method('update')
             ->with($this->equalTo($this->stream), $this->equalTo(\Phipe\Connection\Connection::EVENT_CONNECT_FAIL));
 
-        $this->stream->setStream(NULL);
+        $this->stream->setStream(null);
         $this->stream->connect();
     }
 
-    public function testDisconnect() {
+    public function testDisconnect()
+    {
         $this->stream->disconnect();
 
         $this->assertNull($this->stream->getStream());
     }
 
-    public function testDisconnect_AlreadyDisconnected() {
+    public function testDisconnect_AlreadyDisconnected()
+    {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Already disconnected');
 
         $this->stream->disconnect();
         $this->stream->disconnect();
     }
 
-    public function testGetState_Connected() {
+    public function testGetState_Connected()
+    {
         $state = $this->stream->getState();
         $this->assertGreaterThan(0, StreamConnection::STATE_CONNECTED & $state);
         $this->assertEquals(0, StreamConnection::STATE_DATA_AVAILABLE & $state);
         $this->assertEquals(0, StreamConnection::STATE_EOF & $state);
     }
 
-    public function testGetState_DataAvailable() {
+    public function testGetState_DataAvailable()
+    {
         $this->stream->setReadBuffer('mock');
 
         $state = $this->stream->getState();
@@ -121,7 +134,8 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(0, StreamConnection::STATE_EOF & $state);
     }
 
-    public function testGetState_EndOfFile() {
+    public function testGetState_EndOfFile()
+    {
         $this->resourceTestHelper->fetchPayload();
 
         $state = $this->stream->getState();
@@ -130,14 +144,16 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertGreaterThan(0, StreamConnection::STATE_EOF & $state);
     }
 
-    public function testGetState_Disconnected() {
+    public function testGetState_Disconnected()
+    {
         $this->resourceTestHelper->close();
 
         $state = $this->stream->getState();
         $this->assertEquals(0, $state);
     }
 
-    public function testPopulateReadBuffer() {
+    public function testPopulateReadBuffer()
+    {
         $this->resourceTestHelper->addPayload('mock');
 
         $this->stream->populateReadBuffer();
@@ -145,14 +161,16 @@ class StreamConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('mock', $this->stream->read());
     }
 
-    public function testPopulateReadBuffer_NullHandle() {
+    public function testPopulateReadBuffer_NullHandle()
+    {
         $this->setExpectedException('\Phipe\Connection\ConnectionException', 'Stream socket is not readable');
 
         $this->stream->setStream(null);
         $this->stream->populateReadBuffer();
     }
 
-    public function testClearReadBuffer() {
+    public function testClearReadBuffer()
+    {
         $this->stream->setReadBuffer('mock');
         $this->assertEquals('mock', $this->stream->read());
 

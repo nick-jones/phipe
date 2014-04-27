@@ -7,4 +7,6 @@ namespace Phipe\Connection\Stream;
  *
  * @package Phipe\Connection\Stream
  */
-class SelectFailureException extends \RuntimeException { }
+class SelectFailureException extends \RuntimeException
+{
+}

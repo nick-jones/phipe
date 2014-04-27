@@ -11,7 +11,8 @@ use Phipe\Connection\Connection;
  *
  * @package Phipe
  */
-class Watcher implements \SplObserver {
+class Watcher implements \SplObserver
+{
     /**
      * @var array
      */
@@ -32,7 +33,8 @@ class Watcher implements \SplObserver {
      * @return $this
      * @throws \InvalidArgumentException
      */
-    public function on($event, callable $callback) {
+    public function on($event, callable $callback)
+    {
         if (!array_key_exists($event, $this->eventCallbackMappings)) {
             throw new \InvalidArgumentException(sprintf('Event "%s" is unrecognised', $event));
         }
@@ -47,7 +49,8 @@ class Watcher implements \SplObserver {
      * @param string|null $event
      * @param mixed $data
      */
-    public function update(\SplSubject $subject, $event = NULL, $data = NULL) {
+    public function update(\SplSubject $subject, $event = null, $data = null)
+    {
         if ($subject instanceof Connection) {
             $this->connectionUpdate($subject, $event, $data);
         }
@@ -58,7 +61,8 @@ class Watcher implements \SplObserver {
      * @param string|null $event
      * @param string $data
      */
-    protected function connectionUpdate(Connection $connection, $event, $data) {
+    protected function connectionUpdate(Connection $connection, $event, $data)
+    {
         if (isset($this->eventCallbackMappings[$event])) {
             $this->executeCallbacks($this->eventCallbackMappings[$event], $connection, $data);
         }
@@ -69,7 +73,8 @@ class Watcher implements \SplObserver {
      * @param Connection $connection
      * @param mixed $data
      */
-    protected function executeCallbacks($callbacks, Connection $connection, $data) {
+    protected function executeCallbacks($callbacks, Connection $connection, $data)
+    {
         foreach ($callbacks as $callback) {
             call_user_func($callback, $connection, $data);
         }

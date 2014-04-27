@@ -5,17 +5,20 @@ namespace Phipe\Connection;
 /**
  * @package Phipe
  */
-class ConnectionTest extends \PHPUnit_Framework_TestCase {
+class ConnectionTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|Connection
      */
     protected $connection;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->connection = $this->getMockForAbstractClass('\Phipe\Connection\Connection', array('127.0.0.1', 80));
     }
 
-    public function testIsEndOfFile() {
+    public function testIsEndOfFile()
+    {
         $this->connection
             ->expects($this->once())
             ->method('getState')
@@ -26,7 +29,8 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($result, 'Connection must indicate it has reached EOF');
     }
 
-    public function testIsEndOfFile_NotEnded() {
+    public function testIsEndOfFile_NotEnded()
+    {
         $this->connection
             ->expects($this->once())
             ->method('getState')
@@ -37,7 +41,8 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($result, 'Connection must not indicate it has reached EOF');
     }
 
-    public function testIsConnected() {
+    public function testIsConnected()
+    {
         $this->connection
             ->expects($this->once())
             ->method('getState')
@@ -48,7 +53,8 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($result, 'Connection must indicate it is connected');
     }
 
-    public function testIsConnected_NotConnected() {
+    public function testIsConnected_NotConnected()
+    {
         $this->connection
             ->expects($this->once())
             ->method('getState')
@@ -59,7 +65,8 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($result, 'Connection must not indicate it is connected');
     }
 
-    public function testIsDisconnected() {
+    public function testIsDisconnected()
+    {
         $this->connection
             ->expects($this->once())
             ->method('getState')
@@ -70,7 +77,8 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($result, 'Connection must indicate it is disconnected');
     }
 
-    public function testIsDisconnected_NotDisconnected() {
+    public function testIsDisconnected_NotDisconnected()
+    {
         $this->connection
             ->expects($this->once())
             ->method('getState')
@@ -81,7 +89,8 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($result, 'Connection must not indicate it is disconnected');
     }
 
-    public function testAttach() {
+    public function testAttach()
+    {
         $observer = $this->getMock('\SplObserver');
 
         $storage = $this->getMock('\SplObjectStorage');
@@ -94,7 +103,8 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->connection->attach($observer);
     }
 
-    public function testDetach() {
+    public function testDetach()
+    {
         $observer = $this->getMock('\SplObserver');
 
         $storage = $this->getMock('\SplObjectStorage');
@@ -107,7 +117,8 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->connection->detach($observer);
     }
 
-    public function testNotify() {
+    public function testNotify()
+    {
         $event = 'mock';
 
         $observer = $this->getMock('\SplObserver');

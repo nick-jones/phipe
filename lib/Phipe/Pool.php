@@ -10,13 +10,15 @@ use Phipe\Connection\Connection;
  *
  * @package Phipe
  */
-class Pool implements \Countable {
+class Pool implements \Countable
+{
     /**
      * @var \SplObjectStorage
      */
     protected $connections;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->connections = new \SplObjectStorage();
     }
 
@@ -25,7 +27,8 @@ class Pool implements \Countable {
      *
      * @param Connection $connection
      */
-    public function add(Connection $connection) {
+    public function add(Connection $connection)
+    {
         $this->connections->attach($connection);
     }
 
@@ -34,7 +37,8 @@ class Pool implements \Countable {
      *
      * @param Connection $connection
      */
-    public function remove(Connection $connection) {
+    public function remove(Connection $connection)
+    {
         $this->connections->detach($connection);
     }
 
@@ -43,7 +47,8 @@ class Pool implements \Countable {
      *
      * @param \SplObjectStorage|Connection[] $connections
      */
-    public function setConnections($connections) {
+    public function setConnections($connections)
+    {
         $this->connections = $connections;
     }
 
@@ -53,7 +58,8 @@ class Pool implements \Countable {
      *
      * @param callable $callback
      */
-    public function walk(callable $callback) {
+    public function walk(callable $callback)
+    {
         foreach ($this->connections as $connection) {
             call_user_func($callback, $connection);
         }
@@ -66,7 +72,8 @@ class Pool implements \Countable {
      * @param callable $callback The callback to apply to each Connection.
      * @return Pool A new instance of Pool which contains the filtered Connection instances
      */
-    public function filter(callable $callback) {
+    public function filter(callable $callback)
+    {
         $connections = new self();
 
         foreach ($this->connections as $connection) {
@@ -86,16 +93,20 @@ class Pool implements \Countable {
      * @param int $state The state to search for. Must be a Connection::STATE_* value.
      * @return Pool A new instance of Pool containing only Connection instances holding the supplied state.
      */
-    public function getAllWithState($state) {
-        return $this->filter(function(Connection $connection) use($state) {
-            return $state & $connection->getState();
-        });
+    public function getAllWithState($state)
+    {
+        return $this->filter(
+            function (Connection $connection) use ($state) {
+                return $state & $connection->getState();
+            }
+        );
     }
 
     /**
      * @return int The number of connections contained within this instance.
      */
-    public function count() {
+    public function count()
+    {
         return count($this->connections);
     }
 
@@ -104,7 +115,8 @@ class Pool implements \Countable {
      *
      * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         $connections = array();
 
         foreach ($this->connections as $connection) {

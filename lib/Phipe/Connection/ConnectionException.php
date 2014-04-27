@@ -7,7 +7,8 @@ namespace Phipe\Connection;
  *
  * @package Phipe
  */
-class ConnectionException extends \RuntimeException {
+class ConnectionException extends \RuntimeException
+{
     /**
      * @var Connection
      */
@@ -18,7 +19,8 @@ class ConnectionException extends \RuntimeException {
      * @param Connection $connection
      * @param \Exception $previous
      */
-    public function __construct($message, Connection $connection, \Exception $previous = NULL) {
+    public function __construct($message, Connection $connection, \Exception $previous = null)
+    {
         parent::__construct($message, 0, $previous);
 
         $this->connection = $connection;
@@ -27,7 +29,8 @@ class ConnectionException extends \RuntimeException {
     /**
      * @return Connection
      */
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->connection;
     }
 }

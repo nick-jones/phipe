@@ -11,7 +11,8 @@ use Phipe\Connection\Prober;
  *
  * @package Phipe\Strategy
  */
-interface ActivityDetect {
+interface ActivityDetect
+{
     /**
      * @param Pool $pool
      * @param \Phipe\Connection\Prober $prober

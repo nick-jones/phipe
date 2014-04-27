@@ -4,6 +4,7 @@ namespace Phipe\Strategy\Disconnect;
 
 use Phipe\Pool;
 use Phipe\Connection\Connection;
+use Phipe\Strategy\Disconnect;
 
 /**
  * A disconnection strategy that acts in a "soft" manor. It simply looks for EOF connections and ensures they are then
@@ -12,22 +13,27 @@ use Phipe\Connection\Connection;
  *
  * @package Phipe\Strategy\Disconnect
  */
-class Soft implements \Phipe\Strategy\Disconnect {
+class Soft implements Disconnect
+{
     /**
      *
      */
-    public function performDisconnect(Pool $pool) {
+    public function performDisconnect(Pool $pool)
+    {
         $this->disconnectEndOfFileConnectionsInPool($pool);
     }
 
     /**
      * @param Pool $pool
      */
-    protected function disconnectEndOfFileConnectionsInPool(Pool $pool) {
+    protected function disconnectEndOfFileConnectionsInPool(Pool $pool)
+    {
         $connections = $pool->getAllWithState(Connection::STATE_EOF);
 
-        $connections->walk(function(Connection $connection) {
-            $connection->disconnect();
-        });
+        $connections->walk(
+            function (Connection $connection) {
+                $connection->disconnect();
+            }
+        );
     }
 }

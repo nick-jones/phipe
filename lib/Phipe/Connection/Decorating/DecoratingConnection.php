@@ -12,7 +12,8 @@ use Phipe\Connection\NotificationPropagator;
  *
  * @package Phipe\Connection
  */
-abstract class DecoratingConnection extends \Phipe\Connection\Connection {
+abstract class DecoratingConnection extends Connection
+{
     /**
      * @var Connection
      */
@@ -31,7 +32,8 @@ abstract class DecoratingConnection extends \Phipe\Connection\Connection {
     /**
      * @param Connection $connection
      */
-    public function __construct(Connection $connection = NULL) {
+    public function __construct(Connection $connection = null)
+    {
         $this->setConnection($connection);
 
         parent::__construct(null);
@@ -40,10 +42,11 @@ abstract class DecoratingConnection extends \Phipe\Connection\Connection {
     /**
      * @param Connection|null $connection
      */
-    public function setConnection(Connection $connection = NULL) {
+    public function setConnection(Connection $connection = null)
+    {
         $this->connection = $connection;
 
-        if ($connection !== NULL) {
+        if ($connection !== null) {
             $this->setupNotificationPropagator($connection);
         }
     }
@@ -51,14 +54,16 @@ abstract class DecoratingConnection extends \Phipe\Connection\Connection {
     /**
      * @return Connection
      */
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->connection;
     }
 
     /**
      * @param Connection $connection
      */
-    protected function setupNotificationPropagator(Connection $connection) {
+    protected function setupNotificationPropagator(Connection $connection)
+    {
         $notificationPropagator = new NotificationPropagator($this, $connection, $this->eventIgnores);
         $notificationPropagator->initialise();
 
@@ -68,63 +73,72 @@ abstract class DecoratingConnection extends \Phipe\Connection\Connection {
     /**
      * @param NotificationPropagator $notificationPropagator
      */
-    public function setNotificationPropagator(NotificationPropagator $notificationPropagator) {
+    public function setNotificationPropagator(NotificationPropagator $notificationPropagator)
+    {
         $this->notificationPropagator = $notificationPropagator;
     }
 
     /**
      * Connect to the registered host and port.
      */
-    public function connect() {
+    public function connect()
+    {
         $this->connection->connect();
     }
 
     /**
      * Disconnect the active connection.
      */
-    public function disconnect() {
+    public function disconnect()
+    {
         $this->connection->disconnect();
     }
 
     /**
      * @param string $data
      */
-    public function write($data) {
+    public function write($data)
+    {
         $this->connection->write($data);
     }
 
     /**
      * @return string
      */
-    public function read() {
+    public function read()
+    {
         return $this->connection->read();
     }
 
     /**
      * @return int
      */
-    public function getState() {
+    public function getState()
+    {
         return $this->connection->getState();
     }
 
     /**
      * @param string $host
      */
-    public function setHost($host) {
+    public function setHost($host)
+    {
         $this->connection->setHost($host);
     }
 
     /**
      * @param int $port
      */
-    public function setPort($port) {
+    public function setPort($port)
+    {
         $this->connection->setPort($port);
     }
 
     /**
      * @param bool $ssl
      */
-    public function setSsl($ssl) {
+    public function setSsl($ssl)
+    {
         $this->connection->setSsl($ssl);
     }
 }

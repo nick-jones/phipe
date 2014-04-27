@@ -2,22 +2,26 @@
 
 namespace Phipe\Connection\Stream;
 
-class StreamFactoryTest extends \PHPUnit_Framework_TestCase {
+class StreamFactoryTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var StreamFactory
      */
     protected $factory;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->factory = new StreamFactory();
     }
 
-    public function testCreateConnection() {
+    public function testCreateConnection()
+    {
         $connection = $this->factory->createConnection('127.0.0.1', 80);
         $this->assertEquals('Phipe\Connection\Stream\StreamConnection', get_class($connection));
     }
 
-    public function testCreateProber() {
+    public function testCreateProber()
+    {
         $prober = $this->factory->createProber();
         $this->assertEquals('Phipe\Connection\Stream\StreamProber', get_class($prober));
     }

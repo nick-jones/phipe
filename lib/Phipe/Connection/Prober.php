@@ -9,7 +9,8 @@ namespace Phipe\Connection;
  *
  * @package Phipe
  */
-interface Prober {
+interface Prober
+{
     /**
      * Check whether any of the supplied connections have changed state, and ensure they update their internal state.
      *

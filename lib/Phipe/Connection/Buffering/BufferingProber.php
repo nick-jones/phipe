@@ -2,28 +2,33 @@
 
 namespace Phipe\Connection\Buffering;
 
+use Phipe\Connection\Prober;
+
 /**
  * Prober for BufferingConnections. This utilises the prober of the original connection.
  *
  * @package Phipe\Connection
  */
-class BufferingProber implements \Phipe\Connection\Prober {
+class BufferingProber implements Prober
+{
     /**
-     * @var \Phipe\Connection\Prober
+     * @var Prober
      */
     protected $prober;
 
     /**
-     * @param \Phipe\Connection\Prober $prober
+     * @param Prober $prober
      */
-    public function __construct(\Phipe\Connection\Prober $prober) {
+    public function __construct(Prober $prober)
+    {
         $this->prober = $prober;
     }
 
     /**
      * @param BufferingConnection[] $connections
      */
-    public function probe(array $connections) {
+    public function probe(array $connections)
+    {
         $this->clearConnectionReadBuffers($connections);
         $this->probeProxiedConnections($connections);
         $this->populateConnectionReadBuffers($connections);
@@ -35,7 +40,8 @@ class BufferingProber implements \Phipe\Connection\Prober {
      *
      * @param BufferingConnection[] $connections
      */
-    protected function probeProxiedConnections(array $connections) {
+    protected function probeProxiedConnections(array $connections)
+    {
         $proxied = array();
 
         foreach ($connections as $connection) {
@@ -50,7 +56,8 @@ class BufferingProber implements \Phipe\Connection\Prober {
      *
      * @param BufferingConnection[] $connections
      */
-    protected function clearConnectionReadBuffers(array $connections) {
+    protected function clearConnectionReadBuffers(array $connections)
+    {
         foreach ($connections as $connection) {
             $connection->clearReadBuffer();
         }
@@ -61,7 +68,8 @@ class BufferingProber implements \Phipe\Connection\Prober {
      *
      * @param BufferingConnection[] $connections
      */
-    protected function populateConnectionReadBuffers(array $connections) {
+    protected function populateConnectionReadBuffers(array $connections)
+    {
         foreach ($connections as $connection) {
             $connection->populateReadBuffer();
         }

@@ -7,7 +7,8 @@ namespace Phipe\Connection;
  *
  * @package Phipe
  */
-interface Factory {
+interface Factory
+{
     /**
      * @param $host
      * @param $port
@@ -15,7 +16,7 @@ interface Factory {
      * @internal param array $config
      * @return \Phipe\Connection\Connection
      */
-    public function createConnection($host, $port, $ssl = FALSE);
+    public function createConnection($host, $port, $ssl = false);
 
     /**
      * @return \Phipe\Connection\Prober

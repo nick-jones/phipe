@@ -2,7 +2,8 @@
 
 namespace Phipe\Connection\Buffering;
 
-class BufferingConnectionTest extends \PHPUnit_Framework_TestCase {
+class BufferingConnectionTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var BufferingConnection
      */
@@ -13,7 +14,8 @@ class BufferingConnectionTest extends \PHPUnit_Framework_TestCase {
      */
     protected $proxied;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->proxied = $this->getMock('\Phipe\Connection\Connection');
 
         $this->connection = $this->getMockForAbstractClass(
@@ -22,7 +24,8 @@ class BufferingConnectionTest extends \PHPUnit_Framework_TestCase {
         );
     }
 
-    public function testWrite() {
+    public function testWrite()
+    {
         $this->proxied
             ->expects($this->at(0))
             ->method('write')
@@ -37,7 +40,8 @@ class BufferingConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->connection->write("r\n");
     }
 
-    public function testPopulateReadBuffer() {
+    public function testPopulateReadBuffer()
+    {
         $this->proxied
             ->expects($this->at(0))
             ->method('read')
@@ -57,19 +61,22 @@ class BufferingConnectionTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("bar\n", $this->connection->read());
     }
 
-    public function testSetReadBuffer() {
+    public function testSetReadBuffer()
+    {
         $this->connection->setReadBuffer('mock');
         $this->assertEquals('mock', $this->connection->read());
     }
 
-    public function testClearReadBuffer() {
+    public function testClearReadBuffer()
+    {
         $this->connection->setReadBuffer('mock');
         $this->connection->clearReadBuffer();
 
         $this->assertEquals('', $this->connection->read());
     }
 
-    public function testRead() {
+    public function testRead()
+    {
         $this->connection->setReadBuffer('mock');
         $this->assertEquals('mock', $this->connection->read());
         $this->assertEquals('mock', $this->connection->read()); // idempotent

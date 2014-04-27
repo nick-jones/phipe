@@ -8,12 +8,14 @@ use SimpleConfig\Container;
  *
  * @package Phipe
  */
-class ApplicationConfig extends Container {
+class ApplicationConfig extends Container
+{
     /**
      * @param array $values
      * @param array $factories
      */
-    public function __construct(array $values = array(), array $factories = array()) {
+    public function __construct(array $values = array(), array $factories = array())
+    {
         $values += $this->createDefaultValues();
         $factories += $this->createDefaultFactories();
 
@@ -23,11 +25,12 @@ class ApplicationConfig extends Container {
     /**
      * @return array
      */
-    protected function createDefaultValues() {
+    protected function createDefaultValues()
+    {
         $values = array(
             'connections' => array(),
             'observers' => array(),
-            'reconnect' => TRUE
+            'reconnect' => true
         );
 
         return $values;
@@ -36,18 +39,19 @@ class ApplicationConfig extends Container {
     /**
      * @return array
      */
-    protected function createDefaultFactories() {
+    protected function createDefaultFactories()
+    {
         $factories = array(
-            'factory' => function() {
+            'factory' => function () {
                 return new Connection\Stream\StreamFactory();
             },
-            'pool' => function() {
+            'pool' => function () {
                 return new Pool();
             },
-            'loop_runner' => function() {
+            'loop_runner' => function () {
                 return new Loop\Runner();
             },
-            'strategies' => function() {
+            'strategies' => function () {
                 return new Container(array(), $this->createDefaultStrategies());
             }
         );
@@ -58,20 +62,21 @@ class ApplicationConfig extends Container {
     /**
      * @return array
      */
-    protected function createDefaultStrategies() {
+    protected function createDefaultStrategies()
+    {
         $strategies = array(
-            'connect' => function() {
+            'connect' => function () {
                 return new Strategy\Connect\Sequential();
             },
-            'reconnect' => function() {
+            'reconnect' => function () {
                 return new Strategy\Reconnect\SequentialDelayed();
             },
-            'disconnect' => function() {
+            'disconnect' => function () {
                 return $this['reconnect'] ?
                     new Strategy\Disconnect\Soft() :
                     new Strategy\Disconnect\Expunging();
             },
-            'activity_detect' => function() {
+            'activity_detect' => function () {
                 return new Strategy\ActivityDetect\Simple();
             }
         );

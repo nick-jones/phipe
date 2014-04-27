@@ -7,11 +7,12 @@ namespace Phipe\Loop;
  *
  * @package Phipe\Loop
  */
-class Runner {
+class Runner
+{
     /**
      * @var bool
      */
-    protected $running = FALSE;
+    protected $running = false;
 
     /**
      * Loops, asking the worker to perform it's work. If the worker indicates there is no further work to do, it will
@@ -19,8 +20,9 @@ class Runner {
      *
      * @param Worker $worker
      */
-    public function loop(Worker $worker) {
-        $this->running = TRUE;
+    public function loop(Worker $worker)
+    {
+        $this->running = true;
 
         $worker->initialise();
 
@@ -34,14 +36,16 @@ class Runner {
     /**
      *
      */
-    public function stop() {
-        $this->running = FALSE;
+    public function stop()
+    {
+        $this->running = false;
     }
 
     /**
      * @return bool
      */
-    public function isRunning() {
+    public function isRunning()
+    {
         return $this->running;
     }
 }

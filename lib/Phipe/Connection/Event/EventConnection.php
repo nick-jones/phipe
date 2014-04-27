@@ -2,6 +2,7 @@
 
 namespace Phipe\Connection\Event;
 
+use Phipe\Connection\Connection;
 use Phipe\Connection\ConnectionException;
 
 /**
@@ -15,7 +16,8 @@ use Phipe\Connection\ConnectionException;
  * @link http://www.php.net/manual/en/book.event.php
  * @package Phipe\Connector\Event
  */
-class EventConnection extends \Phipe\Connection\Connection {
+class EventConnection extends Connection
+{
     /**
      * Base instance for use when creating the EventBufferEvent instance
      *
@@ -65,7 +67,8 @@ class EventConnection extends \Phipe\Connection\Connection {
     /**
      * Connect to host & port, as provided in the constructor. To be done: SSL & DNS support.
      */
-    public function connect() {
+    public function connect()
+    {
         $this->applyBufferEventOptions();
 
         $address = sprintf('%s:%d', $this->host, $this->port);
@@ -80,7 +83,8 @@ class EventConnection extends \Phipe\Connection\Connection {
      *
      * @link http://www.php.net/manual/en/event.examples.php
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->destroyBufferEvent();
     }
 
@@ -88,7 +92,8 @@ class EventConnection extends \Phipe\Connection\Connection {
      * Disconnects the connection. The EventBufferEvent class does not have an explicit disconnect method, but it
      * appears calling free and killing the instance should suffice.
      */
-    public function disconnect() {
+    public function disconnect()
+    {
         $this->destroyBufferEvent();
         $this->state = 0;
 
@@ -100,7 +105,8 @@ class EventConnection extends \Phipe\Connection\Connection {
      *
      * @return string
      */
-    public function read() {
+    public function read()
+    {
         return $this->getBufferEvent()
             ->getInput()
             ->read(8192);
@@ -111,7 +117,8 @@ class EventConnection extends \Phipe\Connection\Connection {
      *
      * @param string $data
      */
-    public function write($data) {
+    public function write($data)
+    {
         $this->getBufferEvent()
             ->getOutput()
             ->add($data);
@@ -125,7 +132,8 @@ class EventConnection extends \Phipe\Connection\Connection {
      *
      * @return int
      */
-    public function getState() {
+    public function getState()
+    {
         return $this->state;
     }
 
@@ -134,7 +142,8 @@ class EventConnection extends \Phipe\Connection\Connection {
      *
      * @param \EventBufferEvent $bufferEvent
      */
-    public function eventRead($bufferEvent) {
+    public function eventRead($bufferEvent)
+    {
         $this->state |= self::STATE_DATA_AVAILABLE;
 
         $this->notify(self::EVENT_READ);
@@ -147,7 +156,8 @@ class EventConnection extends \Phipe\Connection\Connection {
      * @param int $events
      * @throws ConnectionException
      */
-    public function eventStatus($bufferEvent, $events) {
+    public function eventStatus($bufferEvent, $events)
+    {
         if ($events & \EventBufferEvent::CONNECTED) {
             $this->state |= self::STATE_CONNECTED;
 
@@ -168,7 +178,8 @@ class EventConnection extends \Phipe\Connection\Connection {
     /**
      * @throws ConnectionException
      */
-    protected function handleEventError() {
+    protected function handleEventError()
+    {
         if (!$this->isConnected()) {
             $this->notify(self::EVENT_CONNECT_FAIL);
         }
@@ -183,10 +194,11 @@ class EventConnection extends \Phipe\Connection\Connection {
     /**
      * Destroys our EventBufferEvent instance
      */
-    protected function destroyBufferEvent() {
+    protected function destroyBufferEvent()
+    {
         if ($this->bufferEvent) {
             $this->bufferEvent->free();
-            $this->bufferEvent = NULL;
+            $this->bufferEvent = null;
         }
     }
 
@@ -196,10 +208,11 @@ class EventConnection extends \Phipe\Connection\Connection {
      *
      * @return \EventBufferEvent
      */
-    public function createBufferEvent() {
+    public function createBufferEvent()
+    {
         $base = $this->getEventBase();
 
-        return new \EventBufferEvent($base, NULL, $this->bufferEventOptions);
+        return new \EventBufferEvent($base, null, $this->bufferEventOptions);
     }
 
     /**
@@ -207,31 +220,34 @@ class EventConnection extends \Phipe\Connection\Connection {
      *
      * @return \EventBufferEvent
      */
-    public function createSslBufferEvent() {
+    public function createSslBufferEvent()
+    {
         $base = $this->getEventBase();
         $context = new \EventSslContext($this->sslMethod, $this->sslOptions);
         $state = \EventBufferEvent::SSL_CONNECTING;
 
-        return \EventBufferEvent::sslSocket($base, NULL, $context, $state, $this->sslMethod);
+        return \EventBufferEvent::sslSocket($base, null, $context, $state, $this->sslMethod);
     }
 
     /**
      *
      */
-    protected function applyBufferEventOptions() {
+    protected function applyBufferEventOptions()
+    {
         $bufferEvent = $this->getBufferEvent();
 
         $readCallback = array($this, 'eventRead');
         $statusCallback = array($this, 'eventStatus');
 
-        $bufferEvent->setCallbacks($readCallback, NULL, $statusCallback);
+        $bufferEvent->setCallbacks($readCallback, null, $statusCallback);
         $bufferEvent->enable(\Event::READ | \Event::WRITE);
     }
 
     /**
      * @param \EventBufferEvent $bufferEvent
      */
-    public function setBufferEvent($bufferEvent) {
+    public function setBufferEvent($bufferEvent)
+    {
         $this->bufferEvent = $bufferEvent;
     }
 
@@ -240,7 +256,8 @@ class EventConnection extends \Phipe\Connection\Connection {
      *
      * @return \EventBufferEvent
      */
-    protected function getBufferEvent() {
+    protected function getBufferEvent()
+    {
         if (!$this->bufferEvent) {
             $this->bufferEvent = $this->ssl
                 ? $this->createSslBufferEvent()
@@ -253,7 +270,8 @@ class EventConnection extends \Phipe\Connection\Connection {
     /**
      * @param \EventBase $eventBase
      */
-    public function setEventBase($eventBase) {
+    public function setEventBase($eventBase)
+    {
         $this->eventBase = $eventBase;
     }
 
@@ -262,7 +280,8 @@ class EventConnection extends \Phipe\Connection\Connection {
      *
      * @return \EventBase
      */
-    public function getEventBase() {
+    public function getEventBase()
+    {
         return $this->eventBase;
     }
 }

@@ -2,7 +2,8 @@
 
 namespace Phipe;
 
-class SessionTest extends \PHPUnit_Framework_TestCase {
+class SessionTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @var Session
      */
@@ -23,10 +24,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
      */
     protected $strategies = array();
 
-    /**
-     *
-     */
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->pool = $this->getMock('\Phipe\Pool');
         $this->prober = $this->getMock('\Phipe\Connection\Prober');
 
@@ -40,7 +39,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
         $this->session = new Session($this->pool, $this->prober, $this->strategies);
     }
 
-    public function testInitialise() {
+    public function testInitialise()
+    {
         $this->strategies['connect']->expects($this->once())
             ->method('performConnect')
             ->with($this->equalTo($this->pool));
@@ -48,7 +48,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
         $this->session->initialise();
     }
 
-    public function testWork() {
+    public function testWork()
+    {
         $this->strategies['reconnect']->expects($this->once())
             ->method('performReconnect')
             ->with($this->equalTo($this->pool));
@@ -64,7 +65,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
         $this->session->work();
     }
 
-    public function testHasWork() {
+    public function testHasWork()
+    {
         $this->pool->expects($this->once())
             ->method('count')
             ->will($this->returnValue(1));
@@ -72,7 +74,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
         $this->assertTrue($this->session->hasWork());
     }
 
-    public function testHasWork_None() {
+    public function testHasWork_None()
+    {
         $this->pool->expects($this->once())
             ->method('count')
             ->will($this->returnValue(0));

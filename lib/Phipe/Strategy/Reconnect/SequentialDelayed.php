@@ -5,6 +5,7 @@ namespace Phipe\Strategy\Reconnect;
 use Phipe\Connection\ConnectionException;
 use Phipe\Pool;
 use Phipe\Connection\Connection;
+use Phipe\Strategy\Reconnect;
 
 /**
  * A simple implementation of the Reconnection strategy interface. This class will attempt to reconnect *all*
@@ -12,7 +13,8 @@ use Phipe\Connection\Connection;
  *
  * @package Phipe\Strategy\Reconnect
  */
-class SequentialDelayed implements \Phipe\Strategy\Reconnect {
+class SequentialDelayed implements Reconnect
+{
     /**
      * The delay, in seconds, to wait between each reconnection attempt.
      *
@@ -31,11 +33,12 @@ class SequentialDelayed implements \Phipe\Strategy\Reconnect {
      * @param int $delay Delay to wait before attempting to reconnect any dropped connections.
      * @param int|null $waitUntil Time at which the next reconnect attempt should commence.
      */
-    public function __construct($delay = 30, $waitUntil = NULL) {
+    public function __construct($delay = 30, $waitUntil = null)
+    {
         $this->delay = $delay;
         $this->waitUntil = $waitUntil;
 
-        if ($waitUntil === NULL) {
+        if ($waitUntil === null) {
             $this->updateWaitUntil();
         }
     }
@@ -43,7 +46,8 @@ class SequentialDelayed implements \Phipe\Strategy\Reconnect {
     /**
      * @param Pool $pool
      */
-    public function performReconnect(Pool $pool) {
+    public function performReconnect(Pool $pool)
+    {
         if (time() >= $this->waitUntil) {
             $this->reconnectDisconnectedInPool($pool);
             $this->updateWaitUntil();
@@ -53,7 +57,8 @@ class SequentialDelayed implements \Phipe\Strategy\Reconnect {
     /**
      * Increases the wait until time by the delay value.
      */
-    protected function updateWaitUntil() {
+    protected function updateWaitUntil()
+    {
         $this->waitUntil = time() + $this->delay;
     }
 
@@ -62,7 +67,8 @@ class SequentialDelayed implements \Phipe\Strategy\Reconnect {
      *
      * @param Pool $pool
      */
-    protected function reconnectDisconnectedInPool(Pool $pool) {
+    protected function reconnectDisconnectedInPool(Pool $pool)
+    {
         $this->reconnectConnections(
             $this->resolveDisconnectedInPool($pool)
         );
@@ -74,10 +80,13 @@ class SequentialDelayed implements \Phipe\Strategy\Reconnect {
      * @param Pool $pool
      * @return Pool
      */
-    protected function resolveDisconnectedInPool(Pool $pool) {
-        return $pool->filter(function(Connection $connection) {
-            return $connection->isDisconnected();
-        });
+    protected function resolveDisconnectedInPool(Pool $pool)
+    {
+        return $pool->filter(
+            function (Connection $connection) {
+                return $connection->isDisconnected();
+            }
+        );
     }
 
     /**
@@ -85,14 +94,16 @@ class SequentialDelayed implements \Phipe\Strategy\Reconnect {
      *
      * @param Pool $pool
      */
-    protected function reconnectConnections(Pool $pool) {
-        $pool->walk(function(Connection $connection) {
-            try {
-                $connection->connect();
+    protected function reconnectConnections(Pool $pool)
+    {
+        $pool->walk(
+            function (Connection $connection) {
+                try {
+                    $connection->connect();
+                } catch (ConnectionException $e) {
+                    // Cannot reconnect for whatever reason, we'll try again later.
+                }
             }
-            catch (ConnectionException $e) {
-                // Cannot reconnect for whatever reason, we'll try again later.
-            }
-        });
+        );
     }
 }
