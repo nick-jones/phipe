@@ -2,8 +2,10 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use \Phipe\Watcher;
-use \Phipe\Connection\Connection;
+use Phipe\Application;
+use Phipe\Watcher;
+use Phipe\Connection;
+use Phipe\Connection\Event\Factory;
 
 $watcher = new Watcher();
 
@@ -54,14 +56,14 @@ $watcher->on(
     }
 );
 
-$phipe = new \Phipe\Application([
+$phipe = new Application([
     'connections' => [
         ['host' => '93.184.216.119', 'port' => 80]
     ],
     'observers' => [
         $watcher
     ],
-    'factory' => new \Phipe\Connection\Event\EventFactory(),
+    'factory' => new Factory(),
     'reconnect' => false
 ]);
 

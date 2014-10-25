@@ -15,7 +15,7 @@ interface ActivityDetect
 {
     /**
      * @param Pool $pool
-     * @param \Phipe\Connection\Prober $prober
+     * @param Prober $prober
      */
     public function performDetect(Pool $pool, Prober $prober);
 }

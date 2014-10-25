@@ -2,7 +2,7 @@
 
 namespace Phipe;
 
-use Phipe\Connection\Connection;
+use Phipe\Connection;
 
 /**
  * Convenience class for watching connections. This implements the SplObserver interface, and provides a simple

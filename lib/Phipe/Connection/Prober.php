@@ -2,6 +2,8 @@
 
 namespace Phipe\Connection;
 
+use Phipe\Connection;
+
 /**
  * The Probers role is to look for changed connections. It does not have to return any information, it should simply
  * ensure that those connections update their state, so observers can continue to watch their state, and, if applicable,

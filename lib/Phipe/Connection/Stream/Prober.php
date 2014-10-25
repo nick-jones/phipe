@@ -2,7 +2,7 @@
 
 namespace Phipe\Connection\Stream;
 
-use Phipe\Connection\Prober;
+use Phipe\Connection\Prober as BaseProber;
 
 /**
  * Provides Probing behaviour for Stream Connection instances. This makes use of stream_select to wait for changed
@@ -10,7 +10,7 @@ use Phipe\Connection\Prober;
  *
  * @package Phipe\Connection\Stream
  */
-class StreamProber implements Prober
+class Prober implements BaseProber
 {
     /**
      * An instance that provides select() like behaviour on file descriptors.
@@ -30,7 +30,7 @@ class StreamProber implements Prober
     /**
      * Probes the provided connections for activity.
      *
-     * @param StreamConnection[] $connections
+     * @param Connection[] $connections
      */
     public function probe(array $connections)
     {
@@ -66,7 +66,7 @@ class StreamProber implements Prober
     /**
      * Clears the read buffers of the provided connections.
      *
-     * @param StreamConnection[] $connections
+     * @param Connection[] $connections
      */
     protected function clearConnectionReadBuffers(array $connections)
     {
@@ -78,7 +78,7 @@ class StreamProber implements Prober
     /**
      * Requests that the provided Connection instances populate their own read buffer.
      *
-     * @param StreamConnection[] $connections
+     * @param Connection[] $connections
      */
     protected function populateConnectionReadBuffers(array $connections)
     {
@@ -90,7 +90,7 @@ class StreamProber implements Prober
     /**
      * Converts an array of Connection instances into an array of resource handles.
      *
-     * @param StreamConnection[] $connections The instances to be translated
+     * @param Connection[] $connections The instances to be translated
      * @return resource[] The resource handles associated with the provided instances
      */
     protected function connectionsToResources(array $connections)
@@ -110,7 +110,7 @@ class StreamProber implements Prober
      * array of Connections. This can only be used with resources extracted via the connectionsToResources().
      *
      * @param resource[] $resources Resource handles to be mapped to Connections
-     * @param StreamConnection[] $existingConnections Connections that should contain the associated resource handles
+     * @param Connection[] $existingConnections Connections that should contain the associated resource handles
      * @return array
      */
     protected function resourcesToConnections($resources, $existingConnections)

@@ -2,7 +2,7 @@
 
 namespace Phipe;
 
-use Phipe\Connection\Connection;
+use Phipe\Connection;
 
 /**
  * @package Phipe
@@ -160,7 +160,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMockConnection($state = 0)
     {
-        $connection = $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80));
 
         $connection->expects($this->any())
             ->method('getState')

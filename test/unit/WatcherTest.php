@@ -2,7 +2,7 @@
 
 namespace Phipe;
 
-use Phipe\Connection\Connection;
+use Phipe\Connection;
 
 /**
  * @package Phipe
@@ -62,7 +62,7 @@ class WatcherTest extends \PHPUnit_Framework_TestCase
     {
         $calls = 0;
         $event = Connection::EVENT_CONNECT;
-        $connection = $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80));
 
         $this->watcher->on(
             $event,
@@ -78,7 +78,7 @@ class WatcherTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdateWithNonListeningEvent()
     {
-        $connection = $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80));
 
         $this->watcher->on(
             Connection::EVENT_CONNECT,

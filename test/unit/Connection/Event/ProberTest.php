@@ -2,10 +2,10 @@
 
 namespace Phipe\Connection\Event;
 
-class EventProberTest extends \PHPUnit_Framework_TestCase
+class ProberTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var EventProber
+     * @var Prober
      */
     protected $prober;
 
@@ -17,12 +17,12 @@ class EventProberTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->eventBase = $this->getMock('\Phipe\Stub\EventBase');
-        $this->prober = new EventProber($this->eventBase);
+        $this->prober = new Prober($this->eventBase);
     }
 
     public function testProbe()
     {
-        $connection = $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80));
 
         $this->eventBase->expects($this->once())
             ->method('loop')

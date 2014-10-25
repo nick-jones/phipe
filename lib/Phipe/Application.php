@@ -2,7 +2,10 @@
 
 namespace Phipe;
 
-use Phipe\Connection\Connection;
+use Phipe\Connection;
+use Phipe\Connection\Factory;
+use Phipe\Loop\Runner;
+use Phipe\Pool;
 
 /**
  * This class aims to provide an easy interface to the various connection components. Based on the provided config,
@@ -24,7 +27,7 @@ class Application
      * The $config array can contain the following values:
      *  - connections: array of array-based connection details (host/port/ssl), or actual instances themselves.
      *  - pool: an instance of \Phipe\Pool (optional)
-     *  - factory: a concrete instance of \Phipe\Connection\Factory (optional, \Phipe\Connection\Stream\StreamFactory
+     *  - factory: a concrete instance of \Phipe\Connection\Factory (optional, \Phipe\Connection\Stream\Factory
      *             is default)
      *  - loop_runner: an instance of \Phipe\Loop\Runner (optional)
      *
@@ -104,7 +107,7 @@ class Application
      *  - ssl: whether or not ssl should be used (optional, default is FALSE)
      *
      * @param array $config
-     * @return \Phipe\Connection\Connection
+     * @return Connection
      */
     protected function createConnectionFromConfig(array $config)
     {
@@ -154,7 +157,7 @@ class Application
     }
 
     /**
-     * @return \Phipe\Connection\Factory
+     * @return Factory
      */
     protected function getFactory()
     {
@@ -162,7 +165,7 @@ class Application
     }
 
     /**
-     * @return \Phipe\Pool
+     * @return Pool
      */
     protected function getPool()
     {
@@ -170,7 +173,7 @@ class Application
     }
 
     /**
-     * @return \Phipe\Loop\Runner
+     * @return Runner
      */
     protected function getLoop()
     {

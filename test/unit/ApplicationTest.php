@@ -22,7 +22,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $observer = $this->getMock('\SplObserver');
         $prober = $this->getMock('\Phipe\Connection\Prober');
 
-        $connection = $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80));
 
         $connection->expects($this->once())
             ->method('attach')

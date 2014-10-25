@@ -26,7 +26,7 @@ class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateDefaultFactories()
     {
-        $this->assertEquals('Phipe\Connection\Stream\StreamFactory', get_class($this->container['factory']));
+        $this->assertEquals('Phipe\Connection\Stream\Factory', get_class($this->container['factory']));
         $this->assertEquals('Phipe\Pool', get_class($this->container['pool']));
         $this->assertEquals('Phipe\Loop\Runner', get_class($this->container['loop_runner']));
         $this->assertInstanceOf('SimpleConfig\Container', $this->container['strategies']);

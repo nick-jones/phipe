@@ -3,8 +3,8 @@
 namespace Phipe\Strategy\Connect;
 
 use Phipe\Pool;
-use Phipe\Connection\Connection;
-use Phipe\Connection\ConnectionException;
+use Phipe\Connection;
+use Phipe\Connection\Exception;
 use Phipe\Strategy\Connect;
 
 /**
@@ -33,7 +33,7 @@ class Sequential implements Connect
             function (Connection $connection) {
                 try {
                     $connection->connect();
-                } catch (ConnectionException $e) {
+                } catch (Exception $e) {
                     // If any cannot connect, we will retry later. No need for any one connection to
                     // disrupt other connections.
                 }

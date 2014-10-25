@@ -2,7 +2,7 @@
 
 namespace Phipe\Connection\Event;
 
-use Phipe\Connection\Prober;
+use Phipe\Connection\Prober as BaseProber;
 
 /**
  * Prober implementation for use with Event based connections. This simply asks the EventBase instance to wait for
@@ -10,7 +10,7 @@ use Phipe\Connection\Prober;
  *
  * @package Phipe\Connection\Event
  */
-class EventProber implements Prober
+class Prober implements BaseProber
 {
     /**
      * @var \EventBase
@@ -30,7 +30,7 @@ class EventProber implements Prober
      * the same EventBase instance. If they don't then the factories have been misused. Unfortunately there is not
      * way to stop this happening at the moment.
      *
-     * @param EventConnection[] $connections
+     * @param Connection[] $connections
      */
     public function probe(array $connections)
     {

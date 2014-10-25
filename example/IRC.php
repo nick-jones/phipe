@@ -2,8 +2,11 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use \Phipe\Watcher;
-use \Phipe\Connection\Connection;
+use Phipe\Application;
+use Phipe\Watcher;
+use Phipe\Connection;
+use Phipe\Connection\Event\Factory as EventFactory;
+use Phipe\Connection\Buffering\Factory as BufferingFactory;
 
 $watcher = new Watcher();
 
@@ -65,14 +68,12 @@ $watcher->on(
     }
 );
 
-//$factory = new \Phipe\Connection\Event\EventFactory();
-//$factory = new \Phipe\Connection\Stream\StreamFactory();
+$factory = new \Phipe\Connection\Event\Factory();
+//$factory = new \Phipe\Connection\Stream\Factory();
 
-$factory = new \Phipe\Connection\Buffering\BufferingFactory(
-    new \Phipe\Connection\Event\EventFactory()
-);
+//$factory = new BufferingFactory(new EventFactory());
 
-$phipe = new \Phipe\Application([
+$phipe = new Application([
     'connections' => [
         ['host' => '108.61.240.240', 'port' => 6667], // DALnet
         ['host' => '76.72.161.35', 'port' => 6667] // IRCHighway

@@ -2,10 +2,10 @@
 
 namespace Phipe\Connection\Stream;
 
-class StreamProberTest extends \PHPUnit_Framework_TestCase
+class ProberTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var StreamProber
+     * @var Prober
      */
     protected $prober;
 
@@ -17,7 +17,7 @@ class StreamProberTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->selector = $this->getMock('\Phipe\Connection\Stream\Selector');
-        $this->prober = new StreamProber($this->selector);
+        $this->prober = new Prober($this->selector);
     }
 
     public function testProbe()
@@ -51,7 +51,7 @@ class StreamProberTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMockConnection($stream)
     {
-        $connection = $this->getMock('\Phipe\Connection\Stream\StreamConnection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock('\Phipe\Connection\Stream\Connection', array(), array('127.0.0.1', 80));
 
         $connection->expects($this->any())
             ->method('getStream')

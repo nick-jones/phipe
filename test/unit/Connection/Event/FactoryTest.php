@@ -2,27 +2,27 @@
 
 namespace Phipe\Connection\Event;
 
-class EventFactoryTest extends \PHPUnit_Framework_TestCase
+class FactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var EventFactory
+     * @var Factory
      */
     protected $factory;
 
     protected function setUp()
     {
-        $this->factory = new EventFactory();
+        $this->factory = new Factory();
     }
 
     public function testCreateConnection()
     {
         $connection = $this->factory->createConnection('127.0.0.1', 80);
-        $this->assertEquals('Phipe\Connection\Event\EventConnection', get_class($connection));
+        $this->assertEquals('Phipe\Connection\Event\Connection', get_class($connection));
     }
 
     public function testCreateProber()
     {
         $prober = $this->factory->createProber();
-        $this->assertEquals('Phipe\Connection\Event\EventProber', get_class($prober));
+        $this->assertEquals('Phipe\Connection\Event\Prober', get_class($prober));
     }
 }

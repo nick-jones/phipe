@@ -2,8 +2,8 @@
 
 namespace Phipe\Connection\Event;
 
-use Phipe\Connection\Connection;
-use Phipe\Connection\ConnectionException;
+use Phipe\Connection as BaseConnection;
+use Phipe\Connection\Exception;
 
 /**
  * Connection implementation built on top of the PHP "event" extension, a port of libevent to the PHP infrastructure.
@@ -16,7 +16,7 @@ use Phipe\Connection\ConnectionException;
  * @link http://www.php.net/manual/en/book.event.php
  * @package Phipe\Connector\Event
  */
-class EventConnection extends Connection
+class Connection extends BaseConnection
 {
     /**
      * Base instance for use when creating the EventBufferEvent instance
@@ -154,7 +154,7 @@ class EventConnection extends Connection
      *
      * @param \EventBufferEvent $bufferEvent
      * @param int $events
-     * @throws ConnectionException
+     * @throws Exception
      */
     public function eventStatus($bufferEvent, $events)
     {
@@ -176,7 +176,7 @@ class EventConnection extends Connection
     }
 
     /**
-     * @throws ConnectionException
+     * @throws Exception
      */
     protected function handleEventError()
     {
@@ -188,7 +188,7 @@ class EventConnection extends Connection
         $errorMessage = \EventUtil::getLastSocketError();
         $message = sprintf('EventBufferEvent received error status (%d), message: %s', $errorNumber, $errorMessage);
 
-        throw new ConnectionException($message, $this);
+        throw new Exception($message, $this);
     }
 
     /**

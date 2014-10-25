@@ -1,6 +1,8 @@
 <?php
 
-namespace Phipe\Connection;
+namespace Phipe;
+
+use Phipe\Connection;
 
 /**
  * @package Phipe
@@ -14,7 +16,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->connection = $this->getMockForAbstractClass('\Phipe\Connection\Connection', array('127.0.0.1', 80));
+        $this->connection = $this->getMockForAbstractClass('\Phipe\Connection', array('127.0.0.1', 80));
     }
 
     public function testIsEndOfFile()

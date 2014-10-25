@@ -3,7 +3,7 @@
 namespace Phipe\Strategy\Disconnect;
 
 use Phipe\Pool;
-use Phipe\Connection\Connection;
+use Phipe\Connection;
 
 /**
  * An implementation of the Disconnect strategy interface that expunges Connections from the supplied Pool, if they

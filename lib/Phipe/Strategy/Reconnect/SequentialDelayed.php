@@ -2,9 +2,9 @@
 
 namespace Phipe\Strategy\Reconnect;
 
-use Phipe\Connection\ConnectionException;
+use Phipe\Connection\Exception;
 use Phipe\Pool;
-use Phipe\Connection\Connection;
+use Phipe\Connection;
 use Phipe\Strategy\Reconnect;
 
 /**
@@ -100,7 +100,7 @@ class SequentialDelayed implements Reconnect
             function (Connection $connection) {
                 try {
                     $connection->connect();
-                } catch (ConnectionException $e) {
+                } catch (Exception $e) {
                     // Cannot reconnect for whatever reason, we'll try again later.
                 }
             }

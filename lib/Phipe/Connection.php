@@ -1,6 +1,6 @@
 <?php
 
-namespace Phipe\Connection;
+namespace Phipe;
 
 /**
  * Abstract class to represent a connection. Observer methods are implemented concretely, as it seems unlikely

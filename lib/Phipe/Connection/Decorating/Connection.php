@@ -2,7 +2,7 @@
 
 namespace Phipe\Connection\Decorating;
 
-use Phipe\Connection\Connection;
+use Phipe\Connection as BaseConnection;
 use Phipe\Connection\NotificationPropagator;
 
 /**
@@ -12,7 +12,7 @@ use Phipe\Connection\NotificationPropagator;
  *
  * @package Phipe\Connection
  */
-abstract class DecoratingConnection extends Connection
+abstract class Connection extends BaseConnection
 {
     /**
      * @var Connection
@@ -30,9 +30,9 @@ abstract class DecoratingConnection extends Connection
     protected $eventIgnores = array();
 
     /**
-     * @param Connection $connection
+     * @param BaseConnection $connection
      */
-    public function __construct(Connection $connection = null)
+    public function __construct(BaseConnection $connection = null)
     {
         $this->setConnection($connection);
 
@@ -40,9 +40,9 @@ abstract class DecoratingConnection extends Connection
     }
 
     /**
-     * @param Connection|null $connection
+     * @param BaseConnection|null $connection
      */
-    public function setConnection(Connection $connection = null)
+    public function setConnection(BaseConnection $connection = null)
     {
         $this->connection = $connection;
 
@@ -60,9 +60,9 @@ abstract class DecoratingConnection extends Connection
     }
 
     /**
-     * @param Connection $connection
+     * @param BaseConnection $connection
      */
-    protected function setupNotificationPropagator(Connection $connection)
+    protected function setupNotificationPropagator(BaseConnection $connection)
     {
         $notificationPropagator = new NotificationPropagator($this, $connection, $this->eventIgnores);
         $notificationPropagator->initialise();

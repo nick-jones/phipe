@@ -2,12 +2,14 @@
 
 namespace Phipe\Connection;
 
+use Phipe\Connection;
+
 /**
  * Base exception class for Connection related issues.
  *
  * @package Phipe
  */
-class ConnectionException extends \RuntimeException
+class Exception extends \RuntimeException
 {
     /**
      * @var Connection

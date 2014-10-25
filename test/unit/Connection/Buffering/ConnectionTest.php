@@ -2,10 +2,10 @@
 
 namespace Phipe\Connection\Buffering;
 
-class BufferingConnectionTest extends \PHPUnit_Framework_TestCase
+class ConnectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var BufferingConnection
+     * @var Connection
      */
     protected $connection;
 
@@ -16,10 +16,10 @@ class BufferingConnectionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->proxied = $this->getMock('\Phipe\Connection\Connection');
+        $this->proxied = $this->getMock('\Phipe\Connection');
 
         $this->connection = $this->getMockForAbstractClass(
-            '\Phipe\Connection\Buffering\BufferingConnection',
+            '\Phipe\Connection\Buffering\Connection',
             array($this->proxied)
         );
     }

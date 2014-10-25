@@ -2,8 +2,8 @@
 
 namespace Phipe\Connection\Stream;
 
-use Phipe\Connection\Connection;
-use Phipe\Connection\ConnectionException;
+use Phipe\Connection as BaseConnection;
+use Phipe\Connection\Exception;
 
 /**
  * Stream based Connection implementation. This utilises resource handles created via "stream_socket_client" for
@@ -11,7 +11,7 @@ use Phipe\Connection\ConnectionException;
  *
  * @package Phipe\Connection\Stream
  */
-class StreamConnection extends Connection
+class Connection extends BaseConnection
 {
     /**
      * @var resource
@@ -26,12 +26,12 @@ class StreamConnection extends Connection
     /**
      * Connects to the host and port supplied during construction.
      *
-     * @throws ConnectionException
+     * @throws Exception
      */
     public function connect()
     {
         if ($this->isConnected()) {
-            throw new ConnectionException('Already connected', $this);
+            throw new Exception('Already connected', $this);
         }
 
         $stream = @stream_socket_client($this->getAddress(), $errorNumber, $errorMessage, 10);
@@ -54,7 +54,7 @@ class StreamConnection extends Connection
     public function disconnect()
     {
         if ($this->isDisconnected()) {
-            throw new ConnectionException('Already disconnected', $this);
+            throw new Exception('Already disconnected', $this);
         }
 
         stream_socket_shutdown($this->stream, STREAM_SHUT_RDWR);
@@ -79,18 +79,18 @@ class StreamConnection extends Connection
      * Writes data out to the resource handle.
      *
      * @param string $data
-     * @throws ConnectionException
+     * @throws Exception
      */
     public function write($data)
     {
         if (!is_resource($this->stream)) {
-            throw new ConnectionException('Stream socket is not writable', $this);
+            throw new Exception('Stream socket is not writable', $this);
         }
 
         $result = fwrite($this->stream, $data);
 
         if ($result === false) {
-            throw new ConnectionException('Stream socket write failed', $this);
+            throw new Exception('Stream socket write failed', $this);
         }
 
         $this->notify(self::EVENT_WRITE, $data);
@@ -123,18 +123,18 @@ class StreamConnection extends Connection
     /**
      * Populates the internal read buffer by reading from the resource handle.
      *
-     * @throws ConnectionException
+     * @throws Exception
      */
     public function populateReadBuffer()
     {
         if (!is_resource($this->stream)) {
-            throw new ConnectionException('Stream socket is not readable', $this);
+            throw new Exception('Stream socket is not readable', $this);
         }
 
         $data = fread($this->stream, 8192);
 
         if ($data === false) {
-            throw new ConnectionException('Stream socket read failed', $this);
+            throw new Exception('Stream socket read failed', $this);
         }
 
         $this->setReadBuffer($data);
@@ -177,14 +177,14 @@ class StreamConnection extends Connection
     /**
      * @param int $errorNumber
      * @param string $errorMessage
-     * @throws ConnectionException
+     * @throws Exception
      */
     protected function handleConnectFailure($errorNumber, $errorMessage)
     {
         $this->notify(self::EVENT_CONNECT_FAIL);
 
         $message = sprintf('Stream connection failed (%d), message: %s', $errorNumber, $errorMessage);
-        throw new ConnectionException($message, $this);
+        throw new Exception($message, $this);
     }
 
     /**

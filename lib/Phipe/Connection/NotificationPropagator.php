@@ -2,7 +2,7 @@
 
 namespace Phipe\Connection;
 
-use Phipe\Connection\Connection;
+use Phipe\Connection;
 
 /**
  * This class provides a way to propagate notifications from on Connection instance to another. The

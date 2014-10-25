@@ -2,7 +2,7 @@
 
 namespace Phipe;
 
-use Phipe\Connection\Connection;
+use Phipe\Connection;
 
 /**
  * This class is a container for connection instances. The interface provides various ways to interact all the

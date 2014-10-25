@@ -43,7 +43,7 @@ class ApplicationConfig extends Container
     {
         $factories = array(
             'factory' => function () {
-                return new Connection\Stream\StreamFactory();
+                return new Connection\Stream\Factory();
             },
             'pool' => function () {
                 return new Pool();

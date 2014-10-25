@@ -8,8 +8,11 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use \Phipe\Watcher;
-use \Phipe\Connection\Connection;
+use Phipe\Application;
+use Phipe\Watcher;
+use Phipe\Connection;
+use Phipe\Connection\Buffering\Factory as BufferingFactory;
+use Phipe\Connection\Stream\Factory as StreamFactory;
 
 $watcher = new Watcher();
 
@@ -64,11 +67,9 @@ $watcher->on(
     }
 );
 
-$factory = new \Phipe\Connection\Buffering\BufferingFactory(
-    new \Phipe\Connection\Stream\StreamFactory()
-);
+$factory = new BufferingFactory(new StreamFactory());
 
-$phipe = new \Phipe\Application([
+$phipe = new Application([
     'connections' => [
         ['host' => '108.61.240.240', 'port' => 6667], // DALnet
     ],

@@ -21,8 +21,8 @@ class NotificationPropagatorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->connection = $this->getMock('\Phipe\Connection\Connection');
-        $this->proxied = $this->getMock('\Phipe\Connection\Connection');
+        $this->connection = $this->getMock('\Phipe\Connection');
+        $this->proxied = $this->getMock('\Phipe\Connection');
 
         $this->notificationPropagator = new NotificationPropagator($this->connection, $this->proxied);
     }

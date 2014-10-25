@@ -24,7 +24,7 @@ class SequentialDelayedTest extends \PHPUnit_Framework_TestCase
 
     public function testReconnect()
     {
-        $connection = $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80));
 
         $connection->expects($this->once())
             ->method('isDisconnected')
@@ -32,7 +32,7 @@ class SequentialDelayedTest extends \PHPUnit_Framework_TestCase
 
         $connection->expects($this->once())
             ->method('connect')
-            ->will($this->throwException(new \Phipe\Connection\ConnectionException('Mock', $connection)));
+            ->will($this->throwException(new \Phipe\Connection\Exception('Mock', $connection)));
 
         $disconnected = $this->getMock('\Phipe\Pool');
 

@@ -2,7 +2,7 @@
 
 namespace Phipe\Connection\Buffering;
 
-use Phipe\Connection\Decorating\DecoratingConnection;
+use Phipe\Connection\Decorating\Connection as DecoratingConnection;
 
 /**
  * This connection implementation buffers reads and writes until a newline characters is reached.
@@ -11,7 +11,7 @@ use Phipe\Connection\Decorating\DecoratingConnection;
  *
  * @package Phipe\Connection\Buffering
  */
-class BufferingConnection extends DecoratingConnection
+class Connection extends DecoratingConnection
 {
     /**
      * @var string

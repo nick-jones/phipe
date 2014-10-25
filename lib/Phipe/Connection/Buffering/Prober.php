@@ -2,14 +2,14 @@
 
 namespace Phipe\Connection\Buffering;
 
-use Phipe\Connection\Prober;
+use Phipe\Connection\Prober as BaseProber;
 
 /**
  * Prober for BufferingConnections. This utilises the prober of the original connection.
  *
  * @package Phipe\Connection
  */
-class BufferingProber implements Prober
+class Prober implements BaseProber
 {
     /**
      * @var Prober
@@ -17,15 +17,15 @@ class BufferingProber implements Prober
     protected $prober;
 
     /**
-     * @param Prober $prober
+     * @param BaseProber $prober
      */
-    public function __construct(Prober $prober)
+    public function __construct(BaseProber $prober)
     {
         $this->prober = $prober;
     }
 
     /**
-     * @param BufferingConnection[] $connections
+     * @param Connection[] $connections
      */
     public function probe(array $connections)
     {
@@ -35,10 +35,10 @@ class BufferingProber implements Prober
     }
 
     /**
-     * The original proxied connections are extracted from the DecoratingConnection and
+     * The original proxied connections are extracted from the Connection and
      * passed into the appropriate prober (as provided in the constructor)
      *
-     * @param BufferingConnection[] $connections
+     * @param Connection[] $connections
      */
     protected function probeProxiedConnections(array $connections)
     {
@@ -54,7 +54,7 @@ class BufferingProber implements Prober
     /**
      * Clears the read buffers of the provided connections.
      *
-     * @param BufferingConnection[] $connections
+     * @param Connection[] $connections
      */
     protected function clearConnectionReadBuffers(array $connections)
     {
@@ -66,7 +66,7 @@ class BufferingProber implements Prober
     /**
      * Requests that the provided Connection instances populate their own read buffer.
      *
-     * @param BufferingConnection[] $connections
+     * @param Connection[] $connections
      */
     protected function populateConnectionReadBuffers(array $connections)
     {

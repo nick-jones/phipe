@@ -17,7 +17,7 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
     public function testDetect()
     {
         $connections = array(
-            $this->getMock('\Phipe\Connection\Connection', array(), array('127.0.0.1', 80))
+            $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80))
         );
 
         $connected = $this->getMock('\Phipe\Pool');
@@ -30,7 +30,7 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
 
         $pool->expects($this->once())
             ->method('getAllWithState')
-            ->with($this->equalTo(\Phipe\Connection\Connection::STATE_CONNECTED))
+            ->with($this->equalTo(\Phipe\Connection::STATE_CONNECTED))
             ->will($this->returnValue($connected));
 
         $prober = $this->getMock('\Phipe\Connection\Prober');

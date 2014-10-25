@@ -3,7 +3,7 @@
 namespace Phipe\Strategy\ActivityDetect;
 
 use Phipe\Pool;
-use Phipe\Connection\Connection;
+use Phipe\Connection;
 use Phipe\Connection\Prober;
 use Phipe\Strategy\ActivityDetect;
 

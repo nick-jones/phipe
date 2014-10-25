@@ -2,6 +2,9 @@
 
 namespace Phipe\Connection;
 
+use Phipe\Connection;
+use Phipe\Connection\Prober;
+
 /**
  * Generic factory for creating Connection related instances.
  *
@@ -14,12 +17,12 @@ interface Factory
      * @param $port
      * @param bool $ssl
      * @internal param array $config
-     * @return \Phipe\Connection\Connection
+     * @return Connection
      */
     public function createConnection($host, $port, $ssl = false);
 
     /**
-     * @return \Phipe\Connection\Prober
+     * @return Prober
      */
     public function createProber();
 }

@@ -67,11 +67,11 @@ For your convenience, there is an observer implementation that provides a simple
 ```php
 $observer = new \Phipe\Watcher();
 
-$watcher->on('connect', function(\Phipe\Connection\Connection $connection) {
+$watcher->on('connect', function(\Phipe\Connection $connection) {
     echo 'Connected!' . PHP_EOL;
 });
 
-$watcher->on('disconnect', function(\Phipe\Connection\Connection $connection) {
+$watcher->on('disconnect', function(\Phipe\Connection $connection) {
     // etc
 });
 
@@ -101,7 +101,7 @@ a different factory to the `Application` class:
 ```php
 $phipe = new \Phipe\Application([
     'connections' => [ /* connection details */ ],
-    'factory' => new \Phipe\Connection\Event\EventFactory()
+    'factory' => new \Phipe\Connection\Event\Factory()
 ]);
 
 $phipe->execute();
