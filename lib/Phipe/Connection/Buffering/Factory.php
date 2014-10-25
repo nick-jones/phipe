@@ -14,7 +14,7 @@ use Phipe\Connection\Factory as BaseFactory;
 class Factory implements BaseFactory
 {
     /**
-     * @var Factory
+     * @var BaseFactory
      */
     protected $factory;
 

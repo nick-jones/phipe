@@ -12,7 +12,7 @@ use Phipe\Connection\Prober as BaseProber;
 class Prober implements BaseProber
 {
     /**
-     * @var Prober
+     * @var BaseProber
      */
     protected $prober;
 

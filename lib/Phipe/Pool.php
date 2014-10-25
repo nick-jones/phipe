@@ -13,7 +13,7 @@ use Phipe\Connection;
 class Pool implements \Countable
 {
     /**
-     * @var \SplObjectStorage
+     * @var \SplObjectStorage|Connection[]
      */
     protected $connections;
 

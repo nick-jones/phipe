@@ -15,7 +15,7 @@ use Phipe\Connection\NotificationPropagator;
 abstract class Connection extends BaseConnection
 {
     /**
-     * @var Connection
+     * @var BaseConnection
      */
     protected $connection;
 
