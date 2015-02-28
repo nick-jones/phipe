@@ -5,16 +5,16 @@ namespace Phipe;
 /**
  * @package Phipe
  */
-class ApplicationConfigTest extends \PHPUnit_Framework_TestCase
+class ContainerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ApplicationConfig
+     * @var Container
      */
     protected $container;
 
     protected function setUp()
     {
-        $this->container = new ApplicationConfig();
+        $this->container = new Container();
     }
 
     public function testCreateDefaultValues()

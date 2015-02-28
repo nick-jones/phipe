@@ -2,13 +2,13 @@
 
 namespace Phipe;
 
-use SimpleConfig\Container;
+use SimpleConfig\Container as BaseContainer;
 
 /**
  *
  * @package Phipe
  */
-class ApplicationConfig extends Container
+class Container extends BaseContainer
 {
     /**
      * @param array $values

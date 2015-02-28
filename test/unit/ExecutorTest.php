@@ -5,16 +5,16 @@ namespace Phipe;
 /**
  * @package Phipe
  */
-class ApplicationTest extends \PHPUnit_Framework_TestCase
+class ExecutorTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Application
+     * @var Executor
      */
     protected $application;
 
     protected function setUp()
     {
-        $this->application = new Application();
+        $this->application = new Executor();
     }
 
     public function testExecute()

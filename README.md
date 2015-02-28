@@ -20,10 +20,10 @@ repository details.
 ## Usage
 
 If you wish to have your connections managed by the bundled connection session manager, then you simply need to supply
-connection details to the `\Phipe\Application` class:
+connection details to the `\Phipe\Executor` class:
 
 ```php
-$phipe = new \Phipe\Application([
+$phipe = new \Phipe\Executor([
     'connections' => [
         ['host' => '127.0.0.1', 'port' => 80],
         ['host' => '127.0.0.1', 'port' => 80]
@@ -40,7 +40,8 @@ It is likely that you will wish to read from and write to the connection(s) bein
 utilising observers that implement the SplObserver interface:
 
 ```php
-class MyObserver implements \SplObserver {
+class MyObserver implements \SplObserver
+{
     public function update(\SplSubject $subject, $event = NULL) {
         echo $event . PHP_EOL;
     }
@@ -48,7 +49,7 @@ class MyObserver implements \SplObserver {
 
 $observer = new MyObserver();
 
-$phipe = new \Phipe\Application([
+$phipe = new \Phipe\Executor([
     'connections' => [
         ['host' => '127.0.0.1', 'port' => 80]
     ],
@@ -75,7 +76,7 @@ $watcher->on('disconnect', function(\Phipe\Connection $connection) {
     // etc
 });
 
-$phipe = new \Phipe\Application([
+$phipe = new \Phipe\Executor([
     'connections' => [
         ['host' => '127.0.0.1', 'port' => 80]
     ],
@@ -93,13 +94,13 @@ please see the [`example/`](example/) directory.
 ### Advanced Usage
 
 Should you wish to control the connection management, you will need to setup the various components yourself. Please
-refer to the Application implementation for guidance.
+refer to the Executor implementation for guidance.
 
 The default connection class is the `Stream` flavour. If you wish to use the `Event` flavour, you will need to provide
-a different factory to the `Application` class:
+a different factory to the `Executor` class:
 
 ```php
-$phipe = new \Phipe\Application([
+$phipe = new \Phipe\Executor([
     'connections' => [ /* connection details */ ],
     'factory' => new \Phipe\Connection\Event\Factory()
 ]);

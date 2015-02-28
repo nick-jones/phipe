@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Phipe\Application;
+use Phipe\Executor;
 use Phipe\Watcher;
 use Phipe\Connection;
 use Phipe\Connection\Event\Factory as EventFactory;
@@ -73,7 +73,7 @@ $factory = new \Phipe\Connection\Event\Factory();
 
 //$factory = new BufferingFactory(new EventFactory());
 
-$phipe = new Application([
+$phipe = new Executor([
     'connections' => [
         ['host' => '108.61.240.240', 'port' => 6667], // DALnet
         ['host' => '76.72.161.35', 'port' => 6667] // IRCHighway

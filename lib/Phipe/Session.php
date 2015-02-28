@@ -33,14 +33,14 @@ class Session implements Worker
     protected $prober;
 
     /**
-     * @var array|ApplicationConfig
+     * @var array|Container
      */
     protected $strategies;
 
     /**
      * @param Pool $pool
      * @param Prober $prober
-     * @param array|ApplicationConfig $strategies
+     * @param array|Container $strategies
      */
     public function __construct(Pool $pool, Prober $prober, $strategies)
     {

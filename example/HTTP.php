@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Phipe\Application;
+use Phipe\Executor;
 use Phipe\Watcher;
 use Phipe\Connection;
 use Phipe\Connection\Event\Factory;
@@ -56,7 +56,7 @@ $watcher->on(
     }
 );
 
-$phipe = new Application([
+$phipe = new Executor([
     'connections' => [
         ['host' => '93.184.216.119', 'port' => 80]
     ],

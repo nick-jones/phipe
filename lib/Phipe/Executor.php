@@ -4,6 +4,7 @@ namespace Phipe;
 
 use Phipe\Connection;
 use Phipe\Connection\Factory;
+use Phipe\Connection\Prober;
 use Phipe\Loop\Runner;
 use Phipe\Pool;
 
@@ -16,10 +17,10 @@ use Phipe\Pool;
  *
  * @package Phipe
  */
-class Application
+class Executor
 {
     /**
-     * @var ApplicationConfig
+     * @var Container
      */
     protected $config;
 
@@ -31,7 +32,7 @@ class Application
      *             is default)
      *  - loop_runner: an instance of \Phipe\Loop\Runner (optional)
      *
-     * @param array|ApplicationConfig|NULL $config
+     * @param array|Container|NULL $config
      */
     public function __construct($config = null)
     {
@@ -43,18 +44,24 @@ class Application
      */
     public function execute()
     {
+        $session = $this->createSession();
+        $loopRunner = $this->getLoopRunner();
+
+        $loopRunner->loop($session);
+    }
+
+    /**
+     * @return Session
+     */
+    protected function createSession()
+    {
         $pool = $this->getPool();
         $this->preparePool($pool);
 
-        $prober = $this->getFactory()
-            ->createProber();
-
+        $prober = $this->getConnectionProper();
         $strategies = $this->getStrategies();
 
-        $session = new Session($pool, $prober, $strategies);
-
-        $this->getLoop()
-            ->loop($session);
+        return new Session($pool, $prober, $strategies);
     }
 
     /**
@@ -115,20 +122,20 @@ class Application
         $port = $config['port'];
         $ssl = isset($config['ssl']) ? $config['ssl'] : false;
 
-        return $this->getFactory()
+        return $this->getConnectionFactory()
             ->createConnection($host, $port, $ssl);
     }
 
     /**
-     * Sets the config class property. If an array is provided, a ApplicationConfig instance is created containing the
+     * Sets the config class property. If an array is provided, a Container instance is created containing the
      * provided array, and a default set of factories relevant to this class.
      *
-     * @param array|ApplicationConfig|NULL $config
+     * @param array|Container|NULL $config
      */
     public function setConfig($config)
     {
         if (is_array($config)) {
-            $config = new ApplicationConfig($config);
+            $config = new Container($config);
         }
 
         if (is_null($config)) {
@@ -139,7 +146,16 @@ class Application
     }
 
     /**
-     * @return array|ApplicationConfig
+     * @return Prober
+     */
+    protected function getConnectionProper()
+    {
+        return $this->getConnectionFactory()
+            ->createProber();
+    }
+
+    /**
+     * @return array|Container
      */
     protected function getStrategies()
     {
@@ -159,7 +175,7 @@ class Application
     /**
      * @return Factory
      */
-    protected function getFactory()
+    protected function getConnectionFactory()
     {
         return $this->config['factory'];
     }
@@ -175,7 +191,7 @@ class Application
     /**
      * @return Runner
      */
-    protected function getLoop()
+    protected function getLoopRunner()
     {
         return $this->config['loop_runner'];
     }
