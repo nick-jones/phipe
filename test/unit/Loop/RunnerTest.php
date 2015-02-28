@@ -16,7 +16,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
     public function testLoop()
     {
-        $worker = $this->getMock('\Phipe\Loop\Worker');
+        $worker = $this->getMock(Worker::CLASS);
 
         $worker->expects($this->exactly(2))
             ->method('hasWork')
@@ -30,7 +30,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
     public function testStop()
     {
-        $worker = $this->getMock('\Phipe\Loop\Worker');
+        $worker = $this->getMock(Worker::CLASS);
 
         $worker->expects($this->once())
             ->method('hasWork')
@@ -51,7 +51,7 @@ class RunnerTest extends \PHPUnit_Framework_TestCase
 
     public function testIsRunning()
     {
-        $worker = $this->getMock('\Phipe\Loop\Worker');
+        $worker = $this->getMock(Worker::CLASS);
 
         $worker->expects($this->exactly(2))
             ->method('hasWork')

@@ -17,12 +17,12 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateConnection()
     {
         $connection = $this->factory->createConnection('127.0.0.1', 80);
-        $this->assertEquals('Phipe\Connection\Stream\Connection', get_class($connection));
+        $this->assertEquals(Connection::CLASS, get_class($connection));
     }
 
     public function testCreateProber()
     {
         $prober = $this->factory->createProber();
-        $this->assertEquals('Phipe\Connection\Stream\Prober', get_class($prober));
+        $this->assertEquals(Prober::CLASS, get_class($prober));
     }
 }

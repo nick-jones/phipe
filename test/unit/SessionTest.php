@@ -2,6 +2,8 @@
 
 namespace Phipe;
 
+use Phipe\Connection\Prober;
+
 class SessionTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -22,19 +24,19 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject[]
      */
-    protected $strategies = array();
+    protected $strategies = [];
 
     protected function setUp()
     {
-        $this->pool = $this->getMock('\Phipe\Pool');
-        $this->prober = $this->getMock('\Phipe\Connection\Prober');
+        $this->pool = $this->getMock(Pool::CLASS);
+        $this->prober = $this->getMock(Prober::CLASS);
 
-        $this->strategies = array(
-            'connect' => $this->getMock('\Phipe\Strategy\Connect'),
-            'reconnect' => $this->getMock('\Phipe\Strategy\Reconnect'),
-            'disconnect' => $this->getMock('\Phipe\Strategy\Disconnect'),
-            'activity_detect' => $this->getMock('\Phipe\Strategy\ActivityDetect')
-        );
+        $this->strategies = [
+            'connect' => $this->getMock(Strategy\Connect::CLASS),
+            'reconnect' => $this->getMock(Strategy\Reconnect::CLASS),
+            'disconnect' => $this->getMock(Strategy\Disconnect::CLASS),
+            'activity_detect' => $this->getMock(Strategy\ActivityDetect::CLASS)
+        ];
 
         $this->session = new Session($this->pool, $this->prober, $this->strategies);
     }

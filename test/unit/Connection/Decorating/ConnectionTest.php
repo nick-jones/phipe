@@ -2,6 +2,9 @@
 
 namespace Phipe\Connection\Decorating;
 
+use Phipe\Connection as BaseConnection;
+use Phipe\Connection\Decorating\Connection as DecoratingConnection;
+
 class ConnectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -16,18 +19,14 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->proxied = $this->getMock('\Phipe\Connection');
-
-        $this->connection = $this->getMockForAbstractClass(
-            '\Phipe\Connection\Decorating\Connection',
-            array($this->proxied)
-        );
+        $this->proxied = $this->getMock(Connection::CLASS);
+        $this->connection = $this->getMockForAbstractClass(DecoratingConnection::CLASS, [$this->proxied]);
     }
 
     public function testSetConnection()
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|\Phipe\Connection $connection */
-        $connection = $this->getMock('\Phipe\Connection');
+        /** @var \PHPUnit_Framework_MockObject_MockObject|BaseConnection $connection */
+        $connection = $this->getMock(BaseConnection::CLASS);
 
         $this->connection->setConnection($connection);
 

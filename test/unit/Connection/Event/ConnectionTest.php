@@ -2,6 +2,11 @@
 
 namespace Phipe\Connection\Event;
 
+use Phipe\Connection as BaseConnection;
+use Phipe\Connection\Exception;
+use Phipe\Stub\EventBase;
+use Phipe\Stub\EventBufferEvent;
+
 class ConnectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -21,9 +26,9 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $eventBase = $this->getMock('\Phipe\Stub\EventBase');
-        $this->bufferEvent = $this->getMock('\Phipe\Stub\EventBufferEvent', array(), array($eventBase));
-        $this->observer = $this->getMock('\SplObserver');
+        $eventBase = $this->getMock(EventBase::CLASS);
+        $this->bufferEvent = $this->getMock(EventBufferEvent::CLASS, [], [$eventBase]);
+        $this->observer = $this->getMock(\SplObserver::CLASS);
 
         $this->event = new Connection('127.0.0.1', 80);
         $this->event->setBufferEvent($this->bufferEvent);
@@ -49,7 +54,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $this->observer->expects($this->once())
             ->method('update')
-            ->with($this->equalTo($this->event), $this->equalTo(\Phipe\Connection::EVENT_DISCONNECT));
+            ->with($this->equalTo($this->event), $this->equalTo(BaseConnection::EVENT_DISCONNECT));
 
         $this->bufferEvent->expects($this->once())
             ->method('free');
@@ -61,7 +66,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $expected = 'foo';
 
-        $input = $this->getMock('\EventBuffer');
+        $input = $this->getMock(\EventBuffer::CLASS);
 
         $input->expects($this->once())
             ->method('read')
@@ -79,7 +84,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $data = 'foo';
 
-        $output = $this->getMock('\EventBuffer');
+        $output = $this->getMock(\EventBuffer::CLASS);
 
         $output->expects($this->once())
             ->method('add')
@@ -101,7 +106,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $this->observer->expects($this->once())
             ->method('update')
-            ->with($this->equalTo($this->event), $this->equalTo(\Phipe\Connection::EVENT_READ));
+            ->with($this->equalTo($this->event), $this->equalTo(BaseConnection::EVENT_READ));
 
         $this->event->eventRead(null);
     }
@@ -110,7 +115,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $this->observer->expects($this->once())
             ->method('update')
-            ->with($this->equalTo($this->event), $this->equalTo(\Phipe\Connection::EVENT_CONNECT));
+            ->with($this->equalTo($this->event), $this->equalTo(BaseConnection::EVENT_CONNECT));
 
         $this->event->eventStatus(null, \EventBufferEvent::CONNECTED);
     }
@@ -119,18 +124,18 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $this->observer->expects($this->once())
             ->method('update')
-            ->with($this->equalTo($this->event), $this->equalTo(\Phipe\Connection::EVENT_EOF));
+            ->with($this->equalTo($this->event), $this->equalTo(BaseConnection::EVENT_EOF));
 
         $this->event->eventStatus(null, \EventBufferEvent::EOF);
     }
 
     public function testEventStatusWithErrorEvent()
     {
-        $this->setExpectedException('\Phipe\Connection\Exception', 'EventBufferEvent received error status');
+        $this->setExpectedException(Exception::CLASS, 'EventBufferEvent received error status');
 
         $this->observer->expects($this->once())
             ->method('update')
-            ->with($this->equalTo($this->event), $this->equalTo(\Phipe\Connection::EVENT_CONNECT_FAIL));
+            ->with($this->equalTo($this->event), $this->equalTo(BaseConnection::EVENT_CONNECT_FAIL));
 
         $this->event->eventStatus(null, \EventBufferEvent::ERROR);
     }

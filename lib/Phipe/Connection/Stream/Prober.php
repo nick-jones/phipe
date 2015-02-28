@@ -95,7 +95,7 @@ class Prober implements BaseProber
      */
     protected function connectionsToResources(array $connections)
     {
-        $resources = array();
+        $resources = [];
 
         foreach ($connections as $position => $connection) {
             $resource = $connection->getStream();
@@ -115,7 +115,7 @@ class Prober implements BaseProber
      */
     protected function resourcesToConnections($resources, $existingConnections)
     {
-        $drivers = array();
+        $drivers = [];
 
         foreach ($resources as $position => $resource) {
             $drivers[] = $existingConnections[$position];

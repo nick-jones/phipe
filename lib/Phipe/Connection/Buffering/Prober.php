@@ -42,7 +42,7 @@ class Prober implements BaseProber
      */
     protected function probeProxiedConnections(array $connections)
     {
-        $proxied = array();
+        $proxied = [];
 
         foreach ($connections as $connection) {
             array_push($proxied, $connection->getConnection());

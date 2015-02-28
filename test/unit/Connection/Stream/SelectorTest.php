@@ -17,7 +17,7 @@ class SelectorTest extends \PHPUnit_Framework_TestCase
 
     public function testSelect()
     {
-        $expectedStreams = array(fopen('php://memory', 'r'));
+        $expectedStreams = [fopen('php://memory', 'r')];
         $expectedTimeout = 500;
 
         $strategy = function ($streams, $timeout) use ($expectedStreams, $expectedTimeout) {
@@ -31,9 +31,9 @@ class SelectorTest extends \PHPUnit_Framework_TestCase
 
     public function testSleepingStreamSelectWithNoStreams()
     {
-        $streams = array();
+        $streams = [];
 
-        $this->selector->setSelectStrategy(array('Phipe\Connection\Stream\Selector', 'sleepingStreamSelect'));
+        $this->selector->setSelectStrategy([Selector::CLASS, 'sleepingStreamSelect']);
         $results = $this->selector->select($streams, 1);
 
         $this->assertEquals($streams, $results);
@@ -46,12 +46,12 @@ class SelectorTest extends \PHPUnit_Framework_TestCase
         $server = stream_socket_server($address);
         $client = stream_socket_client($address);
 
-        $streams = array($client);
+        $streams = [$client];
 
-        $this->selector->setSelectStrategy(array('Phipe\Connection\Stream\Selector', 'sleepingStreamSelect'));
+        $this->selector->setSelectStrategy([Selector::CLASS, 'sleepingStreamSelect']);
         $results = $this->selector->select($streams, 1);
 
-        $this->assertEquals(array(), $results);
+        $this->assertEquals([], $results);
 
         fclose($client);
         fclose($server);

@@ -2,6 +2,10 @@
 
 namespace Phipe\Strategy\Connect;
 
+use Phipe\Connection;
+use Phipe\Connection\Exception;
+use Phipe\Pool;
+
 class SequentialTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -16,13 +20,13 @@ class SequentialTest extends \PHPUnit_Framework_TestCase
 
     public function testConnect()
     {
-        $connection = $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock(Connection::CLASS, [], ['127.0.0.1', 80]);
 
         $connection->expects($this->once())
             ->method('connect')
-            ->will($this->throwException(new \Phipe\Connection\Exception('Mock', $connection)));
+            ->will($this->throwException(new Exception('Mock', $connection)));
 
-        $pool = $this->getMock('\Phipe\Pool');
+        $pool = $this->getMock(Pool::CLASS);
 
         $pool->expects($this->once())
             ->method('walk')

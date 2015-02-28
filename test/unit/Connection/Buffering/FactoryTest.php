@@ -2,6 +2,9 @@
 
 namespace Phipe\Connection\Buffering;
 
+use Phipe\Connection\Factory as ConnectionFactory;
+use Phipe\Connection\Prober as ConnectionProber;
+
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -16,7 +19,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->proxied = $this->getMock('\Phipe\Connection\Factory');
+        $this->proxied = $this->getMock(ConnectionFactory::CLASS);
         $this->factory = new Factory($this->proxied);
     }
 
@@ -29,10 +32,10 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('createConnection')
             ->with($this->equalTo($host), $this->equalTo($port))
-            ->will($this->returnValue($this->getMock('\Phipe\Connection')));
+            ->will($this->returnValue($this->getMock(Connection::CLASS)));
 
         $connection = $this->factory->createConnection($host, $port);
-        $this->assertEquals('Phipe\Connection\Buffering\Connection', get_class($connection));
+        $this->assertEquals(Connection::CLASS, get_class($connection));
     }
 
     public function testCreateProber()
@@ -40,9 +43,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $this->proxied
             ->expects($this->once())
             ->method('createProber')
-            ->will($this->returnValue($this->getMock('\Phipe\Connection\Prober')));
+            ->will($this->returnValue($this->getMock(ConnectionProber::CLASS)));
 
         $prober = $this->factory->createProber();
-        $this->assertEquals('Phipe\Connection\Buffering\Prober', get_class($prober));
+        $this->assertEquals(Prober::CLASS, get_class($prober));
     }
 }

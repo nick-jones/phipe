@@ -16,14 +16,14 @@ class Watcher implements \SplObserver
     /**
      * @var array
      */
-    protected $eventCallbackMappings = array(
-        Connection::EVENT_CONNECT => array(),
-        Connection::EVENT_CONNECT_FAIL => array(),
-        Connection::EVENT_READ => array(),
-        Connection::EVENT_WRITE => array(),
-        Connection::EVENT_EOF => array(),
-        Connection::EVENT_DISCONNECT => array()
-    );
+    protected $eventCallbackMappings = [
+        Connection::EVENT_CONNECT => [],
+        Connection::EVENT_CONNECT_FAIL => [],
+        Connection::EVENT_READ => [],
+        Connection::EVENT_WRITE => [],
+        Connection::EVENT_EOF => [],
+        Connection::EVENT_DISCONNECT => []
+    ];
 
     /**
      * Register a callback to be triggered when an event happens.

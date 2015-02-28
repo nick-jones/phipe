@@ -2,6 +2,10 @@
 
 namespace Phipe\Strategy\ActivityDetect;
 
+use Phipe\Connection;
+use Phipe\Connection\Prober;
+use Phipe\Pool;
+
 class SimpleTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -16,24 +20,24 @@ class SimpleTest extends \PHPUnit_Framework_TestCase
 
     public function testDetect()
     {
-        $connections = array(
-            $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80))
-        );
+        $connections = [
+            $this->getMock(Connection::CLASS, [], ['127.0.0.1', 80])
+        ];
 
-        $connected = $this->getMock('\Phipe\Pool');
+        $connected = $this->getMock(Pool::CLASS);
 
         $connected->expects($this->any())
             ->method('toArray')
             ->will($this->returnValue($connections));
 
-        $pool = $this->getMock('\Phipe\Pool');
+        $pool = $this->getMock(Pool::CLASS);
 
         $pool->expects($this->once())
             ->method('getAllWithState')
-            ->with($this->equalTo(\Phipe\Connection::STATE_CONNECTED))
+            ->with($this->equalTo(Connection::STATE_CONNECTED))
             ->will($this->returnValue($connected));
 
-        $prober = $this->getMock('\Phipe\Connection\Prober');
+        $prober = $this->getMock(Prober::CLASS);
 
         $prober->expects($this->once())
             ->method('probe')

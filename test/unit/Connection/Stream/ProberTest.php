@@ -16,7 +16,7 @@ class ProberTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->selector = $this->getMock('\Phipe\Connection\Stream\Selector');
+        $this->selector = $this->getMock(Selector::CLASS);
         $this->prober = new Prober($this->selector);
     }
 
@@ -27,8 +27,8 @@ class ProberTest extends \PHPUnit_Framework_TestCase
 
         $this->selector->expects($this->once())
             ->method('select')
-            ->with(array($stream1, $stream2))
-            ->will($this->returnValue(array($stream1)));
+            ->with([$stream1, $stream2])
+            ->will($this->returnValue([$stream1]));
 
         $connection1 = $this->createMockConnection($stream1);
 
@@ -40,7 +40,7 @@ class ProberTest extends \PHPUnit_Framework_TestCase
         $connection2->expects($this->never())
             ->method('populateReadBuffer');
 
-        $this->prober->probe(array($connection1, $connection2));
+        $this->prober->probe([$connection1, $connection2]);
     }
 
     /**
@@ -51,7 +51,7 @@ class ProberTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMockConnection($stream)
     {
-        $connection = $this->getMock('\Phipe\Connection\Stream\Connection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock(Connection::CLASS, [], ['127.0.0.1', 80]);
 
         $connection->expects($this->any())
             ->method('getStream')

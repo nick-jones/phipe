@@ -27,7 +27,7 @@ abstract class Connection extends BaseConnection
     /**
      * @var array
      */
-    protected $eventIgnores = array();
+    protected $eventIgnores = [];
 
     /**
      * @param BaseConnection $connection

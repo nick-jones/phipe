@@ -35,10 +35,11 @@ $watcher->on(
         foreach ($lines as $line) {
             echo "← {$line}\n";
 
-            $command = array_shift(explode(' ', $line));
+            $parts = explode(':', $line, 2);
+            $command = trim(array_shift($parts));
 
             if ($command === 'PING') {
-                $token = array_pop(explode(':', $line, 2));
+                $token = array_pop($parts);
                 $connection->write("PONG :{$token}\n");
             }
         }

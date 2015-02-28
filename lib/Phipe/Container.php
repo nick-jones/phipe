@@ -14,7 +14,7 @@ class Container extends BaseContainer
      * @param array $values
      * @param array $factories
      */
-    public function __construct(array $values = array(), array $factories = array())
+    public function __construct(array $values = [], array $factories = [])
     {
         $values += $this->createDefaultValues();
         $factories += $this->createDefaultFactories();
@@ -27,11 +27,11 @@ class Container extends BaseContainer
      */
     protected function createDefaultValues()
     {
-        $values = array(
-            'connections' => array(),
-            'observers' => array(),
+        $values = [
+            'connections' => [],
+            'observers' => [],
             'reconnect' => true
-        );
+        ];
 
         return $values;
     }
@@ -41,7 +41,7 @@ class Container extends BaseContainer
      */
     protected function createDefaultFactories()
     {
-        $factories = array(
+        $factories = [
             'factory' => function () {
                 return new Connection\Stream\Factory();
             },
@@ -52,9 +52,9 @@ class Container extends BaseContainer
                 return new Loop\Runner();
             },
             'strategies' => function () {
-                return new Container(array(), $this->createDefaultStrategies());
+                return new BaseContainer([], $this->createDefaultStrategies());
             }
-        );
+        ];
 
         return $factories;
     }
@@ -64,7 +64,7 @@ class Container extends BaseContainer
      */
     protected function createDefaultStrategies()
     {
-        $strategies = array(
+        $strategies = [
             'connect' => function () {
                 return new Strategy\Connect\Sequential();
             },
@@ -79,7 +79,7 @@ class Container extends BaseContainer
             'activity_detect' => function () {
                 return new Strategy\ActivityDetect\Simple();
             }
-        );
+        ];
 
         return $strategies;
     }

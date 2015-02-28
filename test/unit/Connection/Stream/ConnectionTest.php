@@ -2,6 +2,8 @@
 
 namespace Phipe\Connection\Stream;
 
+use Phipe\Connection as BaseConnection;
+use Phipe\Connection\Exception;
 use Phipe\ResourceTestHelper;
 
 class ConnectionTest extends \PHPUnit_Framework_TestCase
@@ -29,7 +31,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $handle = fopen('php://memory', 'rw');
         $this->resourceTestHelper = new ResourceTestHelper($handle);
-        $this->observer = $this->getMock('\SplObserver');
+        $this->observer = $this->getMock(\SplObserver::CLASS);
 
         $this->stream = new Connection(self::TEST_HOST, self::TEST_PORT);
         $this->stream->setStream($handle);
@@ -62,7 +64,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testWriteWithNullHandle()
     {
-        $this->setExpectedException('\Phipe\Connection\Exception', 'Stream socket is not writable');
+        $this->setExpectedException(Exception::CLASS, 'Stream socket is not writable');
 
         $this->stream->setStream(null);
         $this->stream->write('mock');
@@ -82,18 +84,18 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testConnectWhenAlreadyConnected()
     {
-        $this->setExpectedException('\Phipe\Connection\Exception', 'Already connected');
+        $this->setExpectedException(Exception::CLASS, 'Already connected');
 
         $this->stream->connect();
     }
 
     public function testConnectFailure()
     {
-        $this->setExpectedException('\Phipe\Connection\Exception', 'Stream connection failed');
+        $this->setExpectedException(Exception::CLASS, 'Stream connection failed');
 
         $this->observer->expects($this->once())
             ->method('update')
-            ->with($this->equalTo($this->stream), $this->equalTo(\Phipe\Connection::EVENT_CONNECT_FAIL));
+            ->with($this->equalTo($this->stream), $this->equalTo(BaseConnection::EVENT_CONNECT_FAIL));
 
         $this->stream->setStream(null);
         $this->stream->connect();
@@ -108,7 +110,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testDisconnectWhenAlreadyDisconnected()
     {
-        $this->setExpectedException('\Phipe\Connection\Exception', 'Already disconnected');
+        $this->setExpectedException(Exception::CLASS, 'Already disconnected');
 
         $this->stream->disconnect();
         $this->stream->disconnect();
@@ -161,7 +163,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testPopulateReadBufferWithNullHandle()
     {
-        $this->setExpectedException('\Phipe\Connection\Exception', 'Stream socket is not readable');
+        $this->setExpectedException(Exception::CLASS, 'Stream socket is not readable');
 
         $this->stream->setStream(null);
         $this->stream->populateReadBuffer();

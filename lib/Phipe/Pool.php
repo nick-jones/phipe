@@ -117,7 +117,7 @@ class Pool implements \Countable
      */
     public function toArray()
     {
-        $connections = array();
+        $connections = [];
 
         foreach ($this->connections as $connection) {
             array_push($connections, $connection);

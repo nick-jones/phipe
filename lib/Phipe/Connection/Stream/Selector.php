@@ -15,7 +15,7 @@ class Selector
      *
      * @var callable
      */
-    protected $selectStrategy = array(__CLASS__, 'sleepingStreamSelect');
+    protected $selectStrategy = [__CLASS__, 'sleepingStreamSelect'];
 
     /**
      * Indicates which resources are available for reading (or rather, won't block for further processing)
@@ -61,8 +61,8 @@ class Selector
      */
     protected function streamSelect(array $streams, $timeout)
     {
-        $write = array();
-        $except = array();
+        $write = [];
+        $except = [];
         $changed = stream_select($streams, $write, $except, 0, $timeout);
 
         if ($changed === false) {

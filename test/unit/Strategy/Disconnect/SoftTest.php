@@ -2,6 +2,9 @@
 
 namespace Phipe\Strategy\Disconnect;
 
+use Phipe\Connection;
+use Phipe\Pool;
+
 class SoftTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -16,12 +19,12 @@ class SoftTest extends \PHPUnit_Framework_TestCase
 
     public function testDisconnect()
     {
-        $strategy = $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80));
+        $strategy = $this->getMock(Connection::CLASS, [], ['127.0.0.1', 80]);
 
         $strategy->expects($this->once())
             ->method('disconnect');
 
-        $eof = $this->getMock('\Phipe\Pool');
+        $eof = $this->getMock(Pool::CLASS);
 
         $eof->expects($this->once())
             ->method('walk')
@@ -34,11 +37,11 @@ class SoftTest extends \PHPUnit_Framework_TestCase
                 )
             );
 
-        $pool = $this->getMock('\Phipe\Pool');
+        $pool = $this->getMock(Pool::CLASS);
 
         $pool->expects($this->once())
             ->method('getAllWithState')
-            ->with($this->equalTo(\Phipe\Connection::STATE_EOF))
+            ->with($this->equalTo(Connection::STATE_EOF))
             ->will($this->returnValue($eof));
 
         $this->strategy->performDisconnect($pool);

@@ -2,6 +2,9 @@
 
 namespace Phipe\Strategy\Disconnect;
 
+use Phipe\Connection;
+use Phipe\Pool;
+
 class ExpungingTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -16,13 +19,13 @@ class ExpungingTest extends \PHPUnit_Framework_TestCase
 
     public function testDisconnect()
     {
-        $connection = $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock(Connection::CLASS, [], ['127.0.0.1', 80]);
 
         $connection->expects($this->once())
             ->method('isDisconnected')
             ->will($this->returnValue(true));
 
-        $disconnected = $this->getMock('\Phipe\Pool');
+        $disconnected = $this->getMock(Pool::CLASS);
 
         $disconnected->expects($this->once())
             ->method('walk')
@@ -35,7 +38,7 @@ class ExpungingTest extends \PHPUnit_Framework_TestCase
                 )
             );
 
-        $pool = $this->getMock('\Phipe\Pool');
+        $pool = $this->getMock(Pool::CLASS);
 
         $pool->expects($this->once())
             ->method('filter')
@@ -50,7 +53,7 @@ class ExpungingTest extends \PHPUnit_Framework_TestCase
 
         $pool->expects($this->any())
             ->method('getAllWithState')
-            ->will($this->returnValue($this->getMock('\Phipe\Pool')));
+            ->will($this->returnValue($this->getMock(Pool::CLASS)));
 
         $pool->expects($this->once())
             ->method('remove')

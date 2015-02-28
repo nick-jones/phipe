@@ -31,9 +31,9 @@ class Connection extends DecoratingConnection
     /**
      * @var array
      */
-    protected $eventIgnores = array(
+    protected $eventIgnores = [
         self::EVENT_READ
-    );
+    ];
 
     /**
      * Write any data which precedes a newline character.

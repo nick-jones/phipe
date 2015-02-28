@@ -2,6 +2,8 @@
 
 namespace Phipe\Connection;
 
+use Phipe\Connection;
+
 class NotificationPropagatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -21,8 +23,8 @@ class NotificationPropagatorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->connection = $this->getMock('\Phipe\Connection');
-        $this->proxied = $this->getMock('\Phipe\Connection');
+        $this->connection = $this->getMock(Connection::CLASS);
+        $this->proxied = $this->getMock(Connection::CLASS);
 
         $this->notificationPropagator = new NotificationPropagator($this->connection, $this->proxied);
     }

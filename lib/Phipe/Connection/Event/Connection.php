@@ -59,10 +59,10 @@ class Connection extends BaseConnection
      *
      * @var array
      */
-    protected $sslOptions = array(
+    protected $sslOptions = [
         \EventSslContext::OPT_VERIFY_PEER => false,
         \EventSslContext::OPT_ALLOW_SELF_SIGNED => true
-    );
+    ];
 
     /**
      * Connect to host & port, as provided in the constructor. To be done: SSL & DNS support.
@@ -236,8 +236,8 @@ class Connection extends BaseConnection
     {
         $bufferEvent = $this->getBufferEvent();
 
-        $readCallback = array($this, 'eventRead');
-        $statusCallback = array($this, 'eventStatus');
+        $readCallback = [$this, 'eventRead'];
+        $statusCallback = [$this, 'eventStatus'];
 
         $bufferEvent->setCallbacks($readCallback, null, $statusCallback);
         $bufferEvent->enable(\Event::READ | \Event::WRITE);

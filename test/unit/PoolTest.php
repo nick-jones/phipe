@@ -2,8 +2,6 @@
 
 namespace Phipe;
 
-use Phipe\Connection;
-
 /**
  * @package Phipe
  */
@@ -21,7 +19,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->connections = $this->getMock('\SplObjectStorage');
+        $this->connections = $this->getMock(\SplObjectStorage::CLASS);
 
         $this->pool = new Pool();
         $this->pool->setConnections($this->connections);
@@ -53,7 +51,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
 
     public function testSetAll()
     {
-        $storage = $this->getMock('\SplObjectStorage');
+        $storage = $this->getMock(\SplObjectStorage::CLASS);
 
         $this->pool->setConnections($storage);
 
@@ -62,10 +60,10 @@ class PoolTest extends \PHPUnit_Framework_TestCase
 
     public function testFilterWithValueInclusion()
     {
-        $connections = array(
+        $connections = [
             $this->createMockConnection(),
             $this->createMockConnection()
-        );
+        ];
 
         $this->pool->setConnections($connections);
 
@@ -81,11 +79,9 @@ class PoolTest extends \PHPUnit_Framework_TestCase
 
     public function testFilterWithValueExclusion()
     {
-        $this->pool->setConnections(
-            array(
-                $this->createMockConnection()
-            )
-        );
+        $this->pool->setConnections([
+            $this->createMockConnection()
+        ]);
 
         // Filter always returning FALSE for exclusion, expecting nothing to be return
         $result = $this->pool->filter(
@@ -99,12 +95,10 @@ class PoolTest extends \PHPUnit_Framework_TestCase
 
     public function testWalk()
     {
-        $this->pool->setConnections(
-            array(
-                $this->createMockConnection(),
-                $this->createMockConnection()
-            )
-        );
+        $this->pool->setConnections([
+            $this->createMockConnection(),
+            $this->createMockConnection()
+        ]);
 
         $calls = 0;
 
@@ -123,7 +117,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
         $connectionDataAvailable = $this->createMockConnection(Connection::STATE_DATA_AVAILABLE);
         $connectionUnknown = $this->createMockConnection(0);
 
-        $connections = array($connectionConnected, $connectionDataAvailable, $connectionUnknown);
+        $connections = [$connectionConnected, $connectionDataAvailable, $connectionUnknown];
 
         $this->pool->setConnections($connections);
 
@@ -136,7 +130,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(0, $this->pool->count());
 
-        $this->pool->setConnections(array($this->createMockConnection()));
+        $this->pool->setConnections([$this->createMockConnection()]);
 
         $this->assertEquals(1, $this->pool->count());
     }
@@ -151,7 +145,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
         $this->pool->setConnections($storage);
         $result = $this->pool->toArray();
 
-        $this->assertEquals(array($connection), $result);
+        $this->assertEquals([$connection], $result);
     }
 
     /**
@@ -160,7 +154,7 @@ class PoolTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMockConnection($state = 0)
     {
-        $connection = $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock(Connection::CLASS, [], ['127.0.0.1', 80]);
 
         $connection->expects($this->any())
             ->method('getState')

@@ -2,8 +2,6 @@
 
 namespace Phipe;
 
-use Phipe\Connection;
-
 /**
  * @package Phipe
  */
@@ -24,14 +22,14 @@ class WatcherTest extends \PHPUnit_Framework_TestCase
      */
     public function eventDataProvider()
     {
-        return array(
-            array(Connection::EVENT_CONNECT),
-            array(Connection::EVENT_CONNECT_FAIL),
-            array(Connection::EVENT_READ),
-            array(Connection::EVENT_WRITE),
-            array(Connection::EVENT_EOF),
-            array(Connection::EVENT_DISCONNECT)
-        );
+        return [
+            [Connection::EVENT_CONNECT],
+            [Connection::EVENT_CONNECT_FAIL],
+            [Connection::EVENT_READ],
+            [Connection::EVENT_WRITE],
+            [Connection::EVENT_EOF],
+            [Connection::EVENT_DISCONNECT]
+        ];
     }
 
     /**
@@ -62,7 +60,7 @@ class WatcherTest extends \PHPUnit_Framework_TestCase
     {
         $calls = 0;
         $event = Connection::EVENT_CONNECT;
-        $connection = $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock(Connection::CLASS, [], ['127.0.0.1', 80]);
 
         $this->watcher->on(
             $event,
@@ -78,7 +76,7 @@ class WatcherTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdateWithNonListeningEvent()
     {
-        $connection = $this->getMock('\Phipe\Connection', array(), array('127.0.0.1', 80));
+        $connection = $this->getMock(Connection::CLASS, [], ['127.0.0.1', 80]);
 
         $this->watcher->on(
             Connection::EVENT_CONNECT,
@@ -92,7 +90,7 @@ class WatcherTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdateWithNonConnection()
     {
-        $subject = $this->getMock('\SplSubject');
+        $subject = $this->getMock(\SplSubject::CLASS);
 
         $this->watcher->on(
             Connection::EVENT_CONNECT,

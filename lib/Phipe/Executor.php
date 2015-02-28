@@ -94,7 +94,7 @@ class Executor
      */
     protected function createConnections()
     {
-        $connections = array();
+        $connections = [];
 
         foreach ($this->config['connections'] as $connection) {
             if (is_array($connection)) {
@@ -139,7 +139,7 @@ class Executor
         }
 
         if (is_null($config)) {
-            $config = array();
+            $config = [];
         }
 
         $this->config = $config;

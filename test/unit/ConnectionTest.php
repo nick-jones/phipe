@@ -2,8 +2,6 @@
 
 namespace Phipe;
 
-use Phipe\Connection;
-
 /**
  * @package Phipe
  */
@@ -16,7 +14,7 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->connection = $this->getMockForAbstractClass('\Phipe\Connection', array('127.0.0.1', 80));
+        $this->connection = $this->getMockForAbstractClass(Connection::CLASS, ['127.0.0.1', 80]);
     }
 
     public function testIsEndOfFile()
@@ -93,9 +91,9 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testAttach()
     {
-        $observer = $this->getMock('\SplObserver');
+        $observer = $this->getMock(\SplObserver::CLASS);
 
-        $storage = $this->getMock('\SplObjectStorage');
+        $storage = $this->getMock(\SplObjectStorage::CLASS);
 
         $storage->expects($this->once())
             ->method('attach')
@@ -107,9 +105,9 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
 
     public function testDetach()
     {
-        $observer = $this->getMock('\SplObserver');
+        $observer = $this->getMock(\SplObserver::CLASS);
 
-        $storage = $this->getMock('\SplObjectStorage');
+        $storage = $this->getMock(\SplObjectStorage::CLASS);
 
         $storage->expects($this->once())
             ->method('detach')
@@ -123,13 +121,13 @@ class ConnectionTest extends \PHPUnit_Framework_TestCase
     {
         $event = 'mock';
 
-        $observer = $this->getMock('\SplObserver');
+        $observer = $this->getMock(\SplObserver::CLASS);
 
         $observer->expects($this->once())
             ->method('update')
             ->with($this->connection, $event);
 
-        $this->connection->setObservers(array($observer));
+        $this->connection->setObservers([$observer]);
         $this->connection->notify($event);
     }
 }
