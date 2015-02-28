@@ -42,7 +42,8 @@ utilising observers that implement the SplObserver interface:
 ```php
 class MyObserver implements \SplObserver
 {
-    public function update(\SplSubject $subject, $event = NULL) {
+    public function update(\SplSubject $subject, $event = NULL)
+    {
         echo $event . PHP_EOL;
     }
 }
